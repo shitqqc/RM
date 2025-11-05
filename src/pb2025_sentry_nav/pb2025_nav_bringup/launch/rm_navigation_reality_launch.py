@@ -44,6 +44,7 @@ def generate_launch_description():
     use_respawn = LaunchConfiguration("use_respawn")
     rviz_config_file = LaunchConfiguration("rviz_config_file")
     use_robot_state_pub = LaunchConfiguration("use_robot_state_pub")
+    use_serial = LaunchConfiguration("use_serial")
     use_rviz = LaunchConfiguration("use_rviz")
 
     # Declare the launch arguments
@@ -122,6 +123,12 @@ def generate_launch_description():
         default_value="False",
         description="Whether to start the robot state publisher",
     )
+    
+    declare_use_serial_cmd = DeclareLaunchArgument(
+        "use_serial",
+        default_value="True",
+        description="Whether to start the serial driver",
+    )
 
     declare_rviz_config_file_cmd = DeclareLaunchArgument(
         "rviz_config_file",
@@ -190,6 +197,11 @@ def generate_launch_description():
             "use_respawn": use_respawn,
         }.items(),
     )
+    
+    serial_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(launch_dir, "serial_launch.py")),
+        condition=IfCondition(use_serial)
+    )
 
     joy_teleop_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(launch_dir, "joy_teleop_launch.py")),
@@ -216,12 +228,14 @@ def generate_launch_description():
     ld.add_action(declare_use_robot_state_pub_cmd)
     ld.add_action(declare_use_rviz_cmd)
     ld.add_action(declare_use_respawn_cmd)
+    ld.add_action(declare_use_serial_cmd)
 
     # Add the actions to launch all of the navigation nodes
     ld.add_action(start_robot_state_publisher_cmd)
     ld.add_action(start_livox_ros_driver2_node)
     ld.add_action(bringup_cmd)
     ld.add_action(joy_teleop_cmd)
+    ld.add_action(serial_cmd)
     ld.add_action(rviz_cmd)
 
     return ld
