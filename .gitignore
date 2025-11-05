@@ -1,0 +1,13 @@
+# 忽略所有 .log 文件
+*.log
+
+*.cache/
+*.install/
+*/build/
+# 忽略编译后的文件
+*.o
+*.out
+
+# 忽略 IDE 配置文件夹（例如 VSCode）
+.vscode/
+.idea/
