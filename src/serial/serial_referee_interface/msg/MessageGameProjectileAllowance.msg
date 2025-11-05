@@ -1,0 +1,3 @@
+uint16 projectile_allowance_17mm
+uint16 projectile_allowance_42mm
+uint16 remaining_gold_coin

@@ -1,0 +1,6 @@
+bool confirm_revival
+bool confirm_immediate_revival
+uint16 ammo_exchange_amount
+uint8 ammo_exchange_request_count
+uint8 health_exchange_request_count
+

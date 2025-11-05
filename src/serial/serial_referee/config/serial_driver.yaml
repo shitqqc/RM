@@ -1,0 +1,8 @@
+/rm_serial_referee:
+  ros__parameters:
+    referee_device_name: /dev/ttyACM0
+    baud_rate: 115200
+    flow_control: none
+    parity: none
+    stop_bits: "1"
+

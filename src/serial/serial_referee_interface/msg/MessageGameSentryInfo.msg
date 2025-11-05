@@ -1,0 +1,4 @@
+uint8 success_ammo
+uint8 success_remote_ammo
+uint8 success_remote_hp
+
