@@ -1,2 +1,0 @@
-Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_tools': /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_tools -- -j32 -l32
-Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_tools' returned '2': /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_tools -- -j32 -l32
