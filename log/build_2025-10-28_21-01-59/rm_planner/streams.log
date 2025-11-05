@@ -1,0 +1,189 @@
+[0.009s] Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32
+[0.026s] [ 33%] Built target rm_planner_node
+[0.040s] [ 50%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o[0m
+[0.041s] [ 66%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o[0m
+[0.041s] [ 83%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/target.cpp.o[0m
+[0.909s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:[m[K In member function ‘[01m[Kstd::vector<Eigen::Matrix<double, 3, 1> > rm_auto_aim::Target::getArmorPositions() const[m[K’:
+[0.909s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:17:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator<<[m[K’ (operand types are ‘[01m[Kconst Vector3d[m[K’ {aka ‘[01m[Kconst Eigen::Matrix<double, 3, 1>[m[K’} and ‘[01m[Kconst double[m[K’)
+[0.909s]     9 |   [32m[Ktarget_center[m[K [01;31m[K<<[m[K [34m[Kxc[m[K, yc, zc;
+[0.909s]       |   [32m[K~~~~~~~~~~~~~[m[K [01;31m[K^~[m[K [34m[K~~[m[K
+[0.909s]       |   [32m[K|[m[K                [34m[K|[m[K
+[0.909s]       |   [32m[K|[m[K                [34m[Kconst double[m[K
+[0.909s]       |   [32m[Kconst Vector3d {aka const Eigen::Matrix<double, 3, 1>}[m[K
+[0.909s] In file included from [01m[K/usr/include/eigen3/Eigen/Core:272[m[K,
+[0.909s]                  from [01m[K/usr/include/eigen3/Eigen/Dense:1[m[K,
+[0.909s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:1[m[K,
+[0.909s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[0.909s] [01m[K/usr/include/eigen3/Eigen/src/Core/DenseBase.h:322:31:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class OtherDerived> Eigen::CommaInitializer<Derived> Eigen::DenseBase<Derived>::operator<<(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = OtherDerived; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[0.909s]   322 |     CommaInitializer<Derived> [01;36m[Koperator[m[K<< (const DenseBase<OtherDerived>& other);
+[0.909s]       |                               [01;36m[K^~~~~~~~[m[K
+[0.909s] [01m[K/usr/include/eigen3/Eigen/src/Core/DenseBase.h:322:31:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[0.909s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::DenseBase<Derived>[m[K’ and ‘[01m[Kconst double[m[K’
+[0.909s]     9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+[0.909s]       |                    [01;36m[K^~[m[K
+[0.909s] In file included from [01m[K/usr/include/eigen3/Eigen/Core:321[m[K,
+[0.910s]                  from [01m[K/usr/include/eigen3/Eigen/Dense:1[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:1[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[0.910s] [01m[K/usr/include/eigen3/Eigen/src/Core/CommaInitializer.h:148:52:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[KEigen::CommaInitializer<Derived> Eigen::DenseBase<Derived>::operator<<(const Scalar&) [with Derived = Eigen::Matrix<double, 3, 1>; Eigen::DenseBase<Derived>::Scalar = double][m[K’ (near match)
+[0.910s]   148 | EIGEN_DEVICE_FUNC inline CommaInitializer<Derived> [01;36m[KDenseBase<Derived>[m[K::operator<< (const Scalar& s)
+[0.910s]       |                                                    [01;36m[K^~~~~~~~~~~~~~~~~~[m[K
+[0.910s] [01m[K/usr/include/eigen3/Eigen/src/Core/CommaInitializer.h:148:52:[m[K [01;36m[Knote: [m[K  passing ‘[01m[Kconst Vector3d*[m[K’ {aka ‘[01m[Kconst Eigen::Matrix<double, 3, 1>*[m[K’} as ‘[01m[Kthis[m[K’ argument discards qualifiers
+[0.910s] In file included from [01m[K/usr/include/eigen3/Eigen/Core:269[m[K,
+[0.910s]                  from [01m[K/usr/include/eigen3/Eigen/Dense:1[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:1[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[0.910s] [01m[K/usr/include/eigen3/Eigen/src/Core/IO.h:249:16:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class Derived> std::ostream& Eigen::operator<<(std::ostream&, const Eigen::DenseBase<Derived>&)[m[K’
+[0.910s]   249 | std::ostream & [01;36m[Koperator[m[K <<
+[0.910s]       |                [01;36m[K^~~~~~~~[m[K
+[0.910s] [01m[K/usr/include/eigen3/Eigen/src/Core/IO.h:249:16:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[0.910s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::DenseBase<Derived>[m[K’ and ‘[01m[Kconst double[m[K’
+[0.910s]     9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+[0.910s]       |                    [01;36m[K^~[m[K
+[0.910s] In file included from [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/Tensor:69[m[K,
+[0.910s]                  from [01m[K/usr/include/opencv4/opencv2/core/eigen.hpp:64[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/math.hpp:8[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:4[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[0.910s] [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorIndexList.h:328:15:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class FirstType, class ... OtherTypes> std::ostream& Eigen::operator<<(std::ostream&, const Eigen::IndexList<FirstType, OtherTypes ...>&)[m[K’
+[0.910s]   328 | std::ostream& [01;36m[Koperator[m[K<<(std::ostream& os,
+[0.910s]       |               [01;36m[K^~~~~~~~[m[K
+[0.910s] [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorIndexList.h:328:15:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[0.910s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::IndexList<FirstType, OtherTypes ...>[m[K’ and ‘[01m[Kconst double[m[K’
+[0.910s]     9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+[0.910s]       |                    [01;36m[K^~[m[K
+[0.910s] In file included from [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/Tensor:71[m[K,
+[0.910s]                  from [01m[K/usr/include/opencv4/opencv2/core/eigen.hpp:64[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/math.hpp:8[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:4[m[K,
+[0.910s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[0.911s] [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorDimensions.h:387:15:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class IndexType, int NumDims> std::ostream& Eigen::operator<<(std::ostream&, const Eigen::DSizes<IndexType, NumDims>&)[m[K’
+[0.911s]   387 | std::ostream& [01;36m[Koperator[m[K<<(std::ostream& os,
+[0.911s]       |               [01;36m[K^~~~~~~~[m[K
+[0.911s] [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorDimensions.h:387:15:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[0.911s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::DSizes<IndexType, NumDims>[m[K’ and ‘[01m[Kconst double[m[K’
+[0.911s]     9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+[0.911s]       |                    [01;36m[K^~[m[K
+[0.911s] In file included from [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/Tensor:132[m[K,
+[0.911s]                  from [01m[K/usr/include/opencv4/opencv2/core/eigen.hpp:64[m[K,
+[0.911s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/math.hpp:8[m[K,
+[0.911s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:4[m[K,
+[0.911s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[0.911s] [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorIO.h:59:15:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T> std::ostream& Eigen::operator<<(std::ostream&, const Eigen::TensorBase<Derived, 0>&)[m[K’
+[0.911s]    59 | std::ostream& [01;36m[Koperator[m[K << (std::ostream& os, const TensorBase<T, ReadOnlyAccessors>& expr) {
+[0.911s]       |               [01;36m[K^~~~~~~~[m[K
+[0.911s] [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorIO.h:59:15:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[0.911s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::TensorBase<Derived, 0>[m[K’ and ‘[01m[Kconst double[m[K’
+[0.911s]     9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+[0.911s]       |                    [01;36m[K^~[m[K
+[1.091s] gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:104：CMakeFiles/rm_planner.dir/src/target.cpp.o] 错误 1
+[1.091s] gmake[2]: *** 正在等待未完成的任务....
+[1.184s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[1.184s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:41:88:[m[K [01;31m[Kerror: [m[K‘[01m[Krclcpp[m[K’ does not name a type
+[1.184s]    41 |   Plan plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const [01;31m[Krclcpp[m[K::Time &current_time,
+[1.184s]       |                                                                                        [01;31m[K^~~~~~[m[K
+[1.184s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:41:101:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before ‘[01m[K&[m[K’ token
+[1.184s]    41 |   Plan plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time [01;31m[K&[m[Kcurrent_time,
+[1.184s]       |                                                                                                     [01;31m[K^[m[K
+[1.184s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:41:100:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K&[m[K’ token
+[1.185s]    41 |   Plan plan[34m[K([m[Kconst auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time[01;31m[K [m[K[32m[K&[m[Kcurrent_time,
+[1.185s]       |            [34m[K~[m[K                                                                                       [01;31m[K^[m[K[32m[K~[m[K
+[1.185s]       |                                                                                                    [32m[K)[m[K
+[1.185s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:41:101:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ at end of member declaration
+[1.185s]    41 |   Plan plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time [01;31m[K&[m[Kcurrent_time,
+[1.185s]       |                                                                                                     [01;31m[K^[m[K
+[1.185s]       |                                                                                                      [32m[K;[m[K
+[1.185s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:41:102:[m[K [01;31m[Kerror: [m[K‘[01m[Kcurrent_time[m[K’ does not name a type
+[1.185s]    41 |   Plan plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time &[01;31m[Kcurrent_time[m[K,
+[1.185s]       |                                                                                                      [01;31m[K^~~~~~~~~~~~[m[K
+[1.190s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:96:[m[K [01;31m[Kerror: [m[K‘[01m[Krclcpp[m[K’ does not name a type
+[1.190s]    19 | Plan Planner:: plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const [01;31m[Krclcpp[m[K::Time &current_time,
+[1.190s]       |                                                                                                [01;31m[K^~~~~~[m[K
+[1.190s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:109:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before ‘[01m[K&[m[K’ token
+[1.190s]    19 | Plan Planner:: plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time [01;31m[K&[m[Kcurrent_time,
+[1.190s]       |                                                                                                             [01;31m[K^[m[K
+[1.190s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:108:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K&[m[K’ token
+[1.190s]    19 | Plan Planner:: plan[34m[K([m[Kconst auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time[01;31m[K [m[K[32m[K&[m[Kcurrent_time,
+[1.190s]       |                    [34m[K~[m[K                                                                                       [01;31m[K^[m[K[32m[K~[m[K
+[1.190s]       |                                                                                                            [32m[K)[m[K
+[1.190s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:110:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[Kcurrent_time[m[K’
+[1.190s]    19 | Plan Planner:: plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time &[01;31m[Kcurrent_time[m[K,
+[1.190s]       |                                                                                                              [01;31m[K^~~~~~~~~~~~[m[K
+[1.414s] gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:76：CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o] 错误 1
+[2.404s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In constructor ‘[01m[Krm_auto_aim::RMPlannerNode::RMPlannerNode(const rclcpp::NodeOptions&)[m[K’:
+[2.404s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:36:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::unique_ptr<rm_tools::TrajectoryCompensator> rm_auto_aim::Planner::trajectory_compensator_[m[K’ is private within this context
+[2.404s]    36 |   planner_->[01;31m[Ktrajectory_compensator_[m[K = CompensatorFactory::createCompensator(compenstator_type);
+[2.404s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.404s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[2.404s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[2.404s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:61:52:[m[K [01;36m[Knote: [m[Kdeclared private here
+[2.404s]    61 |   std::unique_ptr<rm_tools::TrajectoryCompensator> [01;36m[Ktrajectory_compensator_[m[K;
+[2.404s]       |                                                    [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.404s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:36:39:[m[K [01;31m[Kerror: [m[K‘[01m[KCompensatorFactory[m[K’ has not been declared
+[2.404s]    36 |   planner_->trajectory_compensator_ = [01;31m[KCompensatorFactory[m[K::createCompensator(compenstator_type);
+[2.404s]       |                                       [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[2.404s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:37:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::unique_ptr<rm_tools::TrajectoryCompensator> rm_auto_aim::Planner::trajectory_compensator_[m[K’ is private within this context
+[2.404s]    37 |   planner_->[01;31m[Ktrajectory_compensator_[m[K->iteration_times = this->declare_parameter("planner.iteration_times", 20);
+[2.404s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.404s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[2.404s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[2.404s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:61:52:[m[K [01;36m[Knote: [m[Kdeclared private here
+[2.404s]    61 |   std::unique_ptr<rm_tools::TrajectoryCompensator> [01;36m[Ktrajectory_compensator_[m[K;
+[2.404s]       |                                                    [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.405s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:38:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::unique_ptr<rm_tools::TrajectoryCompensator> rm_auto_aim::Planner::trajectory_compensator_[m[K’ is private within this context
+[2.405s]    38 |   planner_->[01;31m[Ktrajectory_compensator_[m[K->velocity = this->declare_parameter("planner.bullet_speed", 20.0);
+[2.405s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.405s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[2.405s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[2.405s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:61:52:[m[K [01;36m[Knote: [m[Kdeclared private here
+[2.405s]    61 |   std::unique_ptr<rm_tools::TrajectoryCompensator> [01;36m[Ktrajectory_compensator_[m[K;
+[2.405s]       |                                                    [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.405s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:39:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::unique_ptr<rm_tools::TrajectoryCompensator> rm_auto_aim::Planner::trajectory_compensator_[m[K’ is private within this context
+[2.405s]    39 |   planner_->[01;31m[Ktrajectory_compensator_[m[K->gravity = this->declare_parameter("planner.gravity", 9.8);
+[2.405s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.405s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[2.405s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[2.405s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:61:52:[m[K [01;36m[Knote: [m[Kdeclared private here
+[2.405s]    61 |   std::unique_ptr<rm_tools::TrajectoryCompensator> [01;36m[Ktrajectory_compensator_[m[K;
+[2.405s]       |                                                    [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.405s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:40:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::unique_ptr<rm_tools::TrajectoryCompensator> rm_auto_aim::Planner::trajectory_compensator_[m[K’ is private within this context
+[2.405s]    40 |   planner_->[01;31m[Ktrajectory_compensator_[m[K->resistance = this->declare_parameter("planner.resistance", 0.001);
+[2.405s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.405s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[2.405s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[2.405s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:61:52:[m[K [01;36m[Knote: [m[Kdeclared private here
+[2.405s]    61 |   std::unique_ptr<rm_tools::TrajectoryCompensator> [01;36m[Ktrajectory_compensator_[m[K;
+[2.405s]       |                                                    [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.406s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::unique_ptr<rm_tools::ManualCompensator> rm_auto_aim::Planner::manual_compensator_[m[K’ is private within this context
+[2.406s]    53 |   planner_->[01;31m[Kmanual_compensator_[m[K = std::make_unique<rm_tools::ManualCompensator>();
+[2.406s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[2.406s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[2.406s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[2.406s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:62:48:[m[K [01;36m[Knote: [m[Kdeclared private here
+[2.406s]    62 |   std::unique_ptr<rm_tools::ManualCompensator> [01;36m[Kmanual_compensator_[m[K;
+[2.406s]       |                                                [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+[2.406s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:55:17:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::unique_ptr<rm_tools::ManualCompensator> rm_auto_aim::Planner::manual_compensator_[m[K’ is private within this context
+[2.406s]    55 |   if(!planner_->[01;31m[Kmanual_compensator_[m[K->updateMapFlow(angle_offset)) {
+[2.406s]       |                 [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[2.406s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[2.407s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[2.407s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:62:48:[m[K [01;36m[Knote: [m[Kdeclared private here
+[2.407s]    62 |   std::unique_ptr<rm_tools::ManualCompensator> [01;36m[Kmanual_compensator_[m[K;
+[2.407s]       |                                                [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+[2.419s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::RMPlannerNode::timerCallback()[m[K’:
+[2.419s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:138:79:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator=[m[K’ (operand types are ‘[01m[Kauto_aim_interfaces::msg::GimbalCmd[m[K’ {aka ‘[01m[Kauto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >[m[K’} and ‘[01m[Krm_auto_aim::Plan[m[K’)
+[2.419s]   138 |       control_msg = planner_->plan(armor_target_, 20, this->now(), tf2_buffer_[01;31m[K)[m[K;
+[2.419s]       |                                                                               [01;31m[K^[m[K
+[2.419s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/include/auto_aim_interfaces/auto_aim_interfaces/msg/gimbal_cmd.hpp:7[m[K,
+[2.419s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:41[m[K,
+[2.419s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[2.419s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/include/auto_aim_interfaces/auto_aim_interfaces/msg/detail/gimbal_cmd__struct.hpp:32:8:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr auto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >& auto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >::operator=(const auto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >&)[m[K’
+[2.419s]    32 | struct [01;36m[KGimbalCmd_[m[K
+[2.419s]       |        [01;36m[K^~~~~~~~~~[m[K
+[2.419s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/include/auto_aim_interfaces/auto_aim_interfaces/msg/detail/gimbal_cmd__struct.hpp:32:8:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krm_auto_aim::Plan[m[K’ to ‘[01m[Kconst auto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >&[m[K’
+[2.419s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/include/auto_aim_interfaces/auto_aim_interfaces/msg/detail/gimbal_cmd__struct.hpp:32:8:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr auto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >& auto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >::operator=(auto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >&&)[m[K’
+[2.419s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/include/auto_aim_interfaces/auto_aim_interfaces/msg/detail/gimbal_cmd__struct.hpp:32:8:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krm_auto_aim::Plan[m[K’ to ‘[01m[Kauto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >&&[m[K’
+[4.257s] gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:90：CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o] 错误 1
+[4.258s] gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/rm_planner.dir/all] 错误 2
+[4.258s] gmake: *** [Makefile:146：all] 错误 2
+[4.259s] Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner' returned '2': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32

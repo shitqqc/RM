@@ -1,0 +1,30 @@
+[0.009s] Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/armor_detector': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/armor_detector -- -j32 -l32
+[0.025s] [ 22%] Built target armor_detector_node
+[0.050s] [ 33%] [32mBuilding CXX object CMakeFiles/armor_detector.dir/src/armor_pose_estimator.cpp.o[0m
+[0.050s] [ 44%] [32mBuilding CXX object CMakeFiles/armor_detector.dir/src/ba_solver.cpp.o[0m
+[0.051s] [ 55%] [32mBuilding CXX object CMakeFiles/armor_detector.dir/src/detector_node.cpp.o[0m
+[0.052s] [ 66%] [32mBuilding CXX object CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.o[0m
+[0.319s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/ba_solver.cpp:17[m[K:
+[0.319s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/ba_solver.hpp:42:10:[m[K [01;31m[Kfatal error: [m[Krclcpp.h: 没有那个文件或目录
+[0.319s]    42 | #include [01;31m[K"rclcpp.h"[m[K
+[0.319s]       |          [01;31m[K^~~~~~~~~~[m[K
+[0.319s] compilation terminated.
+[0.323s] gmake[2]: *** [CMakeFiles/armor_detector.dir/build.make:104：CMakeFiles/armor_detector.dir/src/ba_solver.cpp.o] 错误 1
+[0.323s] gmake[2]: *** 正在等待未完成的任务....
+[0.441s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/armor_pose_estimator.hpp:35[m[K,
+[0.441s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/armor_pose_estimator.cpp:15[m[K:
+[0.441s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/ba_solver.hpp:42:10:[m[K [01;31m[Kfatal error: [m[Krclcpp.h: 没有那个文件或目录
+[0.441s]    42 | #include [01;31m[K"rclcpp.h"[m[K
+[0.441s]       |          [01;31m[K^~~~~~~~~~[m[K
+[0.441s] compilation terminated.
+[0.447s] gmake[2]: *** [CMakeFiles/armor_detector.dir/build.make:90：CMakeFiles/armor_detector.dir/src/armor_pose_estimator.cpp.o] 错误 1
+[0.484s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/armor_pose_estimator.hpp:35[m[K,
+[0.484s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/detector_node.hpp:8[m[K,
+[0.484s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/detector_node.cpp:25[m[K:
+[0.484s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/ba_solver.hpp:42:10:[m[K [01;31m[Kfatal error: [m[Krclcpp.h: 没有那个文件或目录
+[0.484s]    42 | #include [01;31m[K"rclcpp.h"[m[K
+[0.484s]       |          [01;31m[K^~~~~~~~~~[m[K
+[0.484s] compilation terminated.
+[0.490s] gmake[2]: *** [CMakeFiles/armor_detector.dir/build.make:132：CMakeFiles/armor_detector.dir/src/detector_node.cpp.o] 错误 1
+[7.169s] gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/armor_detector.dir/all] 错误 2
+[7.169s] gmake: *** [Makefile:146：all] 错误 2

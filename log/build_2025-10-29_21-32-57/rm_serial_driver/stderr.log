@@ -1,0 +1,31 @@
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:[m[K In member function ‘[01m[Kvoid rm_serial_driver::RMSerialDriver::sendArmorData(auto_aim_interfaces::msg::GimbalCmd_<std::allocator<void> >::ConstSharedPtr, auto_aim_interfaces::msg::TimeInfo_<std::allocator<void> >::ConstSharedPtr)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:216:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Kfire[m[K’
+  216 |     packet.[01;31m[Kfire[m[K = msg->fire;
+      |            [01;31m[K^~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:217:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Ktarget_yaw[m[K’
+  217 |     packet.[01;31m[Ktarget_yaw[m[K = msg->target_yaw;
+      |            [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:218:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Ktarget_pitch[m[K’
+  218 |     packet.[01;31m[Ktarget_pitch[m[K = msg->target_pitch;
+      |            [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:219:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Kyaw[m[K’
+  219 |     packet.[01;31m[Kyaw[m[K = msg->yaw;
+      |            [01;31m[K^~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:220:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Kyaw_vel[m[K’
+  220 |     packet.[01;31m[Kyaw_vel[m[K = msg->yaw_vel;
+      |            [01;31m[K^~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:221:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Kyaw_acc[m[K’
+  221 |     packet.[01;31m[Kyaw_acc[m[K = msg->yaw_acc;
+      |            [01;31m[K^~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:222:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Kpitch[m[K’
+  222 |     packet.[01;31m[Kpitch[m[K = msg->pitch;
+      |            [01;31m[K^~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:223:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Kpitch_vel[m[K’
+  223 |     packet.[01;31m[Kpitch_vel[m[K = msg->pitch_vel;
+      |            [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_serial_driver/src/rm_serial_driver.cpp:224:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstruct rm_serial_driver::SendPacket[m[K’ has no member named ‘[01m[Kpitch_acc[m[K’
+  224 |     packet.[01;31m[Kpitch_acc[m[K = msg->pitch_acc;
+      |            [01;31m[K^~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/rm_serial_driver.dir/build.make:76：CMakeFiles/rm_serial_driver.dir/src/rm_serial_driver.cpp.o] 错误 1
+gmake[1]: *** [CMakeFiles/Makefile2:141：CMakeFiles/rm_serial_driver.dir/all] 错误 2
+gmake: *** [Makefile:146：all] 错误 2

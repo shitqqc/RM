@@ -1,0 +1,16 @@
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/urdf/rm_gimbal.urdf.xacro
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/ament_index/resource_index/package_run_dependencies/rm_gimbal_description
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/ament_index/resource_index/parent_prefix_path/rm_gimbal_description
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/environment/ament_prefix_path.sh
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/environment/ament_prefix_path.dsv
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/environment/path.sh
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/environment/path.dsv
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/local_setup.bash
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/local_setup.sh
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/local_setup.zsh
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/local_setup.dsv
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/package.dsv
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/ament_index/resource_index/packages/rm_gimbal_description
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/cmake/rm_gimbal_descriptionConfig.cmake
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/cmake/rm_gimbal_descriptionConfig-version.cmake
+/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_gimbal_description/share/rm_gimbal_description/package.xml

@@ -1,0 +1,268 @@
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:[m[K In member function ‘[01m[Kstd::vector<Eigen::Matrix<double, 3, 1> > rm_auto_aim::Target::getArmorPositions() const[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:17:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator<<[m[K’ (operand types are ‘[01m[Kconst Vector3d[m[K’ {aka ‘[01m[Kconst Eigen::Matrix<double, 3, 1>[m[K’} and ‘[01m[Kconst double[m[K’)
+    9 |   [32m[Ktarget_center[m[K [01;31m[K<<[m[K [34m[Kxc[m[K, yc, zc;
+      |   [32m[K~~~~~~~~~~~~~[m[K [01;31m[K^~[m[K [34m[K~~[m[K
+      |   [32m[K|[m[K                [34m[K|[m[K
+      |   [32m[K|[m[K                [34m[Kconst double[m[K
+      |   [32m[Kconst Vector3d {aka const Eigen::Matrix<double, 3, 1>}[m[K
+In file included from [01m[K/usr/include/eigen3/Eigen/Core:272[m[K,
+                 from [01m[K/usr/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:1[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[01m[K/usr/include/eigen3/Eigen/src/Core/DenseBase.h:322:31:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class OtherDerived> Eigen::CommaInitializer<Derived> Eigen::DenseBase<Derived>::operator<<(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = OtherDerived; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+  322 |     CommaInitializer<Derived> [01;36m[Koperator[m[K<< (const DenseBase<OtherDerived>& other);
+      |                               [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/eigen3/Eigen/src/Core/DenseBase.h:322:31:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::DenseBase<Derived>[m[K’ and ‘[01m[Kconst double[m[K’
+    9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+      |                    [01;36m[K^~[m[K
+In file included from [01m[K/usr/include/eigen3/Eigen/Core:321[m[K,
+                 from [01m[K/usr/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:1[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[01m[K/usr/include/eigen3/Eigen/src/Core/CommaInitializer.h:148:52:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[KEigen::CommaInitializer<Derived> Eigen::DenseBase<Derived>::operator<<(const Scalar&) [with Derived = Eigen::Matrix<double, 3, 1>; Eigen::DenseBase<Derived>::Scalar = double][m[K’ (near match)
+  148 | EIGEN_DEVICE_FUNC inline CommaInitializer<Derived> [01;36m[KDenseBase<Derived>[m[K::operator<< (const Scalar& s)
+      |                                                    [01;36m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/include/eigen3/Eigen/src/Core/CommaInitializer.h:148:52:[m[K [01;36m[Knote: [m[K  passing ‘[01m[Kconst Vector3d*[m[K’ {aka ‘[01m[Kconst Eigen::Matrix<double, 3, 1>*[m[K’} as ‘[01m[Kthis[m[K’ argument discards qualifiers
+In file included from [01m[K/usr/include/eigen3/Eigen/Core:269[m[K,
+                 from [01m[K/usr/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:1[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[01m[K/usr/include/eigen3/Eigen/src/Core/IO.h:249:16:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class Derived> std::ostream& Eigen::operator<<(std::ostream&, const Eigen::DenseBase<Derived>&)[m[K’
+  249 | std::ostream & [01;36m[Koperator[m[K <<
+      |                [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/eigen3/Eigen/src/Core/IO.h:249:16:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::DenseBase<Derived>[m[K’ and ‘[01m[Kconst double[m[K’
+    9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+      |                    [01;36m[K^~[m[K
+In file included from [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/Tensor:69[m[K,
+                 from [01m[K/usr/include/opencv4/opencv2/core/eigen.hpp:64[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/math.hpp:8[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:4[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorIndexList.h:328:15:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class FirstType, class ... OtherTypes> std::ostream& Eigen::operator<<(std::ostream&, const Eigen::IndexList<FirstType, OtherTypes ...>&)[m[K’
+  328 | std::ostream& [01;36m[Koperator[m[K<<(std::ostream& os,
+      |               [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorIndexList.h:328:15:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::IndexList<FirstType, OtherTypes ...>[m[K’ and ‘[01m[Kconst double[m[K’
+    9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+      |                    [01;36m[K^~[m[K
+In file included from [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/Tensor:71[m[K,
+                 from [01m[K/usr/include/opencv4/opencv2/core/eigen.hpp:64[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/math.hpp:8[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:4[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorDimensions.h:387:15:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class IndexType, int NumDims> std::ostream& Eigen::operator<<(std::ostream&, const Eigen::DSizes<IndexType, NumDims>&)[m[K’
+  387 | std::ostream& [01;36m[Koperator[m[K<<(std::ostream& os,
+      |               [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorDimensions.h:387:15:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::DSizes<IndexType, NumDims>[m[K’ and ‘[01m[Kconst double[m[K’
+    9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+      |                    [01;36m[K^~[m[K
+In file included from [01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/Tensor:132[m[K,
+                 from [01m[K/usr/include/opencv4/opencv2/core/eigen.hpp:64[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/math.hpp:8[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:4[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorIO.h:59:15:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class T> std::ostream& Eigen::operator<<(std::ostream&, const Eigen::TensorBase<Derived, 0>&)[m[K’
+   59 | std::ostream& [01;36m[Koperator[m[K << (std::ostream& os, const TensorBase<T, ReadOnlyAccessors>& expr) {
+      |               [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorIO.h:59:15:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:9:20:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst Eigen::TensorBase<Derived, 0>[m[K’ and ‘[01m[Kconst double[m[K’
+    9 |   target_center << [01;36m[Kxc[m[K, yc, zc;
+      |                    [01;36m[K^~[m[K
+gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:104：CMakeFiles/rm_planner.dir/src/target.cpp.o] 错误 1
+gmake[2]: *** 正在等待未完成的任务....
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:58:19:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCompensator[m[K’ was not declared in this scope; did you mean ‘[01m[Krm_tools::TrajectoryCompensator[m[K’?
+   58 |   std::unique_ptr<[01;31m[KTrajectoryCompensator[m[K> trajectory_compensator_;
+      |                   [01;31m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+      |                   [32m[Krm_tools::TrajectoryCompensator[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:11[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/trajectory_compensator.hpp:25:7:[m[K [01;36m[Knote: [m[K‘[01m[Krm_tools::TrajectoryCompensator[m[K’ declared here
+   25 | class [01;36m[KTrajectoryCompensator[m[K {
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:58:40:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   58 |   std::unique_ptr<TrajectoryCompensator[01;31m[K>[m[K trajectory_compensator_;
+      |                                        [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:58:40:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:59:19:[m[K [01;31m[Kerror: [m[K‘[01m[KManualCompensator[m[K’ was not declared in this scope; did you mean ‘[01m[Krm_tools::ManualCompensator[m[K’?
+   59 |   std::unique_ptr<[01;31m[KManualCompensator[m[K> manual_compensator_;
+      |                   [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+      |                   [32m[Krm_tools::ManualCompensator[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:12[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/manual_compensator.hpp:51:9:[m[K [01;36m[Knote: [m[K‘[01m[Krm_tools::ManualCompensator[m[K’ declared here
+   51 |   class [01;36m[KManualCompensator[m[K {
+      |         [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:59:36:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   59 |   std::unique_ptr<ManualCompensator[01;31m[K>[m[K manual_compensator_;
+      |                                    [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:59:36:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:6:[m[K [01;31m[Kerror: [m[Kno declaration matches ‘[01m[Krm_auto_aim::Plan rm_auto_aim::Planner::plan(const Target&, double)[m[K’
+   19 | Plan [01;31m[KPlanner[m[K::plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed)
+      |      [01;31m[K^~~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:41:8:[m[K [01;36m[Knote: [m[Kcandidate is: ‘[01m[Krm_auto_aim::Plan rm_auto_aim::Planner::plan(rm_auto_aim::Target, double)[m[K’
+   41 |   Plan [01;36m[Kplan[m[K(Target target, double bullet_speed);
+      |        [01;36m[K^~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:35:7:[m[K [01;36m[Knote: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ defined here
+   35 | class [01;36m[KPlanner[m[K
+      |       [01;36m[K^~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::Planner::calcYawAndPitch(const Vector3d&, std::array<double, 3>, double&, double&) const[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:233:57:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+  233 |   if (double temp_pitch = pitch; trajectory_compensator_[01;31m[K->[m[Kcompensate(p, temp_pitch)) {
+      |                                                         [01;31m[K^~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:[m[K In member function ‘[01m[Kstd::vector<std::pair<double, double> > rm_auto_aim::Planner::getTrajectory() const[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:239:44:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+  239 |   auto trajectory = trajectory_compensator_[01;31m[K->[m[KgetTrajectory(15, rpy_[1]);
+      |                                            [01;31m[K^~[m[K
+gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:76：CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o] 错误 1
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:58:19:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCompensator[m[K’ was not declared in this scope; did you mean ‘[01m[Krm_tools::TrajectoryCompensator[m[K’?
+   58 |   std::unique_ptr<[01;31m[KTrajectoryCompensator[m[K> trajectory_compensator_;
+      |                   [01;31m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+      |                   [32m[Krm_tools::TrajectoryCompensator[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:11[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/trajectory_compensator.hpp:25:7:[m[K [01;36m[Knote: [m[K‘[01m[Krm_tools::TrajectoryCompensator[m[K’ declared here
+   25 | class [01;36m[KTrajectoryCompensator[m[K {
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:58:40:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   58 |   std::unique_ptr<TrajectoryCompensator[01;31m[K>[m[K trajectory_compensator_;
+      |                                        [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:58:40:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:59:19:[m[K [01;31m[Kerror: [m[K‘[01m[KManualCompensator[m[K’ was not declared in this scope; did you mean ‘[01m[Krm_tools::ManualCompensator[m[K’?
+   59 |   std::unique_ptr<[01;31m[KManualCompensator[m[K> manual_compensator_;
+      |                   [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+      |                   [32m[Krm_tools::ManualCompensator[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:12[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/manual_compensator.hpp:51:9:[m[K [01;36m[Knote: [m[K‘[01m[Krm_tools::ManualCompensator[m[K’ declared here
+   51 |   class [01;36m[KManualCompensator[m[K {
+      |         [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:59:36:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   59 |   std::unique_ptr<ManualCompensator[01;31m[K>[m[K manual_compensator_;
+      |                                    [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:59:36:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In constructor ‘[01m[Krm_auto_aim::RMPlannerNode::RMPlannerNode(const rclcpp::NodeOptions&)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:34:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kplanner[m[K’ was not declared in this scope; did you mean ‘[01m[KPlanner[m[K’?
+   34 |   [01;31m[Kplanner[m[K->prediction_delay_ = this->declare_parameter("planner.prediction_delay", 0.0);
+      |   [01;31m[K^~~~~~~[m[K
+      |   [32m[KPlanner[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:36:38:[m[K [01;31m[Kerror: [m[K‘[01m[KCompensatorFactory[m[K’ has not been declared
+   36 |   planner->trajectory_compensator_ = [01;31m[KCompensatorFactory[m[K::createCompensator(compenstator_type);
+      |                                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:45:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ has no member named ‘[01m[Kfire_thresh[m[K’; did you mean ‘[01m[Kfire_thresh_[m[K’?
+   45 |   planner_->[01;31m[Kfire_thresh[m[K = this->declare_parameter("fire_thresh", 0.003);
+      |             [01;31m[K^~~~~~~~~~~[m[K
+      |             [32m[Kfire_thresh_[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kint rm_auto_aim::Planner::manual_compensator_[m[K’ is private within this context
+   53 |   planner_->[01;31m[Kmanual_compensator_[m[K = std::make_unique<ManualCompensator>();
+      |             [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:59:38:[m[K [01;36m[Knote: [m[Kdeclared private here
+   59 |   std::unique_ptr<ManualCompensator> [01;36m[Kmanual_compensator_[m[K;
+      |                                      [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:52:[m[K [01;31m[Kerror: [m[K‘[01m[KManualCompensator[m[K’ was not declared in this scope; did you mean ‘[01m[Krm_tools::ManualCompensator[m[K’?
+   53 |   planner_->manual_compensator_ = std::make_unique<[01;31m[KManualCompensator[m[K>();
+      |                                                    [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+      |                                                    [32m[Krm_tools::ManualCompensator[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:12[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/include/rm_tools/manual_compensator.hpp:51:9:[m[K [01;36m[Knote: [m[K‘[01m[Krm_tools::ManualCompensator[m[K’ declared here
+   51 |   class [01;36m[KManualCompensator[m[K {
+      |         [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:70:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kmake_unique<<expression error> >()[m[K’
+   53 |   planner_->manual_compensator_ = [01;31m[Kstd::make_unique<ManualCompensator>()[m[K;
+      |                                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:153[m[K,
+                 from [01m[K/opt/ros/humble/include/message_filters/message_filters/subscriber.h:40[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:24[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/usr/include/c++/11/bits/unique_ptr.h:961:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class ... _Args> typename std::_MakeUniq<_Tp>::__single_object std::make_unique(_Args&& ...)[m[K’
+  961 |     [01;36m[Kmake_unique[m[K(_Args&&... __args)
+      |     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/usr/include/c++/11/bits/unique_ptr.h:961:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:70:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   53 |   planner_->manual_compensator_ = [01;31m[Kstd::make_unique<ManualCompensator>()[m[K;
+      |                                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:153[m[K,
+                 from [01m[K/opt/ros/humble/include/message_filters/message_filters/subscriber.h:40[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:24[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/usr/include/c++/11/bits/unique_ptr.h:967:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> typename std::_MakeUniq<_Tp>::__array std::make_unique(std::size_t)[m[K’
+  967 |     [01;36m[Kmake_unique[m[K(size_t __num)
+      |     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/usr/include/c++/11/bits/unique_ptr.h:967:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:70:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   53 |   planner_->manual_compensator_ = [01;31m[Kstd::make_unique<ManualCompensator>()[m[K;
+      |                                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:153[m[K,
+                 from [01m[K/opt/ros/humble/include/message_filters/message_filters/subscriber.h:40[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:24[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/usr/include/c++/11/bits/unique_ptr.h:973:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class ... _Args> typename std::_MakeUniq<_Tp>::__invalid_type std::make_unique(_Args&& ...)[m[K’ (deleted)
+  973 |     [01;36m[Kmake_unique[m[K(_Args&&...) = delete;
+      |     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/usr/include/c++/11/bits/unique_ptr.h:973:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:70:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   53 |   planner_->manual_compensator_ = [01;31m[Kstd::make_unique<ManualCompensator>()[m[K;
+      |                                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:55:17:[m[K [01;31m[Kerror: [m[K‘[01m[Kint rm_auto_aim::Planner::manual_compensator_[m[K’ is private within this context
+   55 |   if(!planner_->[01;31m[Kmanual_compensator_[m[K->updateMapFlow(angle_offset)) {
+      |                 [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:59:38:[m[K [01;36m[Knote: [m[Kdeclared private here
+   59 |   std::unique_ptr<ManualCompensator> [01;36m[Kmanual_compensator_[m[K;
+      |                                      [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:55:36:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+   55 |   if(!planner_->manual_compensator_[01;31m[K->[m[KupdateMapFlow(angle_offset)) {
+      |                                    [01;31m[K^~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::RMPlannerNode::timerCallback()[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:137:21:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ has no member named ‘[01m[Kprediction_delay_[m[K’
+  137 |           planner_->[01;31m[Kprediction_delay_[m[K = get_parameter("planner.prediction_delay").as_double();
+      |                     [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:138:35:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Krm_auto_aim::Planner::plan(auto_aim_interfaces::msg::Target&, rclcpp::Time, std::shared_ptr<tf2_ros::Buffer>&)[m[K’
+  138 |       control_msg = [01;31m[Kplanner_->plan(armor_target_, this->now(), tf2_buffer_)[m[K;
+      |                     [01;31m[K~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:41:8:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Krm_auto_aim::Plan rm_auto_aim::Planner::plan(rm_auto_aim::Target, double)[m[K’
+   41 |   Plan [01;36m[Kplan[m[K(Target target, double bullet_speed);
+      |        [01;36m[K^~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:41:8:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 3 provided
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::RMPlannerNode::publishMarkers(const Target&, const GimbalCmd&)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:244:12:[m[K [01;31m[Kerror: [m[Kredeclaration of ‘[01m[Kdouble r[m[K’
+  244 |     double [01;31m[Kr[m[K = 0;
+      |            [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:213:34:[m[K [01;36m[Knote: [m[K‘[01m[Kdouble r[m[K’ previously declared here
+  213 |     double yaw = target_msg.yaw, [01;36m[Kr[m[K = target_msg.radius, dr = target_msg.d_radius;
+      |                                  [01;36m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:276:53:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::vector<std::pair<double, double> > rm_auto_aim::Planner::getTrajectory() const[m[K’ is private within this context
+  276 |     for (const auto &point : [01;31m[Kplanner_->getTrajectory()[m[K) {
+      |                              [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:73:42:[m[K [01;36m[Knote: [m[Kdeclared private here
+   73 |   std::vector<std::pair<double, double>> [01;36m[KgetTrajectory[m[K() const noexcept;
+      |                                          [01;36m[K^~~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:90：CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o] 错误 1
+gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/rm_planner.dir/all] 错误 2
+gmake: *** [Makefile:146：all] 错误 2

@@ -1,0 +1,22 @@
+[  0%] Built target auto_aim_interfaces__cpp
+[ 12%] Built target auto_aim_interfaces__rosidl_generator_c
+[ 12%] Built target ament_cmake_python_copy_auto_aim_interfaces
+[ 24%] Built target auto_aim_interfaces__rosidl_typesupport_cpp
+[ 36%] Built target auto_aim_interfaces__rosidl_typesupport_introspection_cpp
+[ 47%] Built target auto_aim_interfaces__rosidl_typesupport_c
+[ 58%] Built target auto_aim_interfaces__rosidl_typesupport_fastrtps_cpp
+[ 70%] Built target auto_aim_interfaces__rosidl_typesupport_introspection_c
+[ 82%] Built target auto_aim_interfaces__rosidl_typesupport_fastrtps_c
+[ 82%] Built target auto_aim_interfaces
+[ 83%] Built target auto_aim_interfaces__py
+[ 94%] Built target auto_aim_interfaces__rosidl_generator_py
+[ 96%] Built target auto_aim_interfaces__rosidl_typesupport_fastrtps_c__pyext
+[100%] Built target auto_aim_interfaces__rosidl_typesupport_introspection_c__pyext
+[100%] Built target auto_aim_interfaces__rosidl_typesupport_c__pyext
+running egg_info
+writing auto_aim_interfaces.egg-info/PKG-INFO
+writing dependency_links to auto_aim_interfaces.egg-info/dependency_links.txt
+writing top-level names to auto_aim_interfaces.egg-info/top_level.txt
+reading manifest file 'auto_aim_interfaces.egg-info/SOURCES.txt'
+writing manifest file 'auto_aim_interfaces.egg-info/SOURCES.txt'
+[100%] Built target ament_cmake_python_build_auto_aim_interfaces_egg

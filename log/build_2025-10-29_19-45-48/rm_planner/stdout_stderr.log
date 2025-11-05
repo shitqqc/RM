@@ -1,0 +1,48 @@
+[ 33%] Built target rm_planner_node
+[ 50%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o[0m
+[ 66%] [32m[1mLinking CXX shared library librm_planner.so[0m
+[100%] Built target rm_planner
+-- Install configuration: ""
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/lib/rm_planner/rm_planner_node
+-- Set non-toolchain portion of runtime path of "/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/lib/rm_planner/rm_planner_node" to ""
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/target.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/rm_planner.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/rm_planner_node.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/admm.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/rho_benchmark.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/CMakeLists.txt
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/admm.cpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/tiny_api_constants.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/tiny_api.cpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/codegen.cpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/codegen.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/error.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/tiny_api.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/types.hpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/rho_benchmark.cpp
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/library_path.sh
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/library_path.dsv
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/lib/librm_planner.so
+-- Set non-toolchain portion of runtime path of "/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/lib/librm_planner.so" to ""
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/ament_index/resource_index/package_run_dependencies/rm_planner
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/ament_index/resource_index/parent_prefix_path/rm_planner
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/ament_prefix_path.sh
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/ament_prefix_path.dsv
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/path.sh
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/path.dsv
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/local_setup.bash
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/local_setup.sh
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/local_setup.zsh
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/local_setup.dsv
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/package.dsv
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/ament_index/resource_index/packages/rm_planner
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/ament_index/resource_index/rclcpp_components/rm_planner
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/ament_cmake_export_libraries-extras.cmake
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/rm_plannerConfig.cmake
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/rm_plannerConfig-version.cmake
+-- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/package.xml

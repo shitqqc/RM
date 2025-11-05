@@ -1,0 +1,6 @@
+Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ljoy/Robomaster/PIONEER/new_rv/hik_camera -DCMAKE_INSTALL_PREFIX=/home/ljoy/Robomaster/PIONEER/new_rv/install/hik_camera
+Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ljoy/Robomaster/PIONEER/new_rv/hik_camera -DCMAKE_INSTALL_PREFIX=/home/ljoy/Robomaster/PIONEER/new_rv/install/hik_camera
+Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera -- -j32 -l32
+Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera -- -j32 -l32
+Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera
+Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera

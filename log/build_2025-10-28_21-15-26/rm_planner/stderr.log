@@ -1,0 +1,27 @@
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:13:10:[m[K [01;31m[Kfatal error: [m[Kcompensator_factory.hpp: 没有那个文件或目录
+   13 | #include [01;31m[K"compensator_factory.hpp"[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:76：CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o] 错误 1
+gmake[2]: *** 正在等待未完成的任务....
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+                 from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:13:10:[m[K [01;31m[Kfatal error: [m[Kcompensator_factory.hpp: 没有那个文件或目录
+   13 | #include [01;31m[K"compensator_factory.hpp"[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:90：CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o] 错误 1
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:6:30:[m[K [01;31m[Kerror: [m[Kno declaration matches ‘[01m[Kstd::vector<Eigen::Matrix<double, 3, 1> > rm_auto_aim::Target::getArmorPositions()[m[K’
+    6 | std::vector<Eigen::Vector3d> [01;31m[KTarget[m[K::getArmorPositions(){
+      |                              [01;31m[K^~~~~~[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:1[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:11:38:[m[K [01;36m[Knote: [m[Kcandidate is: ‘[01m[Kstd::vector<Eigen::Matrix<double, 3, 1> > rm_auto_aim::Target::getArmorPositions() const[m[K’
+   11 |         std::vector<Eigen::Vector3d> [01;36m[KgetArmorPositions[m[K() const noexcept;
+      |                                      [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/target.hpp:7:11:[m[K [01;36m[Knote: [m[K‘[01m[Kclass rm_auto_aim::Target[m[K’ defined here
+    7 |     class [01;36m[KTarget[m[K
+      |           [01;36m[K^~~~~~[m[K
+gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:104：CMakeFiles/rm_planner.dir/src/target.cpp.o] 错误 1
+gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/rm_planner.dir/all] 错误 2
+gmake: *** [Makefile:146：all] 错误 2

@@ -1,0 +1,52 @@
+[0.008s] Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32
+[0.026s] [ 33%] Built target rm_planner_node
+[0.039s] [ 50%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o[0m
+[2.828s] [ 66%] [32m[1mLinking CXX shared library librm_planner.so[0m
+[3.167s] [100%] Built target rm_planner
+[3.177s] Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner' returned '0': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32
+[3.194s] Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner
+[3.195s] -- Install configuration: ""
+[3.195s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/lib/rm_planner/rm_planner_node
+[3.196s] -- Set non-toolchain portion of runtime path of "/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/lib/rm_planner/rm_planner_node" to ""
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/target.hpp
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/rm_planner.hpp
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/rm_planner_node.hpp
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/admm.hpp
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/rho_benchmark.hpp
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/CMakeLists.txt
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/admm.cpp
+[3.196s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/tiny_api_constants.hpp
+[3.197s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/tiny_api.cpp
+[3.197s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/codegen.cpp
+[3.197s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/codegen.hpp
+[3.197s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/error.hpp
+[3.197s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/tiny_api.hpp
+[3.198s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/types.hpp
+[3.198s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/include/rm_planner/tinympc/rho_benchmark.cpp
+[3.198s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/library_path.sh
+[3.198s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/library_path.dsv
+[3.198s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/lib/librm_planner.so
+[3.207s] -- Set non-toolchain portion of runtime path of "/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/lib/librm_planner.so" to ""
+[3.207s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/ament_index/resource_index/package_run_dependencies/rm_planner
+[3.207s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/ament_index/resource_index/parent_prefix_path/rm_planner
+[3.207s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/ament_prefix_path.sh
+[3.207s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/ament_prefix_path.dsv
+[3.208s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/path.sh
+[3.208s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/environment/path.dsv
+[3.208s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/local_setup.bash
+[3.208s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/local_setup.sh
+[3.208s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/local_setup.zsh
+[3.209s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/local_setup.dsv
+[3.209s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/package.dsv
+[3.209s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/ament_index/resource_index/packages/rm_planner
+[3.209s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/ament_index/resource_index/rclcpp_components/rm_planner
+[3.209s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/ament_cmake_export_dependencies-extras.cmake
+[3.209s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/ament_cmake_export_include_directories-extras.cmake
+[3.210s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/ament_cmake_export_libraries-extras.cmake
+[3.210s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/rm_plannerConfig.cmake
+[3.210s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/cmake/rm_plannerConfig-version.cmake
+[3.210s] -- Installing: /home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner/share/rm_planner/package.xml
+[3.211s] Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner' returned '0': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner

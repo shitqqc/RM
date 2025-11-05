@@ -1,0 +1,193 @@
+-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found rclcpp: 16.0.10 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+-- Found geometry_msgs: 4.2.4 (/opt/ros/humble/share/geometry_msgs/cmake)
+-- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: /home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/include
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_tools
+[ 33%] [32mBuilding CXX object CMakeFiles/rm_tools.dir/src/manual_compensator.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/rm_tools.dir/src/trajectory_compensator.cpp.o[0m
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:18:6:[m[K [01;31m[Kerror: [m[K‘[01m[KManualCompensator[m[K’ has not been declared
+   18 | bool [01;31m[KManualCompensator[m[K::updateMap(const LineRegion& d_region,
+      |      [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:18:41:[m[K [01;31m[Kerror: [m[K‘[01m[KLineRegion[m[K’ does not name a type
+   18 | bool ManualCompensator::updateMap(const [01;31m[KLineRegion[m[K& d_region,
+      |                                         [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:19:41:[m[K [01;31m[Kerror: [m[K‘[01m[KLineRegion[m[K’ does not name a type
+   19 |                                   const [01;31m[KLineRegion[m[K& h_region,
+      |                                         [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In function ‘[01m[Kbool rm_auto_aim::updateMap(const int&, const int&, double, double)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:23:20:[m[K [01;31m[Kerror: [m[K‘[01m[Kangle_offset_map_[m[K’ was not declared in this scope
+   23 |       std::find_if([01;31m[Kangle_offset_map_[m[K.begin(),
+      |                    [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:25:30:[m[K [01;31m[Kerror: [m[K‘[01m[KDistMapNode[m[K’ does not name a type
+   25 |                    [&](const [01;31m[KDistMapNode[m[K& dist_node) {
+      |                              [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In lambda function:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:27:7:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K{[m[K’ before ‘[01m[K;[m[K’ token
+   27 |     })[01;31m[K;[m[K
+      |       [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In function ‘[01m[Kbool rm_auto_aim::updateMap(const int&, const int&, double, double)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:27:7:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K;[m[K’ token
+   27 |     })[01;31m[K;[m[K
+      |       [01;31m[K^[m[K
+      |       [32m[K)[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:23:19:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+   23 |       std::find_if[01;36m[K([m[Kangle_offset_map_.begin(),
+      |                   [01;36m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:30:7:[m[K [01;31m[Kerror: [m[K‘[01m[KHeightMapNode[m[K’ was not declared in this scope
+   30 |       [01;31m[KHeightMapNode[m[K height_node(h_region, pitch_offset, yaw_offset);
+      |       [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:31:32:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+   31 |       std::vector<HeightMapNode[01;31m[K>[m[K h_nodes{height_node};
+      |                                [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:31:42:[m[K [01;31m[Kerror: [m[K‘[01m[Kheight_node[m[K’ was not declared in this scope
+   31 |       std::vector<HeightMapNode> h_nodes{[01;31m[Kheight_node[m[K};
+      |                                          [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:32:7:[m[K [01;31m[Kerror: [m[K‘[01m[KDistMapNode[m[K’ was not declared in this scope
+   32 |       [01;31m[KDistMapNode[m[K dist_node(d_region, h_nodes);
+      |       [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:33:38:[m[K [01;31m[Kerror: [m[K‘[01m[Kdist_node[m[K’ was not declared in this scope
+   33 |       angle_offset_map_.emplace_back([01;31m[Kdist_node[m[K);
+      |                                      [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:31:34:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kh_nodes[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   31 |       std::vector<HeightMapNode> [01;35m[Kh_nodes[m[K{height_node};
+      |                                  [01;35m[K^~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:38:32:[m[K [01;31m[Kerror: [m[K‘[01m[KHeightMapNode[m[K’ does not name a type
+   38 |                      [&](const [01;31m[KHeightMapNode[m[K& height_node) {
+      |                                [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In lambda function:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:40:9:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K{[m[K’ before ‘[01m[K;[m[K’ token
+   40 |       })[01;31m[K;[m[K
+      |         [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In function ‘[01m[Kbool rm_auto_aim::updateMap(const int&, const int&, double, double)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:40:9:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K;[m[K’ token
+   40 |       })[01;31m[K;[m[K
+      |         [01;31m[K^[m[K
+      |         [32m[K)[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:36:21:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+   36 |         std::find_if[01;36m[K([m[Ktarget_dist_node->height_map.begin(),
+      |                     [01;36m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:43:9:[m[K [01;31m[Kerror: [m[K‘[01m[KHeightMapNode[m[K’ was not declared in this scope
+   43 |         [01;31m[KHeightMapNode[m[K height_node(h_region, pitch_offset, yaw_offset);
+      |         [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:44:51:[m[K [01;31m[Kerror: [m[K‘[01m[Kheight_node[m[K’ was not declared in this scope
+   44 |         target_dist_node->height_map.emplace_back([01;31m[Kheight_node[m[K);
+      |                                                   [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:18:53:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kd_region[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   18 | bool ManualCompensator::updateMap([01;35m[Kconst LineRegion& d_region[m[K,
+      |                                   [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:19:53:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kh_region[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   19 |                                   [01;35m[Kconst LineRegion& h_region[m[K,
+      |                                   [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:20:48:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kpitch_offset[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   20 |                                   [01;35m[Kconst double pitch_offset[m[K,
+      |                                   [01;35m[K~~~~~~~~~~~~~^~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:21:48:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kyaw_offset[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   21 |                                   [01;35m[Kconst double yaw_offset[m[K) {
+      |                                   [01;35m[K~~~~~~~~~~~~~^~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K At global scope:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:52:21:[m[K [01;31m[Kerror: [m[K‘[01m[KManualCompensator[m[K’ has not been declared
+   52 | std::vector<double> [01;31m[KManualCompensator[m[K::angleHardCorrect(const double dist,
+      |                     [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In function ‘[01m[Kstd::vector<double> rm_auto_aim::angleHardCorrect(double, double)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:55:18:[m[K [01;31m[Kerror: [m[K‘[01m[Kangle_offset_map_[m[K’ was not declared in this scope
+   55 |     std::find_if([01;31m[Kangle_offset_map_[m[K.begin(),
+      |                  [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:57:29:[m[K [01;31m[Kerror: [m[K‘[01m[KDistMapNode[m[K’ does not name a type
+   57 |                   [&](const [01;31m[KDistMapNode[m[K& dist_node) {
+      |                             [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In lambda function:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:59:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K{[m[K’ before ‘[01m[K;[m[K’ token
+   59 |   })[01;31m[K;[m[K
+      |     [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In function ‘[01m[Kstd::vector<double> rm_auto_aim::angleHardCorrect(double, double)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:59:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K;[m[K’ token
+   59 |   })[01;31m[K;[m[K
+      |     [01;31m[K^[m[K
+      |     [32m[K)[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:55:17:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+   55 |     std::find_if[01;36m[K([m[Kangle_offset_map_.begin(),
+      |                 [01;36m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:65:31:[m[K [01;31m[Kerror: [m[K‘[01m[KHeightMapNode[m[K’ does not name a type
+   65 |                     [&](const [01;31m[KHeightMapNode[m[K& height_node) {
+      |                               [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In lambda function:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:67:7:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K{[m[K’ before ‘[01m[K;[m[K’ token
+   67 |     })[01;31m[K;[m[K
+      |       [01;31m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In function ‘[01m[Kstd::vector<double> rm_auto_aim::angleHardCorrect(double, double)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:67:7:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K;[m[K’ token
+   67 |     })[01;31m[K;[m[K
+      |       [01;31m[K^[m[K
+      |       [32m[K)[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:63:19:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+   63 |       std::find_if[01;36m[K([m[Ktarget_dist_node->height_map.begin(),
+      |                   [01;36m[K^[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:70:79:[m[K [01;31m[Kerror: [m[Kcould not convert ‘[01m[K{<expression error>, <expression error>}[m[K’ from ‘[01m[K<brace-enclosed initializer list>[m[K’ to ‘[01m[Kstd::vector<double>[m[K’
+   70 | urn {target_height_node->pitch_offset, target_height_node->yaw_offset[01;31m[K}[m[K;
+      |                                                                      [01;31m[K^[m[K
+      |                                                                      [01;31m[K|[m[K
+      |                                                                      [01;31m[K<brace-enclosed initializer list>[m[K
+
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:52:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kdist[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   52 | ::vector<double> ManualCompensator::angleHardCorrect([01;35m[Kconst double dist[m[K,
+      |                                                      [01;35m[K~~~~~~~~~~~~~^~~~[m[K
+
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:53:57:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kheight[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   53 |                                            [01;35m[Kconst double height[m[K) {
+      |                                            [01;35m[K~~~~~~~~~~~~~^~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K At global scope:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:76:6:[m[K [01;31m[Kerror: [m[K‘[01m[KManualCompensator[m[K’ has not been declared
+   76 | bool [01;31m[KManualCompensator[m[K::parseStr(const std::string& str,
+      |      [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In function ‘[01m[Kbool rm_auto_aim::parseStr(const string&, std::vector<double>&)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:85:22:[m[K [01;31m[Kerror: [m[K‘[01m[KNORMAL_STR_NUM[m[K’ was not declared in this scope; did you mean ‘[01m[Krm_tools::NORMAL_STR_NUM[m[K’?
+   85 |   if (nums.size() != [01;31m[KNORMAL_STR_NUM[m[K) {
+      |                      [01;31m[K^~~~~~~~~~~~~~[m[K
+      |                      [32m[Krm_tools::NORMAL_STR_NUM[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:15[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/include/rm_tools/manual_compensator.hpp:24:20:[m[K [01;36m[Knote: [m[K‘[01m[Krm_tools::NORMAL_STR_NUM[m[K’ declared here
+   24 |   constexpr size_t [01;36m[KNORMAL_STR_NUM[m[K = 6;
+      |                    [01;36m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K At global scope:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:91:6:[m[K [01;31m[Kerror: [m[K‘[01m[KManualCompensator[m[K’ has not been declared
+   91 | bool [01;31m[KManualCompensator[m[K::updateMapByStr(const std::string &str) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:[m[K In function ‘[01m[Kbool rm_auto_aim::updateMapByStr(const string&)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:98:3:[m[K [01;31m[Kerror: [m[K‘[01m[KLineRegion[m[K’ was not declared in this scope; did you mean ‘[01m[Krm_tools::LineRegion[m[K’?
+   98 |   [01;31m[KLineRegion[m[K d_region(nums[0], nums[1]);
+      |   [01;31m[K^~~~~~~~~~[m[K
+      |   [32m[Krm_tools::LineRegion[m[K
+In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:15[m[K:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/include/rm_tools/manual_compensator.hpp:26:9:[m[K [01;36m[Knote: [m[K‘[01m[Krm_tools::LineRegion[m[K’ declared here
+   26 |   class [01;36m[KLineRegion[m[K{
+      |         [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:99:13:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before ‘[01m[Kh_region[m[K’
+   99 |   LineRegion[01;31m[K [m[K[32m[Kh_region[m[K(nums[2], nums[3]);
+      |             [01;31m[K^[m[K[32m[K~~~~~~~~[m[K
+      |             [32m[K;[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:100:18:[m[K [01;31m[Kerror: [m[K‘[01m[Kd_region[m[K’ was not declared in this scope
+  100 |   if (!updateMap([01;31m[Kd_region[m[K, h_region, nums[4], nums[5])) {
+      |                  [01;31m[K^~~~~~~~[m[K
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/src/manual_compensator.cpp:100:28:[m[K [01;31m[Kerror: [m[K‘[01m[Kh_region[m[K’ was not declared in this scope
+  100 |   if (!updateMap(d_region, [01;31m[Kh_region[m[K, nums[4], nums[5])) {
+      |                            [01;31m[K^~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/rm_tools.dir/build.make:118：CMakeFiles/rm_tools.dir/src/manual_compensator.cpp.o] 错误 1
+gmake[2]: *** 正在等待未完成的任务....
+gmake[1]: *** [CMakeFiles/Makefile2:137：CMakeFiles/rm_tools.dir/all] 错误 2
+gmake: *** [Makefile:146：all] 错误 2

@@ -1,0 +1,22 @@
+[0.007s] Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32
+[0.026s] [ 33%] Built target rm_planner_node
+[0.041s] [ 50%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o[0m
+[0.041s] [ 66%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o[0m
+[0.041s] [ 83%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/target.cpp.o[0m
+[0.309s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[0.309s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:13:10:[m[K [01;31m[Kfatal error: [m[Kcompensator_factory.hpp: 没有那个文件或目录
+[0.309s]    13 | #include [01;31m[K"compensator_factory.hpp"[m[K
+[0.309s]       |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[0.309s] compilation terminated.
+[0.313s] gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:76：CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o] 错误 1
+[0.313s] gmake[2]: *** 正在等待未完成的任务....
+[0.441s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[0.441s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[0.441s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:13:10:[m[K [01;31m[Kfatal error: [m[Kcompensator_factory.hpp: 没有那个文件或目录
+[0.441s]    13 | #include [01;31m[K"compensator_factory.hpp"[m[K
+[0.441s]       |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[0.441s] compilation terminated.
+[0.445s] gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:90：CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o] 错误 1
+[1.171s] gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/rm_planner.dir/all] 错误 2
+[1.171s] gmake: *** [Makefile:146：all] 错误 2
+[1.173s] Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner' returned '2': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32

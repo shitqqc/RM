@@ -1,0 +1,304 @@
+[0.006s] Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/ljoy/Robomaster/PIONEER/new_rv/rm_planner -DCMAKE_INSTALL_PREFIX=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner
+[0.034s] -- The C compiler identification is GNU 11.4.0
+[0.066s] -- The CXX compiler identification is GNU 11.4.0
+[0.073s] -- Detecting C compiler ABI info
+[0.107s] -- Detecting C compiler ABI info - done
+[0.117s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.118s] -- Detecting C compile features
+[0.118s] -- Detecting C compile features - done
+[0.120s] -- Detecting CXX compiler ABI info
+[0.163s] -- Detecting CXX compiler ABI info - done
+[0.173s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.173s] -- Detecting CXX compile features
+[0.173s] -- Detecting CXX compile features - done
+[0.175s] -- Found ament_cmake_auto: 1.3.10 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+[0.249s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter
+[0.357s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.360s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.366s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.374s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.385s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.415s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.417s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.476s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")
+[0.496s] -- Found FastRTPS: /opt/ros/humble/include
+[0.524s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.529s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.567s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.567s] -- Found Threads: TRUE
+[0.709s] -- Found Eigen3: TRUE (found version "3.4.0")
+[0.709s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[0.779s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.799s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.799s] -- Configured cppcheck include dirs: /home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include
+[0.799s] -- Configured cppcheck exclude dirs and/or files: 
+[0.800s] -- Added test 'lint_cmake' to check CMake code style
+[0.800s] -- Added test 'xmllint' to check XML markup files
+[0.802s] -- Configuring done (0.8s)
+[0.817s] -- Generating done (0.0s)
+[0.818s] -- Build files have been written to: /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner
+[0.828s] Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner' returned '0': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/ljoy/Robomaster/PIONEER/new_rv/rm_planner -DCMAKE_INSTALL_PREFIX=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_planner
+[0.829s] Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32
+[0.844s] [ 16%] [32mBuilding CXX object CMakeFiles/rm_planner_node.dir/rclcpp_components/node_main_rm_planner_node.cpp.o[0m
+[0.845s] [ 33%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o[0m
+[0.845s] [ 50%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o[0m
+[0.845s] [ 66%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/target.cpp.o[0m
+[1.493s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:[m[K In member function ‘[01m[Kstd::vector<Eigen::Matrix<double, 3, 1> > rm_auto_aim::Target::getArmorPositions() const[m[K’:
+[1.493s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:21:7:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_center[m[K’ was not declared in this scope
+[1.493s]    21 |       [01;31m[Ktarget_center[m[K + Eigen::Vector3d(-r_ * cos(temp_yaw), -r_ * sin(temp_yaw), target_dz);
+[1.493s]       |       [01;31m[K^~~~~~~~~~~~~[m[K
+[1.518s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:[m[K In member function ‘[01m[Kint rm_auto_aim::Target::selectBestArmor() const[m[K’:
+[1.518s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/target.cpp:47:19:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_v_yaw[m[K’ was not declared in this scope
+[1.518s]    47 |   double theta = ([01;31m[Ktarget_v_yaw[m[K > 0 ? side_angle_ : -side_angle_) / 180.0 * M_PI;
+[1.518s]       |                   [01;31m[K^~~~~~~~~~~~[m[K
+[1.653s] gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:104：CMakeFiles/rm_planner.dir/src/target.cpp.o] 错误 1
+[1.653s] gmake[2]: *** 正在等待未完成的任务....
+[2.126s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:26:[m[K [01;31m[Kerror: [m[K‘[01m[Kauto_aim_interfaces[m[K’ does not name a type
+[2.127s]    19 | Plan Planner::plan(const [01;31m[Kauto_aim_interfaces[m[K::msg::Target &target, double bullet_speed)
+[2.127s]       |                          [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[2.127s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:50:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before ‘[01m[K::[m[K’ token
+[2.127s]    19 | Plan Planner::plan(const auto_aim_interfaces::msg[01;31m[K::[m[KTarget &target, double bullet_speed)
+[2.127s]       |                                                  [01;31m[K^~[m[K
+[2.127s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:50:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K::[m[K’ token
+[2.127s]    19 | Plan Planner::plan[34m[K([m[Kconst auto_aim_interfaces::msg[01;31m[K:[m[K[32m[K:[m[KTarget &target, double bullet_speed)
+[2.127s]       |                   [34m[K~[m[K                              [01;31m[K^[m[K[32m[K~[m[K
+[2.127s]       |                                                  [32m[K)[m[K
+[2.127s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:19:50:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K::[m[K’ token
+[2.127s]    19 | Plan Planner::plan(const auto_aim_interfaces::msg[01;31m[K::[m[KTarget &target, double bullet_speed)
+[2.127s]       |                                                  [01;31m[K^~[m[K
+[2.127s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:144:6:[m[K [01;31m[Kerror: [m[Kno declaration matches ‘[01m[Kvoid rm_auto_aim::Planner::setup_yaw_solver(const string&)[m[K’
+[2.127s]   144 | void [01;31m[KPlanner[m[K::setup_yaw_solver(const std::string & config_path)
+[2.127s]       |      [01;31m[K^~~~~~~[m[K
+[2.127s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[2.127s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:57:8:[m[K [01;36m[Knote: [m[Kcandidate is: ‘[01m[Kvoid rm_auto_aim::Planner::setup_yaw_solver()[m[K’
+[2.127s]    57 |   void [01;36m[Ksetup_yaw_solver[m[K();
+[2.127s]       |        [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[2.127s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:33:7:[m[K [01;36m[Knote: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ defined here
+[2.127s]    33 | class [01;36m[KPlanner[m[K
+[2.128s]       |       [01;36m[K^~~~~~~[m[K
+[2.128s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:167:6:[m[K [01;31m[Kerror: [m[Kno declaration matches ‘[01m[Kvoid rm_auto_aim::Planner::setup_pitch_solver(const string&)[m[K’
+[2.128s]   167 | void [01;31m[KPlanner[m[K::setup_pitch_solver(const std::string & config_path)
+[2.128s]       |      [01;31m[K^~~~~~~[m[K
+[2.128s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[2.128s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:58:8:[m[K [01;36m[Knote: [m[Kcandidate is: ‘[01m[Kvoid rm_auto_aim::Planner::setup_pitch_solver()[m[K’
+[2.128s]    58 |   void [01;36m[Ksetup_pitch_solver[m[K();
+[2.128s]       |        [01;36m[K^~~~~~~~~~~~~~~~~~[m[K
+[2.128s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:33:7:[m[K [01;36m[Knote: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ defined here
+[2.128s]    33 | class [01;36m[KPlanner[m[K
+[2.128s]       |       [01;36m[K^~~~~~~[m[K
+[2.302s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:[m[K In member function ‘[01m[Kstd::vector<Eigen::Matrix<double, 3, 1> > rm_auto_aim::Target::getArmorPositions() const[m[K’:
+[2.302s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:218:7:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_center[m[K’ was not declared in this scope
+[2.302s]   218 |       [01;31m[Ktarget_center[m[K + Eigen::Vector3d(-r_ * cos(temp_yaw), -r_ * sin(temp_yaw), target_dz);
+[2.302s]       |       [01;31m[K^~~~~~~~~~~~~[m[K
+[2.302s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:[m[K At global scope:
+[2.302s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:223:5:[m[K [01;31m[Kerror: [m[Kno declaration matches ‘[01m[Kint rm_auto_aim::Planner::selectBestArmor() const[m[K’
+[2.302s]   223 | int [01;31m[KPlanner[m[K::selectBestArmor() const noexcept {
+[2.302s]       |     [01;31m[K^~~~~~~[m[K
+[2.303s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:223:5:[m[K [01;36m[Knote: [m[Kno functions named ‘[01m[Kint rm_auto_aim::Planner::selectBestArmor() const[m[K’
+[2.303s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:1[m[K:
+[2.303s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:33:7:[m[K [01;36m[Knote: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ defined here
+[2.303s]    33 | class [01;36m[KPlanner[m[K
+[2.303s]       |       [01;36m[K^~~~~~~[m[K
+[2.332s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::Planner::calcYawAndPitch(const Vector3d&, std::array<double, 3>, double&, double&) const[m[K’:
+[2.332s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:298:34:[m[K [01;31m[Kerror: [m[K‘[01m[Ktrajectory_compensator_[m[K’ was not declared in this scope
+[2.332s]   298 |   if (double temp_pitch = pitch; [01;31m[Ktrajectory_compensator_[m[K->compensate(p, temp_pitch)) {
+[2.332s]       |                                  [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.336s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::Target::predict(double)[m[K’:
+[2.336s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:305:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kx[m[K’ was not declared in this scope; did you mean ‘[01m[Kxc[m[K’?
+[2.336s]   305 |     [01;31m[Kx[m[K += vx*dt;
+[2.336s]       |     [01;31m[K^[m[K
+[2.336s]       |     [32m[Kxc[m[K
+[2.339s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:305:10:[m[K [01;31m[Kerror: [m[K‘[01m[Kvx[m[K’ was not declared in this scope
+[2.339s]   305 |     x += [01;31m[Kvx[m[K*dt;
+[2.340s]       |          [01;31m[K^~[m[K
+[2.343s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:306:5:[m[K [01;31m[Kerror: [m[K‘[01m[Ky[m[K’ was not declared in this scope; did you mean ‘[01m[Kyc[m[K’?
+[2.343s]   306 |     [01;31m[Ky[m[K += vy*dt;
+[2.343s]       |     [01;31m[K^[m[K
+[2.343s]       |     [32m[Kyc[m[K
+[2.346s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:306:10:[m[K [01;31m[Kerror: [m[K‘[01m[Kvy[m[K’ was not declared in this scope
+[2.346s]   306 |     y += [01;31m[Kvy[m[K*dt;
+[2.346s]       |          [01;31m[K^~[m[K
+[2.349s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:307:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kz[m[K’ was not declared in this scope; did you mean ‘[01m[Kzc[m[K’?
+[2.349s]   307 |     [01;31m[Kz[m[K += vz*dt;
+[2.349s]       |     [01;31m[K^[m[K
+[2.349s]       |     [32m[Kzc[m[K
+[2.352s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:307:10:[m[K [01;31m[Kerror: [m[K‘[01m[Kvz[m[K’ was not declared in this scope; did you mean ‘[01m[Kdz[m[K’?
+[2.352s]   307 |     z += [01;31m[Kvz[m[K*dt;
+[2.352s]       |          [01;31m[K^~[m[K
+[2.352s]       |          [32m[Kdz[m[K
+[2.355s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner.cpp:308:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kvyaw[m[K’ was not declared in this scope; did you mean ‘[01m[Kyaw[m[K’?
+[2.355s]   308 |     yaw += [01;31m[Kvyaw[m[K*dt;
+[2.355s]       |            [01;31m[K^~~~[m[K
+[2.355s]       |            [32m[Kyaw[m[K
+[2.544s] gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:76：CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o] 错误 1
+[3.010s] [ 83%] [32m[1mLinking CXX executable rm_planner_node[0m
+[3.090s] [ 83%] Built target rm_planner_node
+[3.365s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In constructor ‘[01m[Krm_auto_aim::RMPlannerNode::RMPlannerNode(const rclcpp::NodeOptions&)[m[K’:
+[3.365s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:34:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kplanner[m[K’ was not declared in this scope; did you mean ‘[01m[KPlanner[m[K’?
+[3.365s]    34 |   [01;31m[Kplanner[m[K->prediction_delay_ = this->declare_parameter("planner.prediction_delay", 0.0);
+[3.365s]       |   [01;31m[K^~~~~~~[m[K
+[3.365s]       |   [32m[KPlanner[m[K
+[3.367s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:36:38:[m[K [01;31m[Kerror: [m[K‘[01m[KCompensatorFactory[m[K’ has not been declared
+[3.367s]    36 |   planner->trajectory_compensator_ = [01;31m[KCompensatorFactory[m[K::createCompensator(compenstator_type);
+[3.367s]       |                                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[3.368s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:42:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kdouble rm_auto_aim::Planner::max_yaw_acc[m[K’ is private within this context
+[3.368s]    42 |   planner_->[01;31m[Kmax_yaw_acc[m[K = this->declare_parameter("gimbal.max_yaw_acc", 50);
+[3.368s]       |             [01;31m[K^~~~~~~~~~~[m[K
+[3.368s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[3.368s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.368s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:49:10:[m[K [01;36m[Knote: [m[Kdeclared private here
+[3.368s]    49 |   double [01;36m[Kmax_yaw_acc[m[K, max_pitch_acc;
+[3.368s]       |          [01;36m[K^~~~~~~~~~~[m[K
+[3.368s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:43:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kdouble rm_auto_aim::Planner::max_pitch_acc[m[K’ is private within this context
+[3.368s]    43 |   planner_->[01;31m[Kmax_pitch_acc[m[K = this->declare_parameter("gimbal.max_pitch_acc", 100);
+[3.368s]       |             [01;31m[K^~~~~~~~~~~~~[m[K
+[3.368s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[3.368s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.369s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:49:23:[m[K [01;36m[Knote: [m[Kdeclared private here
+[3.369s]    49 |   double max_yaw_acc, [01;36m[Kmax_pitch_acc[m[K;
+[3.369s]       |                       [01;36m[K^~~~~~~~~~~~~[m[K
+[3.369s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:45:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ has no member named ‘[01m[Kfire_thresh[m[K’; did you mean ‘[01m[Kdouble rm_auto_aim::Planner::fire_thresh_[m[K’? (not accessible from this context)
+[3.369s]    45 |   planner_->[01;31m[Kfire_thresh[m[K = this->declare_parameter("fire_thresh", 0.003);
+[3.369s]       |             [01;31m[K^~~~~~~~~~~[m[K
+[3.369s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[3.369s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.369s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:45:10:[m[K [01;36m[Knote: [m[Kdeclared private here
+[3.369s]    45 |   double [01;36m[Kfire_thresh_[m[K;
+[3.369s]       |          [01;36m[K^~~~~~~~~~~~[m[K
+[3.369s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:47:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::vector<double, std::allocator<double> > rm_auto_aim::Planner::Q_yaw[m[K’ is private within this context
+[3.369s]    47 |   planner_->[01;31m[KQ_yaw[m[K = this->declare_parameter("gimbal.Q_yaw", std::vector<double>{9e6, 0});
+[3.369s]       |             [01;31m[K^~~~~[m[K
+[3.369s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[3.369s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.369s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:47:23:[m[K [01;36m[Knote: [m[Kdeclared private here
+[3.369s]    47 |   std::vector<double> [01;36m[KQ_yaw[m[K, Q_pitch;
+[3.369s]       |                       [01;36m[K^~~~~[m[K
+[3.369s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:48:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::vector<double, std::allocator<double> > rm_auto_aim::Planner::R_yaw[m[K’ is private within this context
+[3.370s]    48 |   planner_->[01;31m[KR_yaw[m[K = this->declare_parameter("gimbal.R_yaw", std::vector<double>{1});
+[3.370s]       |             [01;31m[K^~~~~[m[K
+[3.370s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[3.370s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.370s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:48:23:[m[K [01;36m[Knote: [m[Kdeclared private here
+[3.370s]    48 |   std::vector<double> [01;36m[KR_yaw[m[K, R_pitch;
+[3.370s]       |                       [01;36m[K^~~~~[m[K
+[3.370s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:50:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::vector<double, std::allocator<double> > rm_auto_aim::Planner::Q_pitch[m[K’ is private within this context
+[3.370s]    50 |   planner_->[01;31m[KQ_pitch[m[K = this->declare_parameter("gimbal.Q_pitch", std::vector<double>{9e6, 0});
+[3.370s]       |             [01;31m[K^~~~~~~[m[K
+[3.370s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[3.370s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.370s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:47:30:[m[K [01;36m[Knote: [m[Kdeclared private here
+[3.370s]    47 |   std::vector<double> Q_yaw, [01;36m[KQ_pitch[m[K;
+[3.370s]       |                              [01;36m[K^~~~~~~[m[K
+[3.370s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:51:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::vector<double, std::allocator<double> > rm_auto_aim::Planner::R_pitch[m[K’ is private within this context
+[3.370s]    51 |   planner_->[01;31m[KR_pitch[m[K = this->declare_parameter("gimbal.R_pitch", std::vector<double>{1});
+[3.370s]       |             [01;31m[K^~~~~~~[m[K
+[3.370s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[3.370s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.370s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:48:30:[m[K [01;36m[Knote: [m[Kdeclared private here
+[3.370s]    48 |   std::vector<double> R_yaw, [01;36m[KR_pitch[m[K;
+[3.370s]       |                              [01;36m[K^~~~~~~[m[K
+[3.371s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:13:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ has no member named ‘[01m[Kmanual_compensator_[m[K’
+[3.371s]    53 |   planner_->[01;31m[Kmanual_compensator_[m[K = std::make_unique<ManualCompensator>();
+[3.371s]       |             [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[3.378s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:52:[m[K [01;31m[Kerror: [m[K‘[01m[KManualCompensator[m[K’ was not declared in this scope
+[3.378s]    53 |   planner_->manual_compensator_ = std::make_unique<[01;31m[KManualCompensator[m[K>();
+[3.378s]       |                                                    [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[3.378s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:70:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kmake_unique<<expression error> >()[m[K’
+[3.378s]    53 |   planner_->manual_compensator_ = [01;31m[Kstd::make_unique<ManualCompensator>()[m[K;
+[3.378s]       |                                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+[3.378s] In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+[3.378s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:153[m[K,
+[3.378s]                  from [01m[K/opt/ros/humble/include/message_filters/message_filters/subscriber.h:40[m[K,
+[3.378s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:24[m[K,
+[3.378s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.378s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:961:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class ... _Args> typename std::_MakeUniq<_Tp>::__single_object std::make_unique(_Args&& ...)[m[K’
+[3.378s]   961 |     [01;36m[Kmake_unique[m[K(_Args&&... __args)
+[3.378s]       |     [01;36m[K^~~~~~~~~~~[m[K
+[3.378s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:961:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[3.378s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:70:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[3.379s]    53 |   planner_->manual_compensator_ = [01;31m[Kstd::make_unique<ManualCompensator>()[m[K;
+[3.379s]       |                                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+[3.379s] In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+[3.379s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:153[m[K,
+[3.379s]                  from [01m[K/opt/ros/humble/include/message_filters/message_filters/subscriber.h:40[m[K,
+[3.379s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:24[m[K,
+[3.379s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.379s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:967:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> typename std::_MakeUniq<_Tp>::__array std::make_unique(std::size_t)[m[K’
+[3.379s]   967 |     [01;36m[Kmake_unique[m[K(size_t __num)
+[3.379s]       |     [01;36m[K^~~~~~~~~~~[m[K
+[3.379s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:967:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[3.379s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:70:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[3.379s]    53 |   planner_->manual_compensator_ = [01;31m[Kstd::make_unique<ManualCompensator>()[m[K;
+[3.379s]       |                                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+[3.379s] In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+[3.379s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:153[m[K,
+[3.379s]                  from [01m[K/opt/ros/humble/include/message_filters/message_filters/subscriber.h:40[m[K,
+[3.379s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:24[m[K,
+[3.379s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.379s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:973:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class ... _Args> typename std::_MakeUniq<_Tp>::__invalid_type std::make_unique(_Args&& ...)[m[K’ (deleted)
+[3.379s]   973 |     [01;36m[Kmake_unique[m[K(_Args&&...) = delete;
+[3.380s]       |     [01;36m[K^~~~~~~~~~~[m[K
+[3.380s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:973:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[3.380s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:53:70:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[3.380s]    53 |   planner_->manual_compensator_ = [01;31m[Kstd::make_unique<ManualCompensator>()[m[K;
+[3.380s]       |                                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+[3.380s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:55:17:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ has no member named ‘[01m[Kmanual_compensator_[m[K’
+[3.380s]    55 |   if(!planner_->[01;31m[Kmanual_compensator_[m[K->updateMapFlow(angle_offset)) {
+[3.380s]       |                 [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[3.395s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::RMPlannerNode::timerCallback()[m[K’:
+[3.395s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:137:21:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ has no member named ‘[01m[Kprediction_delay_[m[K’
+[3.396s]   137 |           planner_->[01;31m[Kprediction_delay_[m[K = get_parameter("planner.prediction_delay").as_double();
+[3.396s]       |                     [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[3.396s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:138:35:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Krm_auto_aim::Planner::plan(auto_aim_interfaces::msg::Target&, rclcpp::Time, std::shared_ptr<tf2_ros::Buffer>&)[m[K’
+[3.396s]   138 |       control_msg = [01;31m[Kplanner_->plan(armor_target_, this->now(), tf2_buffer_)[m[K;
+[3.396s]       |                     [01;31m[K~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[3.396s] In file included from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner_node.hpp:38[m[K,
+[3.396s]                  from [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:19[m[K:
+[3.396s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:39:8:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Krm_auto_aim::Plan rm_auto_aim::Planner::plan(rm_auto_aim::Target, double)[m[K’
+[3.403s]    39 |   Plan [01;36m[Kplan[m[K(Target target, double bullet_speed);
+[3.403s]       |        [01;36m[K^~~~[m[K
+[3.403s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/include/rm_planner/rm_planner.hpp:39:8:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 3 provided
+[3.403s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::RMPlannerNode::initMarkers()[m[K’:
+[3.403s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:156:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kposition_marker_[m[K’ was not declared in this scope; did you mean ‘[01m[Kselection_marker_[m[K’?
+[3.403s]   156 |   [01;31m[Kposition_marker_[m[K.ns = "position";
+[3.403s]       |   [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[3.403s]       |   [32m[Kselection_marker_[m[K
+[3.410s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:161:3:[m[K [01;31m[Kerror: [m[K‘[01m[Klinear_v_marker_[m[K’ was not declared in this scope
+[3.410s]   161 |   [01;31m[Klinear_v_marker_[m[K.type = visualization_msgs::msg::Marker::ARROW;
+[3.410s]       |   [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[3.417s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:168:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kangular_v_marker_[m[K’ was not declared in this scope
+[3.417s]   168 |   [01;31m[Kangular_v_marker_[m[K.type = visualization_msgs::msg::Marker::ARROW;
+[3.417s]       |   [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[3.422s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:175:3:[m[K [01;31m[Kerror: [m[K‘[01m[Karmors_marker_[m[K’ was not declared in this scope; did you mean ‘[01m[Karmor_target_[m[K’?
+[3.422s]   175 |   [01;31m[Karmors_marker_[m[K.ns = "filtered_armors";
+[3.422s]       |   [01;31m[K^~~~~~~~~~~~~~[m[K
+[3.423s]       |   [32m[Karmor_target_[m[K
+[3.428s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::RMPlannerNode::publishMarkers(const Target&, const GimbalCmd&)[m[K’:
+[3.429s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:203:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kposition_marker_[m[K’ was not declared in this scope; did you mean ‘[01m[Kselection_marker_[m[K’?
+[3.429s]   203 |   [01;31m[Kposition_marker_[m[K.header = target_msg.header;
+[3.429s]       |   [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[3.429s]       |   [32m[Kselection_marker_[m[K
+[3.435s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:204:3:[m[K [01;31m[Kerror: [m[K‘[01m[Klinear_v_marker_[m[K’ was not declared in this scope
+[3.435s]   204 |   [01;31m[Klinear_v_marker_[m[K.header = target_msg.header;
+[3.435s]       |   [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[3.442s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:205:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kangular_v_marker_[m[K’ was not declared in this scope
+[3.442s]   205 |   [01;31m[Kangular_v_marker_[m[K.header = target_msg.header;
+[3.442s]       |   [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[3.447s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:206:3:[m[K [01;31m[Kerror: [m[K‘[01m[Karmors_marker_[m[K’ was not declared in this scope; did you mean ‘[01m[Karmor_target_[m[K’?
+[3.447s]   206 |   [01;31m[Karmors_marker_[m[K.header = target_msg.header;
+[3.447s]       |   [01;31m[K^~~~~~~~~~~~~~[m[K
+[3.447s]       |   [32m[Karmor_target_[m[K
+[3.447s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:244:12:[m[K [01;31m[Kerror: [m[Kredeclaration of ‘[01m[Kdouble r[m[K’
+[3.447s]   244 |     double [01;31m[Kr[m[K = 0;
+[3.447s]       |            [01;31m[K^[m[K
+[3.447s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:213:34:[m[K [01;36m[Knote: [m[K‘[01m[Kdouble r[m[K’ previously declared here
+[3.447s]   213 |     double yaw = target_msg.yaw, [01;36m[Kr[m[K = target_msg.radius, dr = target_msg.d_radius;
+[3.447s]       |                                  [01;36m[K^[m[K
+[3.448s] [01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:276:40:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rm_auto_aim::Planner[m[K’ has no member named ‘[01m[KgetTrajectory[m[K’; did you mean ‘[01m[Kget_trajectory[m[K’?
+[3.448s]   276 |     for (const auto &point : planner_->[01;31m[KgetTrajectory[m[K()) {
+[3.448s]       |                                        [01;31m[K^~~~~~~~~~~~~[m[K
+[3.448s]       |                                        [32m[Kget_trajectory[m[K
+[5.547s] gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:90：CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o] 错误 1
+[5.547s] gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/rm_planner.dir/all] 错误 2
+[5.547s] gmake: *** [Makefile:146：all] 错误 2
+[5.549s] Invoked command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner' returned '2': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32

@@ -1,0 +1,6 @@
+[0.008s] Invoking command in '/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner': AMENT_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib:/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/64 PYTHONPATH=/home/ljoy/Robomaster/PIONEER/new_rv/install/auto_aim_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ljoy/Robomaster/PIONEER/new_rv/build/rm_planner -- -j32 -l32
+[0.026s] [ 33%] Built target rm_planner_node
+[0.030s] [ 50%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner.cpp.o[0m
+[0.031s] [ 66%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o[0m
+[7.459s] [ 83%] [32m[1mLinking CXX shared library librm_planner.so[0m
+[7.831s] [100%] Built target rm_planner

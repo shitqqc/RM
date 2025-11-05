@@ -1,0 +1,2 @@
+rm_serial_driver::RMSerialDriver;lib/librm_serial_driver.so
+rm_serial_driver::VirtualSerialNode;lib/librm_serial_driver.so

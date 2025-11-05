@@ -1,0 +1,9 @@
+[ 33%] Built target rm_planner_node
+[ 50%] [32mBuilding CXX object CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o[0m
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:[m[K In member function ‘[01m[Kvoid rm_auto_aim::RMPlannerNode::publishMarkers(const Target&, const GimbalCmd&)[m[K’:
+[01m[K/home/ljoy/Robomaster/PIONEER/new_rv/rm_planner/src/rm_planner_node.cpp:265:32:[m[K [01;31m[Kerror: [m[K‘[01m[Kusing _color_type = struct std_msgs::msg::ColorRGBA_<std::allocator<void> >[m[K’ {aka ‘[01m[Kstruct std_msgs::msg::ColorRGBA_<std::allocator<void> >[m[K’} has no member named ‘[01m[Krinit_planner[m[K’
+  265 |       trajectory_marker_.color.[01;31m[Krinit_planner[m[K = 1;
+      |                                [01;31m[K^~~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/rm_planner.dir/build.make:90：CMakeFiles/rm_planner.dir/src/rm_planner_node.cpp.o] 错误 1
+gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/rm_planner.dir/all] 错误 2
+gmake: *** [Makefile:146：all] 错误 2
