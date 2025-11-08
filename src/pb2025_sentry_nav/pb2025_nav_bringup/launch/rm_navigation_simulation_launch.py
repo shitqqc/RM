@@ -87,9 +87,10 @@ def generate_launch_description():
     declare_prior_pcd_file_cmd = DeclareLaunchArgument(
         "prior_pcd_file",
         default_value=[
-            TextSubstitution(text=os.path.join(bringup_dir, "pcd", "simulation", "")),
-            world,
-            TextSubstitution(text=".pcd"),
+            # TextSubstitution(text=os.path.join(bringup_dir, "pcd", "simulation", "")),
+            # world,
+            # TextSubstitution(text=".pcd"),
+            os.path.join(bringup_dir, "pcd", "simulation", "scans.pcd"),
         ],
         description="Full path to prior pcd file to load",
     )
