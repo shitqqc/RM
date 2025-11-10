@@ -34,6 +34,8 @@ public:
   bool check_type(const Armor & armor) const;
   bool check_geometry(const Lightbar & lightbar) const;
   cv::Point2f get_center_norm(const cv::Mat & bgr_img, const cv::Point2f & center) const;
+  void lightbar_points_corrector(Lightbar & lightbar, const cv::Mat & gray_img) const;
+  void zy_corrector(Lightbar & lightbar) const;
 
     double score_threshold_;
     double nms_threshold_;
@@ -45,12 +47,13 @@ public:
     bool use_traditional_;
     double max_angle_error_;
     double min_lightbar_ratio_, max_lightbar_ratio_;
+    double min_l2l_ratio_;
     double min_lightbar_length_;
     double min_armor_ratio_, max_armor_ratio_;
     double max_side_ratio_;
     double max_rectangular_error_;
-
-    int tolerate;
+    bool use_pca;
+    double tolerate;
 
 private:
  

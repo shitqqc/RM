@@ -64,6 +64,7 @@ void Tracker::init(const Armors::SharedPtr & armors_msg)
 
   change_count_ = 0;
   change_thres = 20;
+  diff_count = 0;
 
   updateArmorsNum(tracked_armor);
 }
@@ -95,6 +96,7 @@ void Tracker::update(const Armors::SharedPtr & armors_msg)
   double min_angle_error = DBL_MAX;
   double diff_min_position_diff = DBL_MAX;
   Armor diff_tracked_armor;
+  //std::cout << "tracker_state: " << stateToString(tracker_state) << std::endl;
   if (!armors_msg->armors.empty()) {
     // Find the closest armor with the same id
     // Armor same_id_armor;
@@ -121,8 +123,10 @@ void Tracker::update(const Armors::SharedPtr & armors_msg)
           const auto & xyza = target_armors_position_i[i].first;
           auto yaw = orientationToYaw(armor.pose.orientation);
           auto armor_ypd = Pos2Polar(armor);
-          Eigen::Vector3d ypd = rm_tools::xyz2ypd(xyza.head(3));
 
+          Eigen::Vector3d ypd = rm_tools::xyz2ypd(xyza.head(3));
+          double xxx = std::abs(rm_tools::limit_rad(yaw - xyza[3]));
+          RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "see - ekf yaw:%f!,current id:%d",xxx,i);
           //观测-ekf
           auto angle_error = std::abs(rm_tools::limit_rad(yaw - xyza[3])) +                    //观测的装甲板朝向 - ekf各装甲板朝向
                             std::abs(rm_tools::limit_rad(armor_ypd[0] - ypd[0]));    //观测装甲板质点的yaw - ekf装甲板质点的yaw
@@ -132,7 +136,9 @@ void Tracker::update(const Armors::SharedPtr & armors_msg)
             min_angle_error = angle_error;
             tracked_armor = armor;
           }
+          //RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "current id :%d!",id);
         }
+        RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "current id :%d!",id);
         if(id!=0)
         {
           jumped = true;
@@ -141,15 +147,15 @@ void Tracker::update(const Armors::SharedPtr & armors_msg)
         auto xyz = target_armors_position_i[id].first;
         auto measured_yaw = orientationToYaw(tracked_armor.pose.orientation);
         measurement = Eigen::Vector4d(xyz[0], xyz[1], xyz[2], measured_yaw);
+        RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "current min_angle_error :%f!",min_angle_error);
         if(min_angle_error < max_angle_error_)
         {matched = true;
         update_ypda(armor, id);}
         else
         RCLCPP_WARN(rclcpp::get_logger("armor_tracker"), "Armor Unmatched!");
-
       } else if (tracker_state == CHANGE_TARGET) {
         // Count diff_armor
-        diff_count += 1;
+        //diff_count += 1;
         // Calculate the difference between the predicted position and the current armor position
         auto p = armor.pose.position;
         Eigen::Vector3d position_vec(p.x, p.y, p.z);
@@ -166,20 +172,20 @@ void Tracker::update(const Armors::SharedPtr & armors_msg)
       return;
     }
   }
-  if(tracker_state == TRACKING || tracker_state == TEMP_LOST)
-  {
-    if(this->diverged())
-    {
-      RCLCPP_WARN(rclcpp::get_logger("armor_tracker"), "EKF diverged!");
-      tracker_state = LOST;
-      ekf.x[1] = 0;
-      ekf.x[3] = 0;
-      ekf.x[5] = 0;
-      ekf.x[7] = 0;
-      ekf.x[9] = 0;
-      ekf.x[10] = 0;
-    }
-  }
+  // if(tracker_state == TRACKING || tracker_state == TEMP_LOST)
+  // {
+  //   if(this->diverged())
+  //   {
+  //     RCLCPP_WARN(rclcpp::get_logger("armor_tracker"), "EKF diverged!");
+  //     tracker_state = LOST;
+  //     ekf.x[1] = 0;
+  //     ekf.x[3] = 0;
+  //     ekf.x[5] = 0;
+  //     ekf.x[7] = 0;
+  //     ekf.x[9] = 0;
+  //     ekf.x[10] = 0;
+  //   }
+  // }
   // Tracking state machine
   if (tracker_state == DETECTING) {
     if (matched) {
@@ -228,7 +234,7 @@ void Tracker::initEKF(const Armor & a)
 
   // Set initial position at 0.2m behind the target
   target_state = Eigen::VectorXd::Zero(11);
-  Eigen::VectorXd P0_dig;
+  Eigen::VectorXd P0_dig(11);
   if(a.number == "6")//outpost
   {
     P0_dig << 1, 64, 1, 64, 1, 81, 0.4, 100, 1e-4, 0, 0;
@@ -257,7 +263,6 @@ void Tracker::initEKF(const Armor & a)
     c[6] = rm_tools::limit_rad(c[6]);
     return c;
   };
-
   ekf = rm_tools::ExtendedKalmanFilter(target_state, P0, x_add);  //初始化滤波器（预测量、预测量协方差）
 }
 
@@ -450,10 +455,6 @@ Eigen::VectorXd Tracker::predict(const Armor & armor, double dt)
     x *= 0.1;   // 前哨站加速度方差
     y *= 0.05;  // 前哨站角加速度方差
   } 
-  //else {
-  //   x = 100;  // 加速度方差
-  //   y = 400;  // 角加速度方差
-  // }
   auto a = dt * dt * dt * dt / 4;
   auto b = dt * dt * dt / 2;
   auto c = dt * dt;
@@ -497,6 +498,16 @@ Eigen::Vector3d Tracker::Pos2Polar(const Armor & armor) const
   const auto& position = armor.pose.position;
   Eigen::Vector3d armor_position(position.x, position.y, position.z);
   return rm_tools::xyz2ypd(armor_position);
+}
+const char* Tracker::stateToString(State state) {
+    switch (state) {
+        case LOST: return "LOST";
+        case DETECTING: return "DETECTING";
+        case TRACKING: return "TRACKING";
+        case TEMP_LOST: return "TEMP_LOST";
+        case CHANGE_TARGET: return "CHANGE_TARGET";
+        default: return "UNKNOWN";
+    }
 }
 
 }  // namespace rm_auto_aim

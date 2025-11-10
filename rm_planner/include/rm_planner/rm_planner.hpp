@@ -1,5 +1,5 @@
-#ifndef RM_PLANNER_HPP
-#define RM_PLANNER_HPP
+#ifndef RM_PLANNER_RM_PLANNER_HPP_
+#define RM_PLANNER_RM_PLANNER_HPP_
 
 #include <Eigen/Dense>
 #include <list>
@@ -44,7 +44,7 @@ class Planner
 public:
   Eigen::Vector4d debug_xyza;
   Planner();
-
+  void init_planner();
   auto_aim_interfaces::msg::GimbalCmd plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time &current_time,
                                             std::shared_ptr<tf2_ros::Buffer> tf2_buffer_);
  // Plan plan(std::optional<Target> target, double bullet_speed);

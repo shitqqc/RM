@@ -1,0 +1,11 @@
+string number
+string type
+float32 prob
+string color
+float32 distance_to_image_center
+geometry_msgs/Pose pose
+geometry_msgs/Point[] kpts
+float32 yaw_raw
+float32 yaw
+float32 dyaw
+int32 priority

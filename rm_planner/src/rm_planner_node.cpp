@@ -28,7 +28,7 @@ RMPlannerNode::RMPlannerNode(const rclcpp::NodeOptions &options)
 
   RCLCPP_INFO(this->get_logger(), "Starting RMPlannerNode!");
 
-  debug_mode_ = this->declare_parameter("debug", true);
+  debug_mode_ = this->declare_parameter("debug", false);
   // enable_ = this->declare_parameter("planner_enable",true);
 
 
@@ -54,14 +54,14 @@ RMPlannerNode::RMPlannerNode(const rclcpp::NodeOptions &options)
   // Register a callback with tf2_ros::MessageFilter to be called when
   // transforms are available
   tf2_filter_->registerCallback(&RMPlannerNode::targetCallback, this);
-
+  
   gimbal_pub_ = this->create_publisher<auto_aim_interfaces::msg::GimbalCmd>("armor_planner/cmd_gimbal",
                                                                       rclcpp::SensorDataQoS());
   // Timer 250 Hz
   pub_timer_ = this->create_wall_timer(std::chrono::milliseconds(4),
                                        std::bind(&RMPlannerNode::timerCallback, this));
   armor_target_.header.frame_id = "";
-
+  armor_target_.tracking = false;
   if (debug_mode_) {
     initMarkers();
   }
@@ -77,8 +77,6 @@ void RMPlannerNode::targetCallback(const auto_aim_interfaces::msg::Target::Share
     planner_ = std::make_unique<Planner>();
     init_planner();
   }
-
-  armor_target_.tracking = false;
   armor_target_ = *target_msg;
   
 }
@@ -90,7 +88,6 @@ void RMPlannerNode::timerCallback() {
   // if (!enable_) {
   //   return;
   // }
-
   // Init message
   auto_aim_interfaces::msg::GimbalCmd control_msg;
 
@@ -111,11 +108,14 @@ void RMPlannerNode::timerCallback() {
 
   if (armor_target_.tracking) {
     try {
-          planner_->prediction_delay_ = get_parameter("planner.prediction_delay").as_double();
-      control_msg = planner_->plan(armor_target_, 20, this->now(), tf2_buffer_);
+        planner_->prediction_delay_ = get_parameter("planner.prediction_delay").as_double();
+        control_msg = planner_->plan(armor_target_, 20, this->now(), tf2_buffer_);
+    } catch (const std::exception& e) {
+        RCLCPP_ERROR(get_logger(), "Planner error: %s", e.what());
+        control_msg.fire = false;
     } catch (...) {
-      RCLCPP_ERROR(get_logger(), "Something went wrong in planner!");
-      control_msg.fire = false;
+        RCLCPP_ERROR(get_logger(), "Unknown error in planner!");
+        control_msg.fire = false;
     }
   } else {
     control_msg.fire = false;
@@ -287,7 +287,6 @@ void RMPlannerNode::publishMarkers(const auto_aim_interfaces::msg::Target &targe
 
 void RMPlannerNode::init_planner()
 {
-
   planner_->prediction_delay_ = this->declare_parameter("planner.prediction_delay", 0.0);
   auto compenstator_type = this->declare_parameter("planner.compensator_type", "ideal");
   planner_->trajectory_compensator_ = rm_tools::CompensatorFactory::createCompensator(compenstator_type);
@@ -306,7 +305,7 @@ void RMPlannerNode::init_planner()
 
   planner_->Q_pitch = this->declare_parameter("gimbal.Q_pitch", std::vector<double>{9e6, 0});
   planner_->R_pitch = this->declare_parameter("gimbal.R_pitch", std::vector<double>{1});
-
+  planner_->init_planner();
   planner_->manual_compensator_ = std::make_unique<rm_tools::ManualCompensator>();
   auto angle_offset = this->declare_parameter("planner.angle_offset", std::vector<std::string>{});
   if(!planner_->manual_compensator_->updateMapFlow(angle_offset)) {

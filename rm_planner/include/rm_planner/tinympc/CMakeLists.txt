@@ -1,3 +1,4 @@
+find_package(Eigen3 REQUIRED)
 add_library(tinympcstatic STATIC
     admm.cpp
     tiny_api.cpp
@@ -6,11 +7,10 @@ add_library(tinympcstatic STATIC
 )
 
 set_property(TARGET tinympcstatic PROPERTY POSITION_INDEPENDENT_CODE ON)
-
-# target_link_libraries(tinympcstatic PUBLIC Eigen)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=unused-variable")
+#target_link_libraries(tinympcstatic PUBLIC Eigen)
 target_include_directories(tinympcstatic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/..)
-target_include_directories(tinympcstatic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../include/Eigen)
-
+target_include_directories(tinympcstatic PUBLIC ${EIGEN3_INCLUDE_DIRS})
 
 
 if(USING_CODEGEN) # Defined in top-level CMakeLists.txt

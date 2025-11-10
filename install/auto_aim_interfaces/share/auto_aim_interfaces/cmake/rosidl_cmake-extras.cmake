@@ -1,0 +1,1 @@
+/home/ljoy/Robomaster/PIONEER/new_rv/build/auto_aim_interfaces/rosidl_cmake/rosidl_cmake-extras.cmake

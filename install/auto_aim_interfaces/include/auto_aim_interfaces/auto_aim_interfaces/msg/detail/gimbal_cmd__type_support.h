@@ -1,0 +1,1 @@
+/home/ljoy/Robomaster/PIONEER/new_rv/build/auto_aim_interfaces/rosidl_generator_c/auto_aim_interfaces/msg/detail/gimbal_cmd__type_support.h

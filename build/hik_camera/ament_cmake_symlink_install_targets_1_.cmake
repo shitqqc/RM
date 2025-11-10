@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera/libhik_camera.so" "TARGETS" "hik_camera" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

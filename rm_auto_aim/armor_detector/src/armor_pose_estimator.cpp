@@ -68,13 +68,13 @@ ArmorPoseEstimator::extractArmorPoses(std::vector<Armor> &armors, Eigen::Matrix3
       Eigen::Vector3d xyz_in_camera;
       cv::cv2eigen(tvecs[0], xyz_in_camera);
       armor.ypr_in_world = ypr_in_world;
-      armor.yaw_raw = armor.ypr_in_world[0];
+      armor.yaw_raw = armor_yaw* M_PI / 180;//maybe have problem
       //armor.ypd_in_world = rm_tools::xyz2ypd(armor.xyz_in_world);
 
       //Eigen::Vector3d gimbal_ypr = rm_tools::eulers(R_imu_camera, 2, 1, 0);
 
       if (use_ba_ && armor_roll < 15) {
-        R = ba_solver_->solveBa(armor, t, R, R_imu_camera);
+        //R = ba_solver_->solveBa(armor, t, R, R_imu_camera);
       }
      
       Eigen::Quaterniond q(R);

@@ -76,14 +76,14 @@ const std::vector<std::tuple<Color, ArmorName, ArmorType>> armor_properties = {
 
 struct Lightbar
 {
-  std::size_t id;
+  //std::size_t id;
   Color color;
   cv::Point2f center, top, bottom, top2bottom;
   std::vector<cv::Point2f> points;
   double angle, angle_error, length, width, ratio;
+  std::vector<cv::Point> contour;
   cv::RotatedRect rotated_rect;
-
-  Lightbar(const cv::RotatedRect & rotated_rect, std::size_t id);
+  Lightbar(const cv::RotatedRect & rotated_rect, const std::vector<cv::Point> & contour);
   Lightbar() {};
 };
 

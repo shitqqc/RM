@@ -73,7 +73,7 @@ public:
   double info_position_diff;
   double info_yaw_diff;
   double info_angle_diff;
-
+ const char* stateToString(State state);
   Eigen::VectorXd measurement;
 
   Eigen::VectorXd target_state;

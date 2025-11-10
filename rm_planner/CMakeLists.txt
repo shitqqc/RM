@@ -1,21 +1,17 @@
 cmake_minimum_required(VERSION 3.10)
 project(rm_planner)
 
-## Use C++14
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-## By adding -Wall and -Werror, the compiler does not ignore warnings anymore,
-## enforcing cleaner code.
 add_definitions(-Wall -Werror)
+add_subdirectory(include/rm_planner/tinympc)
 
-## Export compile commands for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 #######################
 ## Find dependencies ##
 #######################
-
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
@@ -25,6 +21,24 @@ ament_auto_find_build_dependencies()
 
 ament_auto_add_library(${PROJECT_NAME} SHARED
   DIRECTORY src
+)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+  ${EIGEN3_INCLUDE_DIRS}
+)
+
+# 对于 Humble，使用 ament_target_dependencies 更可靠
+ament_target_dependencies(${PROJECT_NAME}
+  rclcpp
+  rclcpp_components
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  geometry_msgs
+)
+
+target_link_libraries(${PROJECT_NAME}
+  tinympcstatic
 )
 
 rclcpp_components_register_node(${PROJECT_NAME}
@@ -44,11 +58,6 @@ if(BUILD_TESTING)
     ament_cmake_cpplint
   )
   ament_lint_auto_find_test_dependencies()
-
-  # find_package(ament_cmake_gtest)
-  # set(TEST_NAME test_kalman_filter)
-  # ament_add_gtest(${TEST_NAME} test/${TEST_NAME}.cpp)
-  # target_link_libraries(${TEST_NAME} ${PROJECT_NAME})
 endif()
 
 #############

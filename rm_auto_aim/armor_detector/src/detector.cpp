@@ -168,8 +168,6 @@ std::vector<Armor> MultiThreadDetector::parse(double scale, cv::Mat & output, co
     ++it;
   }
 
-  //if (debug_) draw_detections(bgr_img, armors);
-
   return armors;
 }
 
@@ -201,7 +199,7 @@ bool MultiThreadDetector::traditional_correct(Armor & armor , const cv::Mat & im
   // 计算向量和调整后的点
   auto lt2b = bl - tl;
   auto rt2b = br - tr;
-  //扩大1.5倍
+  //高扩大1.5倍
   auto tl1 = (tl + bl) / 2 - lt2b;
   auto bl1 = (tl + bl) / 2 + lt2b;
   auto br1 = (tr + br) / 2 + rt2b;
@@ -210,7 +208,7 @@ bool MultiThreadDetector::traditional_correct(Armor & armor , const cv::Mat & im
   auto tl2tr = tr1 - tl1;
   auto bl2br = br1 - bl1;
 
-  //扩大
+  //宽扩大
   auto tl2 = (tl1 + tr) / 2 - 0.75 * tl2tr;
   auto tr2 = (tl1 + tr) / 2 + 0.75 * tl2tr;
   auto bl2 = (bl1 + br) / 2 - 0.75 * bl2br;
@@ -243,18 +241,19 @@ bool MultiThreadDetector::traditional_correct(Armor & armor , const cv::Mat & im
   std::vector<std::vector<cv::Point>> contours;
   cv::findContours(binary_img, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
   // 获取灯条
-  std::size_t lightbar_id = 0;
   std::list<Lightbar> lightbars;
   for (const auto & contour : contours) {
     auto rotated_rect = cv::minAreaRect(contour);
-    auto lightbar = Lightbar(rotated_rect, lightbar_id);
+    auto lightbar = Lightbar(rotated_rect, contour);
 
     if (!check_geometry(lightbar)) continue;
 
     //lightbar.color = get_color(bgr_img, contour);
-    // lightbar_points_corrector(lightbar, gray_img); //关闭PCA
+    if(use_pca && lightbar.length > 3)
+    {lightbar_points_corrector(lightbar, gray_img);}
+    else
+    {zy_corrector(lightbar);}
     lightbars.emplace_back(lightbar);
-    lightbar_id += 1;
   }
 
   if (lightbars.size() < 2) return false;
@@ -284,19 +283,30 @@ bool MultiThreadDetector::traditional_correct(Armor & armor , const cv::Mat & im
     }
   }
 
-  auto dis = (min_distance_br_tr + min_distance_tl_bl);
-  RCLCPP_DEBUG(rclcpp::get_logger("armor_detector"), "min_distance_br_tr + min_distance_tl_bl is: %f", dis);
-  if (
-    closest_left_lightbar && closest_right_lightbar &&
-    min_distance_br_tr + min_distance_tl_bl < tolerate) {
-    // 将四个点从armor_roi坐标系转换到原始图像坐标系
-    armor.points[0] = closest_left_lightbar->top + cv::Point2f(boundingBox.x, boundingBox.y);
+  if (closest_left_lightbar && closest_right_lightbar)
+  {
+    auto ratio =  closest_left_lightbar->length / closest_right_lightbar->length;
+    if (ratio > 1)
+    ratio = 1/ratio;   
+    auto left_error = min_distance_tl_bl / closest_left_lightbar->length;
+    auto right_error = min_distance_br_tr / closest_right_lightbar->length;
+    //auto avg_length = (closest_left_lightbar->length + closest_right_lightbar->length) * 0.5;
+    RCLCPP_DEBUG(rclcpp::get_logger("armor_detector"), "left diff between network and traditon is: %f", left_error);
+    RCLCPP_DEBUG(rclcpp::get_logger("armor_detector"), "right diff between network and traditon is: %f", right_error);
+    if(left_error < tolerate)
+    {
+    armor.points[0] = closest_left_lightbar->top + cv::Point2f(boundingBox.x, boundingBox.y);    
+    armor.points[3] = closest_left_lightbar->bottom + cv::Point2f(boundingBox.x, boundingBox.y);  
+    }
+    if(right_error < tolerate)
+    {
     armor.points[1] = closest_right_lightbar->top + cv::Point2f(boundingBox.x, boundingBox.y);
-    armor.points[2] = closest_right_lightbar->bottom + cv::Point2f(boundingBox.x, boundingBox.y);
-    armor.points[3] = closest_left_lightbar->bottom + cv::Point2f(boundingBox.x, boundingBox.y);
-    return true;
+    armor.points[2] = closest_right_lightbar->bottom + cv::Point2f(boundingBox.x, boundingBox.y);     
+    }
+  if(left_error < tolerate || right_error < tolerate)
+  return true;
   }
-  RCLCPP_WARN(rclcpp::get_logger("armor_detector"), "min_distance_br_tr + min_distance_tl_bl too large: %f", dis);
+  RCLCPP_WARN(rclcpp::get_logger("armor_detector"), "diff between network and traditon is too large!");
   return false;
 }
 
@@ -334,6 +344,135 @@ cv::Point2f MultiThreadDetector::get_center_norm(const cv::Mat & bgr_img, const 
   return {center.x / w, center.y / h};
 }
 
+void MultiThreadDetector::lightbar_points_corrector(Lightbar & lightbar, const cv::Mat & gray_img) const
+{
+  // 配置参数
+  constexpr float MAX_BRIGHTNESS = 25;  // 归一化最大亮度值
+  constexpr float ROI_SCALE = 0.07;     // ROI扩展比例
+  constexpr float SEARCH_START = 0.4;   // 搜索起始位置比例（原0.8/2）
+  constexpr float SEARCH_END = 0.6;     // 搜索结束位置比例（原1.2/2）
+
+  // 扩展并裁剪ROI
+  cv::Rect roi_box = lightbar.rotated_rect.boundingRect();
+  roi_box.x -= roi_box.width * ROI_SCALE;
+  roi_box.y -= roi_box.height * ROI_SCALE;
+  roi_box.width += 2 * roi_box.width * ROI_SCALE;
+  roi_box.height += 2 * roi_box.height * ROI_SCALE;
+
+  // 边界约束
+  roi_box &= cv::Rect(0, 0, gray_img.cols, gray_img.rows);
+
+  // 归一化ROI
+  cv::Mat roi = gray_img(roi_box);
+  const float mean_val = cv::mean(roi)[0];
+  roi.convertTo(roi, CV_32F);
+  cv::normalize(roi, roi, 0, MAX_BRIGHTNESS, cv::NORM_MINMAX);
+
+  // 计算质心
+  const cv::Moments moments = cv::moments(roi);
+  const cv::Point2f centroid(
+    moments.m10 / moments.m00 + roi_box.x, moments.m01 / moments.m00 + roi_box.y);
+
+  // 生成稀疏点云（优化性能）
+  std::vector<cv::Point2f> points;
+  for (int i = 0; i < roi.rows; ++i) {
+    for (int j = 0; j < roi.cols; ++j) {
+      const float weight = roi.at<float>(i, j);
+      if (weight > 1e-3) {          // 忽略极小值提升性能
+        points.emplace_back(j, i);  // 坐标相对于ROI区域
+      }
+    }
+  }
+
+  // PCA计算对称轴方向
+  cv::PCA pca(cv::Mat(points).reshape(1), cv::Mat(), cv::PCA::DATA_AS_ROW);
+  cv::Point2f axis(pca.eigenvectors.at<float>(0, 0), pca.eigenvectors.at<float>(0, 1));
+  axis /= cv::norm(axis);
+  if (axis.y > 0) axis = -axis;  // 统一方向
+
+  const auto find_corner = [&](int direction) -> cv::Point2f {
+    const float dx = axis.x * direction;
+    const float dy = axis.y * direction;
+    const float search_length = lightbar.length * (SEARCH_END - SEARCH_START);
+
+    std::vector<cv::Point2f> candidates;
+
+    // 横向采样多个候选线
+    const int half_width = (lightbar.width - 2) / 2;
+    for (int i_offset = -half_width; i_offset <= half_width; ++i_offset) {
+      // 计算搜索起点
+      cv::Point2f start_point(
+        centroid.x + lightbar.length * SEARCH_START * dx + i_offset,
+        centroid.y + lightbar.length * SEARCH_START * dy);
+
+      // 沿轴搜索亮度跳变点
+      cv::Point2f corner = start_point;
+      float max_diff = 0;
+      bool found = false;
+
+      for (float step = 0; step < search_length; ++step) {
+        const cv::Point2f cur_point(start_point.x + dx * step, start_point.y + dy * step);
+
+        // 边界检查
+        if (
+          cur_point.x < 0 || cur_point.x >= gray_img.cols || cur_point.y < 0 ||
+          cur_point.y >= gray_img.rows) {
+          break;
+        }
+
+        // 计算亮度差（使用双线性插值提升精度）
+        const auto prev_val = gray_img.at<uchar>(cv::Point2i(cur_point - cv::Point2f(dx, dy)));
+        const auto cur_val = gray_img.at<uchar>(cv::Point2i(cur_point));
+        const float diff = prev_val - cur_val;
+
+        if (diff > max_diff && prev_val > mean_val) {
+          max_diff = diff;
+          corner = cur_point - cv::Point2f(dx, dy);  // 跳变发生在上一位置
+          found = true;
+        }
+      }
+
+      if (found) {
+        candidates.push_back(corner);
+      }
+    }
+
+    // 返回候选点均值
+    return candidates.empty()
+             ? cv::Point2f(-1, -1)
+             : std::accumulate(candidates.begin(), candidates.end(), cv::Point2f(0, 0)) /
+                 static_cast<float>(candidates.size());
+  };
+
+  // 并行检测顶部和底部
+  lightbar.top = find_corner(1);
+  lightbar.bottom = find_corner(-1);
+}
+
+void MultiThreadDetector::zy_corrector(Lightbar & lightbar) const
+{
+    auto b_rect = cv::boundingRect(lightbar.contour);
+    cv::Mat mask = cv::Mat::zeros(b_rect.size(), CV_8UC1);
+    std::vector<cv::Point> mask_contour;
+    for (const auto & p : lightbar.contour) {
+      mask_contour.emplace_back(p - cv::Point(b_rect.x, b_rect.y));
+    }
+    cv::fillPoly(mask, {mask_contour}, 255);
+    std::vector<cv::Point> points;
+    cv::findNonZero(mask, points);
+    cv::Vec4f return_param;
+    cv::fitLine(points, return_param, cv::DIST_L2, 0, 0.01, 0.01);
+    cv::Point2f top, bottom;
+    if (int(return_param[0] * 100) == 100 || int(return_param[1] * 100) == 0) {
+      top = cv::Point2f(b_rect.x + b_rect.width / 2, b_rect.y);
+      bottom = cv::Point2f(b_rect.x + b_rect.width / 2, b_rect.y + b_rect.height);
+    } else {
+      auto k = return_param[1] / return_param[0];
+      auto b = (return_param[3] + b_rect.y) - k * (return_param[2] + b_rect.x);
+      lightbar.top = cv::Point2f((b_rect.y - b) / k, b_rect.y);
+      lightbar.bottom = cv::Point2f((b_rect.y + b_rect.height - b) / k, b_rect.y + b_rect.height);
+    }
+}
 cv::Mat MultiThreadDetector::get_all_binary_img(std::vector<Armor> armors)
 {
   if (armors.empty()) {

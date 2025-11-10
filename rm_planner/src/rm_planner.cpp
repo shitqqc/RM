@@ -1,5 +1,5 @@
 #include "rm_planner/rm_planner.hpp"
-
+#include "rm_planner/rm_planner_node.hpp"
 #include <vector>
 
 #include "rm_tools/math.hpp"
@@ -12,10 +12,13 @@ namespace rm_auto_aim
 {
 Planner::Planner()
 {
+
+}
+void Planner::init_planner()
+{
   setup_yaw_solver();
   setup_pitch_solver();
 }
-
 auto_aim_interfaces::msg::GimbalCmd Planner:: plan(const auto_aim_interfaces::msg::Target &target, double bullet_speed, const rclcpp::Time &current_time,
                                             std::shared_ptr<tf2_ros::Buffer> tf2_buffer_)
 {
@@ -36,12 +39,11 @@ auto_aim_interfaces::msg::GimbalCmd Planner:: plan(const auto_aim_interfaces::ms
     tf2::Matrix3x3(tf_q).getRPY(rpy_[0], rpy_[1], rpy_[2]);
     rpy_[1] = -rpy_[1];
   } catch (tf2::TransformException &ex) {
-    RCLCPP_WARN(rclcpp::get_logger("armor_solver"), "%s", ex.what());
+    RCLCPP_WARN(rclcpp::get_logger("armor_planner"), "%s", ex.what());
     throw ex;
   }
 
   // 1. Select armor and predict fly_time
-
   // Use flying time to approximately predict the position of target
   Eigen::Vector3d target_position(target.position.x, target.position.y, target.position.z);
   double target_yaw = target.yaw;
@@ -157,7 +159,6 @@ auto_aim_interfaces::msg::GimbalCmd Planner:: plan(const auto_aim_interfaces::ms
 
 void Planner::setup_yaw_solver()
 {
-
   Eigen::MatrixXd A{{1, DT}, {0, 1}};
   Eigen::MatrixXd B{{0}, {DT}};
   Eigen::VectorXd f{{0, 0}};

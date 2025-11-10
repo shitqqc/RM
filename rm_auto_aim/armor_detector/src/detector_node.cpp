@@ -204,7 +204,9 @@ void ArmorDetectorNode::initDetector()
     detector_-> min_lightbar_ratio_ = this->declare_parameter("min_lightbar_ratio", 1.5);
     detector_-> max_lightbar_ratio_ = this->declare_parameter("max_lightbar_ratio", 20);
     detector_-> min_lightbar_length_ = this->declare_parameter("min_lightbar_length", 20);
-    detector_-> tolerate = this->declare_parameter("tolerate", 50);
+    detector_-> tolerate = this->declare_parameter("tolerate", 0.1);
+    detector_-> min_l2l_ratio_ = this->declare_parameter("min_l2l_ratio", 0.7);
+    detector_->use_pca = this->declare_parameter("use_pca",true);
     RCLCPP_INFO(this->get_logger(), "Model loaded: %s", model_path.c_str());
 
 }

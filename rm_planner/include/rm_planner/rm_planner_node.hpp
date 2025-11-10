@@ -17,8 +17,8 @@
 // limitations under the License.
 
 
-#ifndef ARMOR_SOLVER__ARMOR_SOLVER_NODE_HPP_
-#define ARMOR_SOLVER__ARMOR_SOLVER_NODE_HPP_
+#ifndef RM_PLANNER_RM_PLANNER_NODE_HPP_
+#define RM_PLANNER_RM_PLANNER_NODE_HPP_
 
 // ros2
 #include <message_filters/subscriber.h>

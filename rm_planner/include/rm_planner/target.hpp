@@ -1,3 +1,5 @@
+#ifndef RM_PLANNER_TARGET_HPP_
+#define RM_PLANNER_TARGET_HPP_
 #include <Eigen/Dense>
 #include <vector>
 #include <cmath>
@@ -7,7 +9,6 @@ namespace rm_auto_aim
     class Target
     {
     public:
-        Target();
         std::vector<Eigen::Vector3d> getArmorPositions() const noexcept;
         int selectBestArmor() const noexcept;
         void predict(double dt);
@@ -16,3 +17,4 @@ namespace rm_auto_aim
         Eigen::Vector3d target_center;
     };
 }
+#endif
