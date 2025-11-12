@@ -133,7 +133,7 @@ auto_aim_interfaces::msg::GimbalCmd Planner:: plan(const auto_aim_interfaces::ms
 
   cmd.fire = plan.fire;
   cmd.target_yaw = plan.target_yaw;
-  cmd.target_pitch = plan.target_pitch;
+  cmd.target_pitch = -plan.target_pitch;
   cmd.yaw = plan.yaw;
   cmd.yaw_vel = plan.yaw_vel;
   cmd.yaw_acc = plan.yaw_acc;

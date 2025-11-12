@@ -72,7 +72,7 @@ void Tracker::init(const Armors::SharedPtr & armors_msg)
 void Tracker::initChange(const Armor & armor_msg)
 {
   initEKF(armor_msg);
-  RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "Target change and Init EKF!");
+  //RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "Target change and Init EKF!");
 
   tracked_id = armor_msg.number;
   tracker_state = DETECTING;
@@ -87,8 +87,10 @@ void Tracker::update(const Armors::SharedPtr & armors_msg)
 {
   // KF predict
   Eigen::VectorXd ekfprediction = predict(tracked_armor, dt);
+  double uuu = ekfprediction(6);
+  RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "predict yaaw :%f!",uuu);
   auto predicted_position = getArmorPositionFromState(ekfprediction);
-  RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "EKF predict");
+  //RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "EKF predict");
 
   bool matched = false;
   // Use KF prediction as default target state if no matched armor is found
@@ -119,24 +121,26 @@ void Tracker::update(const Armors::SharedPtr & armors_msg)
       // Only consider armors with the same id
       if (armor.number == tracked_id) {
         // 取前3个distance最小的装甲板
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
           const auto & xyza = target_armors_position_i[i].first;
-          auto yaw = orientationToYaw(armor.pose.orientation);
+          auto yaw = orientationToYaw(armor.pose.orientation);//观测板
           auto armor_ypd = Pos2Polar(armor);
-
+            RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "orserbe yaw :%f!",yaw);
           Eigen::Vector3d ypd = rm_tools::xyz2ypd(xyza.head(3));
-          double xxx = std::abs(rm_tools::limit_rad(yaw - xyza[3]));
-          RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "see - ekf yaw:%f!,current id:%d",xxx,i);
+          double yyy = xyza[3];
+          //double xxx = std::abs(rm_tools::limit_rad(yaw - xyza[3]));
+          RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "this armor yaw:%f!,current id:%d",yyy,i);
+          //RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "see - ekf yaw:%f!,current id:%d",xxx,i);
           //观测-ekf
           auto angle_error = std::abs(rm_tools::limit_rad(yaw - xyza[3])) +                    //观测的装甲板朝向 - ekf各装甲板朝向
                             std::abs(rm_tools::limit_rad(armor_ypd[0] - ypd[0]));    //观测装甲板质点的yaw - ekf装甲板质点的yaw
 
           if (std::abs(angle_error) < std::abs(min_angle_error)) {
+
             id = target_armors_position_i[i].second;
             min_angle_error = angle_error;
             tracked_armor = armor;
           }
-          //RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "current id :%d!",id);
         }
         RCLCPP_DEBUG(rclcpp::get_logger("armor_tracker"), "current id :%d!",id);
         if(id!=0)

@@ -43,6 +43,7 @@ public:
 
   void enableBA(bool enable) { use_ba_ = enable; }
 
+  bool use_ba_;
 private:
   // Select the best PnP solution according to the armor's direction in image, only available for SOLVEPNP_IPPE
   void sortPnPResult(const Armor &armor, std::vector<cv::Mat> &rvecs,
@@ -52,7 +53,7 @@ private:
   // Convert a rotation matrix to RPY
   static Eigen::Vector3d rotationMatrixToRPY(const Eigen::Matrix3d &R);
 
-  bool use_ba_;
+
 
  Eigen::Matrix3d R_gimbal_camera_;
 

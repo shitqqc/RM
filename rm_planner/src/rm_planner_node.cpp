@@ -55,7 +55,7 @@ RMPlannerNode::RMPlannerNode(const rclcpp::NodeOptions &options)
   // transforms are available
   tf2_filter_->registerCallback(&RMPlannerNode::targetCallback, this);
   
-  gimbal_pub_ = this->create_publisher<auto_aim_interfaces::msg::GimbalCmd>("armor_planner/cmd_gimbal",
+  gimbal_pub_ = this->create_publisher<auto_aim_interfaces::msg::GimbalCmd>("/armor_planner/cmd_gimbal",
                                                                       rclcpp::SensorDataQoS());
   // Timer 250 Hz
   pub_timer_ = this->create_wall_timer(std::chrono::milliseconds(4),
@@ -93,6 +93,7 @@ void RMPlannerNode::timerCallback() {
 
   // If target never detected
   if (armor_target_.header.frame_id.empty()) {
+    control_msg.header = armor_target_.header;
     control_msg.fire = false;
     control_msg.target_yaw = 0;
     control_msg.target_pitch = 0;
@@ -110,6 +111,7 @@ void RMPlannerNode::timerCallback() {
     try {
         planner_->prediction_delay_ = get_parameter("planner.prediction_delay").as_double();
         control_msg = planner_->plan(armor_target_, 20, this->now(), tf2_buffer_);
+        control_msg.header = armor_target_.header;
     } catch (const std::exception& e) {
         RCLCPP_ERROR(get_logger(), "Planner error: %s", e.what());
         control_msg.fire = false;

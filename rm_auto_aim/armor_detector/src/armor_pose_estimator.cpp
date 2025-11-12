@@ -74,13 +74,12 @@ ArmorPoseEstimator::extractArmorPoses(std::vector<Armor> &armors, Eigen::Matrix3
       //Eigen::Vector3d gimbal_ypr = rm_tools::eulers(R_imu_camera, 2, 1, 0);
 
       if (use_ba_ && armor_roll < 15) {
-        //R = ba_solver_->solveBa(armor, t, R, R_imu_camera);
+        R = ba_solver_->solveBa(armor, t, R, R_imu_camera);
       }
      
       Eigen::Quaterniond q(R);
-
-      Eigen::Vector3d eulerAngles = q.toRotationMatrix().eulerAngles(2, 1, 0);
-      double yaw = eulerAngles[0];
+      Eigen::Vector3d eulerAngles = q.toRotationMatrix().eulerAngles(0, 1, 2);
+      double yaw = eulerAngles[2];  // XYZ 顺序，yaw 在最后
       // Fill the armor message
       auto_aim_interfaces::msg::Armor armor_msg;
 

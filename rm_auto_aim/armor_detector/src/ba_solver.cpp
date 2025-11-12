@@ -76,10 +76,10 @@ BaSolver::solveBa(const Armor &armor, const Eigen::Vector3d &t_camera_armor,
   } else {
     initial_armor_yaw = R_imu_armor(1, 1) > 0 ? 0 : CV_PI;
   }
-
+  //initial_armor_yaw = std::atan2(-R_imu_armor(0, 1), R_imu_armor(1, 1));
   // Get the pitch angle of the armor
   double armor_pitch =
-      armor.name == ArmorName::outpost ? -15 : 15;
+      armor.name == ArmorName::outpost ? -15 * CV_PI / 180 : 15 * CV_PI / 180;
   Sophus::SO3d R_pitch = Sophus::SO3d::exp(Eigen::Vector3d(0, armor_pitch, 0));
 
   // Get the 3D points of the armor

@@ -16,6 +16,7 @@
   <depend>geometry_msgs</depend>
   <depend>cv_bridge</depend>
   <depend>image_transport</depend>
+  <depend>image_transport_plugins</depend>
   <depend>vision_opencv</depend>
   <depend>auto_aim_interfaces</depend>
   <depend>rm_tools</depend>

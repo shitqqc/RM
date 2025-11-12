@@ -207,6 +207,7 @@ void ArmorDetectorNode::initDetector()
     detector_-> tolerate = this->declare_parameter("tolerate", 0.1);
     detector_-> min_l2l_ratio_ = this->declare_parameter("min_l2l_ratio", 0.7);
     detector_->use_pca = this->declare_parameter("use_pca",true);
+    //armor_pose_estimator_->use_ba_ = this->declare_parameter("use_ba",true);
     RCLCPP_INFO(this->get_logger(), "Model loaded: %s", model_path.c_str());
 
 }
@@ -217,9 +218,9 @@ void ArmorDetectorNode::createDebugPublishers()
   //   this->create_publisher<auto_aim_interfaces::msg::DebugLights>("/detector/debug_lights", 10);
   // armors_data_pub_ =
   //   this->create_publisher<auto_aim_interfaces::msg::DebugArmors>("/detector/debug_armors", 10);
-
+  this->declare_parameter("armor_detector.result_img.jpeg_quality", 50);
+  this->declare_parameter("armor_detector.binary_img.jpeg_quality", 50);
   binary_img_pub_ = image_transport::create_publisher(this, "/detector/binary_img");
-  // number_img_pub_ = image_transport::create_publisher(this, "/detector/number_img");
   result_img_pub_ = image_transport::create_publisher(this, "/detector/result_img");
 }
 
@@ -229,7 +230,6 @@ void ArmorDetectorNode::destroyDebugPublishers()
   // armors_data_pub_.reset();
 
   binary_img_pub_.shutdown();
-  // number_img_pub_.shutdown();
   result_img_pub_.shutdown();
 }
 
