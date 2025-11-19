@@ -1,3 +1,15 @@
 path_checker:
   ros__parameters:
     path_topic: "plan"
+
+    friend_bumpy_area:
+      x_max: 3.3
+      x_min: 1.0
+      y_max: -6.0
+      y_min: -8.0
+    
+    enermy_bumpy_area:
+      x_max: 16.5
+      x_min: 18.5
+      y_max: 4.5
+      y_min: 6.5
