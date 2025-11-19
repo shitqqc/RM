@@ -1,0 +1,3 @@
+path_checker:
+  ros__parameters:
+    path_topic: "plan"
