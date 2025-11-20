@@ -12,10 +12,11 @@ namespace sentry_control
         RCLCPP_INFO(this->get_logger(), "Sentry control node start");
 
         this->load_params();
+        RCLCPP_INFO(this->get_logger(), "Parameters loaded: dt=%d, max=%f, min=%f, kp=%f, kd=%f, ki=%f", dt_, v_angular_max_, v_angular_min_, kp, kd, ki);
 
         pid_ = std::make_shared<PID>(dt_/1000.0, v_angular_max_, v_angular_min_, kp, kd, ki);
 
-        this->exp_yaw_ = -M_PI / 3;
+        this->exp_yaw_ = -M_PI / 2;
 
         this->cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_control_result", 10);
 
@@ -27,19 +28,19 @@ namespace sentry_control
     void SentryControlNode::load_params()
     {
         this->declare_parameter<int32_t>("dt", 50);
-        this->declare_parameter<double>("v_angular_max", 3.0);
-        this->declare_parameter<double>("v_angular_min", -3.0);
-        this->declare_parameter<double>("kp", 3.0);
-        this->declare_parameter<double>("ki", 0.1);
-        this->declare_parameter<double>("kd", 0.3);
+        this->declare_parameter<double>("pid.max_", 3.0);
+        this->declare_parameter<double>("pid.min_", -3.0);
+        this->declare_parameter<double>("pid.kp", 3.0);
+        this->declare_parameter<double>("pid.ki", 0.1);
+        this->declare_parameter<double>("pid.kd", 0.3);
 
 
         this->get_parameter("dt", dt_);
-        this->get_parameter("", v_angular_max_);
-        this->get_parameter("v_angular_min", v_angular_min_);
-        this->get_parameter("kp", kp);
-        this->get_parameter("ki", ki);
-        this->get_parameter("kd", kd);
+        this->get_parameter("pid.max_", v_angular_max_);
+        this->get_parameter("pid.min_", v_angular_min_);
+        this->get_parameter("pid.kp", kp);
+        this->get_parameter("pid.ki", ki);
+        this->get_parameter("pid.kd", kd);
 
     }
 
@@ -47,8 +48,8 @@ namespace sentry_control
     {
         if(!nav_start)
             return;
-        this->exp_spin_ =  this->pid_->calculate(this->yaw_, this->exp_yaw_);
-        // RCLCPP_INFO(this->get_logger(), "exp_spin_speed: %.2lf", this->exp_spin_);
+        this->exp_spin_ =  this->pid_->calculate(this->exp_yaw_, this->yaw_);
+        RCLCPP_INFO(this->get_logger(), "yaw_: %.2lf exp_yaw_: %.2lf exp_spin_speed: %.2lf", this->yaw_, this->exp_yaw_, this->exp_spin_);
         this->out_cmd_vel_.angular.set__z(exp_spin_);
         this->cmd_vel_pub_->publish(this->out_cmd_vel_);
     }

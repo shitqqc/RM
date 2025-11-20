@@ -15,6 +15,7 @@
 #ifndef PB_OMNI_PID_PURSUIT_CONTROLLER__PID_HPP_
 #define PB_OMNI_PID_PURSUIT_CONTROLLER__PID_HPP_
 
+#include <cmath>
 class PID
 {
 public:
