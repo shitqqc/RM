@@ -14,8 +14,8 @@
 
 #include "sentry_control/pid.hpp"
 
-PID::PID(double dt, double max, double min, double kp, double kd, double ki)
-    : dt_(dt), max_(max), min_(min), kp_(kp), kd_(kd), ki_(ki), pre_error_(0), integral_(0)
+PID::PID(double dt, double max, double min, double kp, double kd, double ki, double deadband)
+    : dt_(dt), max_(max), min_(min), kp_(kp), kd_(kd), ki_(ki), deadband_(deadband), pre_error_(0), integral_(0)
 {
 }
 
@@ -59,7 +59,7 @@ double PID::calculate(double set_point, double pv)
   // Save error to previous error
   pre_error_ = error;
 
-  if(error < 0.1 && error > -0.1)
+  if(error < deadband_ && error > -deadband_)
   {
     integral_ = 0;
   }

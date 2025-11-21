@@ -25,7 +25,7 @@ public:
   // dt -  loop interval time
   // max - maximum value of manipulated variable
   // min - minimum value of manipulated variable
-  PID(double dt, double max, double min, double kp, double kd, double ki);
+  PID(double dt, double max, double min, double kp, double kd, double ki, double deadband);
 
   // Returns the manipulated variable given a set_point and current process value
   double calculate(double set_point, double pv);
@@ -39,6 +39,7 @@ private:
   double kp_;
   double kd_;
   double ki_;
+  double deadband_;
   double pre_error_;
   double integral_;
 };

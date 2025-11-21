@@ -12,9 +12,9 @@ namespace sentry_control
         RCLCPP_INFO(this->get_logger(), "Sentry control node start");
 
         this->load_params();
-        RCLCPP_INFO(this->get_logger(), "Parameters loaded: dt=%d, max=%f, min=%f, kp=%f, kd=%f, ki=%f", dt_, v_angular_max_, v_angular_min_, kp, kd, ki);
+        // RCLCPP_INFO(this->get_logger(), "Parameters loaded: dt=%d, max=%f, min=%f, kp=%f, kd=%f, ki=%f, deadband=%f", dt_, v_angular_max_, v_angular_min_, kp, kd, ki, deadband);
 
-        pid_ = std::make_shared<PID>(dt_/1000.0, v_angular_max_, v_angular_min_, kp, kd, ki);
+        pid_ = std::make_shared<PID>(dt_/1000.0, v_angular_max_, v_angular_min_, kp, kd, ki, deadband);
 
         this->exp_yaw_ = -M_PI / 2;
 
@@ -33,6 +33,7 @@ namespace sentry_control
         this->declare_parameter<double>("pid.kp", 3.0);
         this->declare_parameter<double>("pid.ki", 0.1);
         this->declare_parameter<double>("pid.kd", 0.3);
+        this->declare_parameter<double>("pid.deadband", 0.05);
 
 
         this->get_parameter("dt", dt_);
@@ -41,6 +42,7 @@ namespace sentry_control
         this->get_parameter("pid.kp", kp);
         this->get_parameter("pid.ki", ki);
         this->get_parameter("pid.kd", kd);
+        this->get_parameter("pid.deadband", deadband);
 
     }
 
@@ -48,7 +50,7 @@ namespace sentry_control
     {
         if(!nav_start)
             return;
-        this->exp_spin_ =  this->pid_->calculate(this->exp_yaw_, this->yaw_);
+        this->exp_spin_ =  this->pid_->calculate(this->yaw_, this->exp_yaw_);
         RCLCPP_INFO(this->get_logger(), "yaw_: %.2lf exp_yaw_: %.2lf exp_spin_speed: %.2lf", this->yaw_, this->exp_yaw_, this->exp_spin_);
         this->out_cmd_vel_.angular.set__z(exp_spin_);
         this->cmd_vel_pub_->publish(this->out_cmd_vel_);

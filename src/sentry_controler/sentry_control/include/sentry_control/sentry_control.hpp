@@ -19,6 +19,7 @@ namespace sentry_control
 
         double v_angular_max_;
         double v_angular_min_;
+        double deadband;
         double kp, ki, kd;
 
         std::shared_ptr<PID> pid_;
