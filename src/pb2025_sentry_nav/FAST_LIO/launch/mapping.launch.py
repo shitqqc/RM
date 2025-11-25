@@ -46,7 +46,7 @@ def generate_launch_description():
     fast_lio_node = Node(
         package='fast_lio',
         executable='fastlio_mapping',
-        namespace="/red_standard_robot1",
+        namespace="/",
         parameters=[PathJoinSubstitution([config_path, config_file]),
                     {'use_sim_time': use_sim_time}],
         output='screen'
@@ -54,7 +54,7 @@ def generate_launch_description():
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
-        namespace="/red_standard_robot1",
+        namespace="/",
         arguments=['-d', rviz_cfg],
         condition=IfCondition(rviz_use)
     )

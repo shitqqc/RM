@@ -20,7 +20,6 @@ namespace sentry_control
 
         this->cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_control_result", 10);
 
-        this->yaw_sub_ = this->create_subscription<std_msgs::msg::Float32>("odom2chassis_yaw", 10, std::bind(&SentryControlNode::handle_yaw_message, this, std::placeholders::_1));
         this->cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel_nav2_result", 10, std::bind(&SentryControlNode::cmd_vel_callback, this, std::placeholders::_1));
         this->timer_ = this->create_wall_timer(std::chrono::milliseconds(dt_), std::bind(&SentryControlNode::timer_callback, this));
     }
@@ -56,10 +55,7 @@ namespace sentry_control
         this->cmd_vel_pub_->publish(this->out_cmd_vel_);
     }
 
-    void SentryControlNode::handle_yaw_message(const std_msgs::msg::Float32::SharedPtr msg)
-    {
-        this->yaw_ = msg->data;
-    }
+
 
     void SentryControlNode::cmd_vel_callback(const geometry_msgs::msg::Twist msg)
     {

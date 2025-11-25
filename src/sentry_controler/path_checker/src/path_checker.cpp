@@ -12,9 +12,10 @@ namespace path_checker
             path_topic_,
             10,
             std::bind(&PathCheckerNode::path_callback, this, std::placeholders::_1));
-        timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(100),
-            std::bind(&PathCheckerNode::timer_callback, this));
+        in_bumpy_area_publisher_ = this->create_publisher<std_msgs::msg::Bool>("in_bumpy_area", 10);
+        // timer_ = this->create_wall_timer(
+        //     std::chrono::milliseconds(100),
+        //     std::bind(&PathCheckerNode::timer_callback, this));
     }
     void PathCheckerNode::get_param()
     {
@@ -39,6 +40,11 @@ namespace path_checker
         this->get_parameter("enermy_bumpy_area.y_min", enermy_bumpy_area_.y_min);
     }
 
+    // void PathCheckerNode::timer_callback()
+    // {
+
+    // }
+
     void PathCheckerNode::path_callback(const nav_msgs::msg::Path::SharedPtr msg)
     {
         if (msg->poses.size() < 10)
@@ -57,6 +63,8 @@ namespace path_checker
                 if (in_bumpy_area_) break;
             }
         }
+        in_bumpy_area_msg_.data = in_bumpy_area_;
+        in_bumpy_area_publisher_->publish(in_bumpy_area_msg_);
     }
 
     bool PathCheckerNode::bumpy_area_check(double pose_x, double pose_y, Bumpy_area friend_bumpy_area, Bumpy_area enermy_bumpy_area)

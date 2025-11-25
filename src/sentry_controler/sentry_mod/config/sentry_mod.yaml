@@ -1,0 +1,3 @@
+sentry_mod:
+  ros__parameters:
+    spin_speed: 1.0

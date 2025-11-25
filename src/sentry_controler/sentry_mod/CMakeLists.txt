@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(through_tunnel)
+project(sentry_mod)
 
 ## Use C++14
 set(CMAKE_CXX_STANDARD 14)
@@ -24,11 +24,11 @@ ament_auto_find_build_dependencies()
 ###########
 
 ament_auto_add_library(${PROJECT_NAME} SHARED
-  src/through_tunnel.cpp
+  src/sentry_mod.cpp
 )
 
 rclcpp_components_register_node(${PROJECT_NAME}
-  PLUGIN Through_tunnel::ThroughTunnel
+  PLUGIN sentry_mod::SentryMode
   EXECUTABLE ${PROJECT_NAME}_node
 )
 
@@ -53,4 +53,5 @@ endif()
 ament_auto_package(
   INSTALL_TO_SHARE
   launch
+  config
 )
