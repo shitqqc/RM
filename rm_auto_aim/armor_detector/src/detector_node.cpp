@@ -30,8 +30,19 @@ namespace rm_auto_aim
 ArmorDetectorNode::ArmorDetectorNode(const rclcpp::NodeOptions & options)
 : Node("armor_detector", options)
 {
+  frame_id = 0;
+  use_thread_pool = this->declare_parameter("is_use_thread_pool",false);
   RCLCPP_INFO(this->get_logger(), "Starting DetectorNode!");
-  initDetector();
+  
+  if(!use_thread_pool)
+  {
+    initDetector();
+  }
+  else
+  {
+    init_pool();
+    process_thread_ = std::thread(&ArmorDetectorNode::processLoop, this);
+  }
   // Armors Publisher
   armors_pub_ = this->create_publisher<auto_aim_interfaces::msg::Armors>(
     "/detector/armors", rclcpp::SensorDataQoS());
@@ -44,13 +55,12 @@ ArmorDetectorNode::ArmorDetectorNode(const rclcpp::NodeOptions & options)
       armor_pose_estimator_ = std::make_unique<ArmorPoseEstimator>(cam_info_);
       cam_info_sub_.reset();
     });
-
-    // Transform initialize
-    odom_frame_ = this->declare_parameter("target_frame", "odom");
-    imu_to_camera_ = Eigen::Matrix3d::Identity();
     img_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
       "/image_raw", rclcpp::SensorDataQoS(),
       std::bind(&ArmorDetectorNode::imageCallback, this, std::placeholders::_1));
+    // Transform initialize
+    odom_frame_ = this->declare_parameter("target_frame", "odom");
+    imu_to_camera_ = Eigen::Matrix3d::Identity();
 
   // Task subscriber
   is_aim_task_ = true;
@@ -102,6 +112,14 @@ ArmorDetectorNode::ArmorDetectorNode(const rclcpp::NodeOptions & options)
 
 }
 
+ArmorDetectorNode::~ArmorDetectorNode()
+{
+  if (process_thread_.joinable()) {
+    process_thread_.join();
+  }
+
+}
+
 void ArmorDetectorNode::taskCallback(const std_msgs::msg::String::SharedPtr task_msg)
 {
   std::string task_mode = task_msg->data;
@@ -112,44 +130,138 @@ void ArmorDetectorNode::taskCallback(const std_msgs::msg::String::SharedPtr task
   }
 }
 
+void ArmorDetectorNode::processLoop()
+{
+  while(rclcpp::ok()) {
+    Frame process_frame;
+    //if (frame_queue.dequeue_timeout(process_frame, std::chrono::milliseconds(50)))
+    {
+    Frame process_frame = frame_queue.dequeue();
+    auto img = process_frame.img;
+    auto armors = process_frame.armors;
+    auto t = process_frame.t;
+    auto header = process_frame.header;
+    auto timestamp = rclcpp::Time(t);
+    auto end = this->get_clock()->now();
+    double latency = (end.seconds() - timestamp.seconds()) * 1000.0;
+    if(detector_->use_traditional_) {
+      for(auto & armor : armors)
+        detector_->traditional_correct(armor, img);
+    }
+    
+    if(debug_) {
+      detector_->result_img = detector_->draw_result(armors, img, latency);
+      result_img_pub_.publish(cv_bridge::CvImage(header, "rgb8", detector_->result_img).toImageMsg());
+      auto all_binary_img = detector_->get_all_binary_img(armors);
+      binary_img_pub_.publish(cv_bridge::CvImage(header, "mono8", all_binary_img).toImageMsg());
+    }  
+    
+    if (armor_pose_estimator_ != nullptr) {
+      armors_msg_.header = header;
+      armors.erase(
+        std::remove_if(armors.begin(), armors.end(), [this](const Armor& armor) {
+            return static_cast<int>(armor.color) != detect_color;}),
+            armors.end()
+      );
+      
+      try {
+        rclcpp::Time target_time = header.stamp;
+        auto odom_to_gimbal = tf2_buffer_->lookupTransform(
+            odom_frame_, header.frame_id, target_time,
+            rclcpp::Duration::from_seconds(0.01));
+        auto msg_q = odom_to_gimbal.transform.rotation;
+        tf2::Quaternion tf_q;
+        tf2::fromMsg(msg_q, tf_q);
+        tf2::Matrix3x3 tf2_matrix = tf2::Matrix3x3(tf_q);
+        imu_to_camera_ << tf2_matrix.getRow(0)[0], tf2_matrix.getRow(0)[1],
+            tf2_matrix.getRow(0)[2], tf2_matrix.getRow(1)[0],
+            tf2_matrix.getRow(1)[1], tf2_matrix.getRow(1)[2],
+            tf2_matrix.getRow(2)[0], tf2_matrix.getRow(2)[1],
+            tf2_matrix.getRow(2)[2];
+      } catch (...) {
+        RCLCPP_ERROR(this->get_logger(), "Something Wrong when lookUpTransform");
+        continue;
+      }
+      
+      armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
+
+      if (debug_) {
+        marker_array_.markers.clear();
+        armor_marker_.id = 0;
+        text_marker_.id = 0;
+        armor_marker_.header = text_marker_.header = armors_msg_.header;
+        
+        for (const auto &armor : armors_msg_.armors) {
+          armor_marker_.scale.y = armor.type == std::string("small") ? 0.135 : 0.23;
+          armor_marker_.pose = armor.pose;
+          armor_marker_.id++;
+          text_marker_.pose.position = armor.pose.position;
+          text_marker_.id++;
+          text_marker_.pose.position.y -= 0.1;
+          text_marker_.text = armor.number;
+          marker_array_.markers.emplace_back(armor_marker_);
+          marker_array_.markers.emplace_back(text_marker_);
+        }
+        publishMarkers();
+      }
+      
+      armors_pub_->publish(armors_msg_);
+    }
+  }
+  // else {
+  //   static auto last_status_time = std::chrono::steady_clock::now();
+  //   auto now = std::chrono::steady_clock::now();
+  //   if (std::chrono::duration_cast<std::chrono::seconds>(now - last_status_time).count() >= 5) {
+  //       frame_queue.print_status();
+  //       last_status_time = now;
+  //   }
+  // }
+}
+}
+
 void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstSharedPtr img_msg)
 {
+  if(!use_thread_pool)
+  {
   // Convert ROS img to cv::Mat
   auto img = cv_bridge::toCvShare(img_msg, "rgb8")->image;
-  detector_->push(img);
-  //TODO 把pop独立到一个回调函数
-  auto result = detector_->debug_pop();  // 非阻塞版本
-          //if (result.has_value()) 
-          { 
-            auto [debug_img, armors] = result;
-          //detector_->result_img = debug_img;
-          detector_->result_img = detector_->draw_result(armors, debug_img);
-          if(debug_)
-          {
-            result_img_pub_.publish(cv_bridge::CvImage(img_msg->header, "rgb8", detector_->result_img).toImageMsg());
-            auto all_binary_img = detector_->get_all_binary_img(armors);
-            binary_img_pub_.publish(cv_bridge::CvImage(img_msg->header, "mono8", all_binary_img).toImageMsg());
-          }  
-          if (armor_pose_estimator_ != nullptr) {
-            armors_msg_.header = img_msg->header;
-            //only reserve enemy
-            armors.erase(
-                std::remove_if(armors.begin(), armors.end(), [this](const Armor& armor) {
-                    return static_cast<int>(armor.color) != detect_color;
-                }),
-                armors.end()
+  auto timestamp = rclcpp::Time(img_msg->header.stamp);
+  yolo_->push(img,timestamp.nanoseconds());
+  
+  while(yolo_->queue_.more_than(n))
+  {
+    auto result = yolo_->debug_pop();
+    auto [debug_img, armors, time] = result;
+    auto t = (this->now()).seconds() * 1000.0;
+    auto time_ms = time / 1e6;
+    auto latency = t - time_ms;
+    detector_->result_img = detector_->draw_result(armors, debug_img, latency);
+    if(debug_)
+      {
+      result_img_pub_.publish(cv_bridge::CvImage(img_msg->header, "rgb8", detector_->result_img).toImageMsg());
+      auto all_binary_img = detector_->get_all_binary_img(armors);
+      binary_img_pub_.publish(cv_bridge::CvImage(img_msg->header, "mono8", all_binary_img).toImageMsg());
+      }  
+    if (armor_pose_estimator_ != nullptr) {
+      armors_msg_.header = img_msg->header;
+      //only reserve enemy
+      armors.erase(
+        std::remove_if(armors.begin(), armors.end(), [this](const Armor& armor) {
+            return static_cast<int>(armor.color) != detect_color;
+            }),
+      armors.end()
             );
               // Get the transform from odom to gimbal
-              try {
-                rclcpp::Time target_time = img_msg->header.stamp;
-                auto odom_to_gimbal = tf2_buffer_->lookupTransform(
-                    odom_frame_, img_msg->header.frame_id, target_time,
-                    rclcpp::Duration::from_seconds(0.01));
-                auto msg_q = odom_to_gimbal.transform.rotation;
-                tf2::Quaternion tf_q;
-                tf2::fromMsg(msg_q, tf_q);
-                tf2::Matrix3x3 tf2_matrix = tf2::Matrix3x3(tf_q);
-                imu_to_camera_ << tf2_matrix.getRow(0)[0], tf2_matrix.getRow(0)[1],
+        try {
+          rclcpp::Time target_time = img_msg->header.stamp;
+          auto odom_to_gimbal = tf2_buffer_->lookupTransform(
+              odom_frame_, img_msg->header.frame_id, target_time,
+              rclcpp::Duration::from_seconds(0.01));
+          auto msg_q = odom_to_gimbal.transform.rotation;
+          tf2::Quaternion tf_q;
+          tf2::fromMsg(msg_q, tf_q);
+          tf2::Matrix3x3 tf2_matrix = tf2::Matrix3x3(tf_q);
+          imu_to_camera_ << tf2_matrix.getRow(0)[0], tf2_matrix.getRow(0)[1],
                     tf2_matrix.getRow(0)[2], tf2_matrix.getRow(1)[0],
                     tf2_matrix.getRow(1)[1], tf2_matrix.getRow(1)[2],
                     tf2_matrix.getRow(2)[0], tf2_matrix.getRow(2)[1],
@@ -160,44 +272,85 @@ void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstShared
               }
             //Eigen::Vector3d gimbal_ypr = rm_tools::eulers(imu_to_camera_, 2, 1, 0);
             //auto y = gimbal_ypr[0];
-            armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
+        armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
 
               // Publishing marker
-            if (debug_) {
-              marker_array_.markers.clear();
-              armor_marker_.id = 0;
-              text_marker_.id = 0;
-              armor_marker_.header = text_marker_.header = armors_msg_.header;
-              // Fill the markers
-              for (const auto &armor : armors_msg_.armors) {
-                armor_marker_.scale.y = armor.type == std::string("small") ? 0.135 : 0.23;
-                armor_marker_.pose = armor.pose;
-                armor_marker_.id++;
-                text_marker_.pose.position = armor.pose.position;
-                text_marker_.id++;
-                text_marker_.pose.position.y -= 0.1;
-                text_marker_.text = armor.number;
-                marker_array_.markers.emplace_back(armor_marker_);
-                marker_array_.markers.emplace_back(text_marker_);
+        if (debug_) {
+          marker_array_.markers.clear();
+          armor_marker_.id = 0;
+          text_marker_.id = 0;
+          armor_marker_.header = text_marker_.header = armors_msg_.header;
+          // Fill the markers
+          for (const auto &armor : armors_msg_.armors) {
+            armor_marker_.scale.y = armor.type == std::string("small") ? 0.135 : 0.23;
+            armor_marker_.pose = armor.pose;
+            armor_marker_.id++;
+            text_marker_.pose.position = armor.pose.position;
+            text_marker_.id++;
+            text_marker_.pose.position.y -= 0.1;
+            text_marker_.text = armor.number;
+            marker_array_.markers.emplace_back(armor_marker_);
+            marker_array_.markers.emplace_back(text_marker_);
               }
-              publishMarkers();
+            publishMarkers();
             }
             // Publishing detected armors
             armors_pub_->publish(armors_msg_);
-          }
+    }        
 }
+  }
+  else
+  {
+  // Convert ROS img to cv::Mat
+  cv::Mat img = cv_bridge::toCvShare(img_msg, "rgb8")->image;
+  auto header = img_msg->header;
+  cv::Mat img_clone = img.clone();
+
+  auto timestamp = rclcpp::Time(header.stamp);
+  int64_t t = timestamp.nanoseconds();
+  int current_frame_id = frame_id.fetch_add(1, std::memory_order_relaxed);
+  //int current_frame_id = ++frame_id;
+
+    thread_pool_->enqueue([this, img_clone = std::move(img_clone), current_frame_id, t,header] {
+      int yolo_id = -1;
+      {
+        std::lock_guard<std::mutex> lock(yolo_mutex_);
+        for (int i = 0; i < num_yolo_thread; i++) {
+          if (!yolo_used[i]) {
+            yolo_used[i] = true;
+            yolo_id = i;
+            break;
+          }
+        }
+      }
+      if (yolo_id != -1) {  
+        Frame frame{current_frame_id, img_clone, t, header};
+        if(!img_clone.empty())
+        {frame.armors = yolos[yolo_id]->detect(frame.img);
+        frame_queue.enqueue(frame);}
+      else
+      std::cout<<"the img is fucking empty"<<std::endl;
+      {
+        std::lock_guard<std::mutex> lock(yolo_mutex_);
+        yolo_used[yolo_id] = false;
+      }  
+      }
+      else
+      RCLCPP_WARN(this->get_logger(), "YOLO Pool is full!");
+    });
+  }
 }
 void ArmorDetectorNode::initDetector()
 {
-
     auto pkg_path = ament_index_cpp::get_package_share_directory("armor_detector");    
     std::string model_name = this->declare_parameter("model_name", "yolov5.xml");
     auto model_path = pkg_path + "/models/" + model_name;  
     std::string device = declare_parameter("device","CPU");
     auto conf_threshold = this->declare_parameter("confidence_threshole", 0.5);
-    detector_ = std::make_unique<MultiThreadDetector>(model_path, device, debug_);
-    detector_-> score_threshold_ = conf_threshold;
+    yolo_ = std::make_unique<YOLOV5>(model_path, conf_threshold, device);
+    detector_ = std::make_unique<Detector>();
     detect_color = declare_parameter("detect_color", 0);//0:red 1:blue
+    n = this->declare_parameter("async_queue_number", 3);
     detector_-> binary_thres = this->declare_parameter("binary_threshold", 70);
     detector_-> use_traditional_ = this->declare_parameter("use_traditional", true);
     detector_-> max_angle_error_ = this->declare_parameter("max_angle_error", 50);
@@ -206,18 +359,38 @@ void ArmorDetectorNode::initDetector()
     detector_-> min_lightbar_length_ = this->declare_parameter("min_lightbar_length", 20);
     detector_-> tolerate = this->declare_parameter("tolerate", 0.1);
     detector_-> min_l2l_ratio_ = this->declare_parameter("min_l2l_ratio", 0.7);
-    detector_->use_pca = this->declare_parameter("use_pca",true);
-    //armor_pose_estimator_->use_ba_ = this->declare_parameter("use_ba",true);
+    detector_->use_pca = this->declare_parameter("use_pca",false);
+    RCLCPP_INFO(this->get_logger(), "Model loaded: %s", model_path.c_str());
+
+}
+
+void ArmorDetectorNode::init_pool()
+{
+    auto pkg_path = ament_index_cpp::get_package_share_directory("armor_detector");    
+    std::string model_name = this->declare_parameter("model_name", "yolov5.xml");
+    auto model_path = pkg_path + "/models/" + model_name;  
+    std::string device = this->declare_parameter("device","CPU");
+    num_yolo_thread = this->declare_parameter("num_yolo_thread",8);
+    auto conf_threshold = this->declare_parameter("confidence_threshole", 0.7);
+    yolos = create_yolov5s(model_path, num_yolo_thread, conf_threshold, device);
+    yolo_used.resize(num_yolo_thread, false);
+    thread_pool_ = std::make_unique<ThreadPool>(num_yolo_thread);
+    detector_ = std::make_unique<Detector>();
+    detect_color = declare_parameter("detect_color", 0);//0:red 1:blue
+    detector_-> binary_thres = this->declare_parameter("binary_threshold", 70);
+    detector_-> max_angle_error_ = this->declare_parameter("max_angle_error", 50);
+    detector_-> min_lightbar_ratio_ = this->declare_parameter("min_lightbar_ratio", 1.5);
+    detector_-> max_lightbar_ratio_ = this->declare_parameter("max_lightbar_ratio", 20);
+    detector_-> min_lightbar_length_ = this->declare_parameter("min_lightbar_length", 20);
+    detector_-> tolerate = this->declare_parameter("tolerate", 0.1);
+    detector_-> min_l2l_ratio_ = this->declare_parameter("min_l2l_ratio", 0.7);
+    detector_->use_pca = this->declare_parameter("use_pca",false);
     RCLCPP_INFO(this->get_logger(), "Model loaded: %s", model_path.c_str());
 
 }
 
 void ArmorDetectorNode::createDebugPublishers()
 {
-  // lights_data_pub_ =
-  //   this->create_publisher<auto_aim_interfaces::msg::DebugLights>("/detector/debug_lights", 10);
-  // armors_data_pub_ =
-  //   this->create_publisher<auto_aim_interfaces::msg::DebugArmors>("/detector/debug_armors", 10);
   this->declare_parameter("armor_detector.result_img.jpeg_quality", 50);
   this->declare_parameter("armor_detector.binary_img.jpeg_quality", 50);
   binary_img_pub_ = image_transport::create_publisher(this, "/detector/binary_img");
@@ -226,9 +399,6 @@ void ArmorDetectorNode::createDebugPublishers()
 
 void ArmorDetectorNode::destroyDebugPublishers()
 {
-  // lights_data_pub_.reset();
-  // armors_data_pub_.reset();
-
   binary_img_pub_.shutdown();
   result_img_pub_.shutdown();
 }

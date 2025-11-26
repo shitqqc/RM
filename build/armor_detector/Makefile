@@ -391,6 +391,54 @@ src/graph_optimator.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/armor_detector.dir/build.make CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.s
 .PHONY : src/graph_optimator.cpp.s
 
+src/yolo.o: src/yolo.cpp.o
+.PHONY : src/yolo.o
+
+# target to build an object file
+src/yolo.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/armor_detector.dir/build.make CMakeFiles/armor_detector.dir/src/yolo.cpp.o
+.PHONY : src/yolo.cpp.o
+
+src/yolo.i: src/yolo.cpp.i
+.PHONY : src/yolo.i
+
+# target to preprocess a source file
+src/yolo.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/armor_detector.dir/build.make CMakeFiles/armor_detector.dir/src/yolo.cpp.i
+.PHONY : src/yolo.cpp.i
+
+src/yolo.s: src/yolo.cpp.s
+.PHONY : src/yolo.s
+
+# target to generate assembly for a file
+src/yolo.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/armor_detector.dir/build.make CMakeFiles/armor_detector.dir/src/yolo.cpp.s
+.PHONY : src/yolo.cpp.s
+
+src/yolov5.o: src/yolov5.cpp.o
+.PHONY : src/yolov5.o
+
+# target to build an object file
+src/yolov5.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/armor_detector.dir/build.make CMakeFiles/armor_detector.dir/src/yolov5.cpp.o
+.PHONY : src/yolov5.cpp.o
+
+src/yolov5.i: src/yolov5.cpp.i
+.PHONY : src/yolov5.i
+
+# target to preprocess a source file
+src/yolov5.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/armor_detector.dir/build.make CMakeFiles/armor_detector.dir/src/yolov5.cpp.i
+.PHONY : src/yolov5.cpp.i
+
+src/yolov5.s: src/yolov5.cpp.s
+.PHONY : src/yolov5.s
+
+# target to generate assembly for a file
+src/yolov5.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/armor_detector.dir/build.make CMakeFiles/armor_detector.dir/src/yolov5.cpp.s
+.PHONY : src/yolov5.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -429,6 +477,12 @@ help:
 	@echo "... src/graph_optimator.o"
 	@echo "... src/graph_optimator.i"
 	@echo "... src/graph_optimator.s"
+	@echo "... src/yolo.o"
+	@echo "... src/yolo.i"
+	@echo "... src/yolo.s"
+	@echo "... src/yolov5.o"
+	@echo "... src/yolov5.i"
+	@echo "... src/yolov5.s"
 .PHONY : help
 
 

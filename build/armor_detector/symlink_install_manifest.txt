@@ -5,7 +5,10 @@
 /home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/include/armor_detector/detector.hpp
 /home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/include/armor_detector/detector_node.hpp
 /home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/include/armor_detector/graph_optimizer.hpp
+/home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/include/armor_detector/thread_pool.hpp
 /home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/include/armor_detector/thread_safe_quene.hpp
+/home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/include/armor_detector/yolo.hpp
+/home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/include/armor_detector/yolov5.hpp
 /home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/share/armor_detector/environment/library_path.sh
 /home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/share/armor_detector/environment/library_path.dsv
 /home/ljoy/Robomaster/PIONEER/new_rv/install/armor_detector/lib/libarmor_detector.so

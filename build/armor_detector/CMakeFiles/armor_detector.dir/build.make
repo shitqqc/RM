@@ -153,6 +153,34 @@ CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/graph_optimator.cpp -o CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.s
 
+CMakeFiles/armor_detector.dir/src/yolo.cpp.o: CMakeFiles/armor_detector.dir/flags.make
+CMakeFiles/armor_detector.dir/src/yolo.cpp.o: /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolo.cpp
+CMakeFiles/armor_detector.dir/src/yolo.cpp.o: CMakeFiles/armor_detector.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ljoy/Robomaster/PIONEER/new_rv/build/armor_detector/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/armor_detector.dir/src/yolo.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/armor_detector.dir/src/yolo.cpp.o -MF CMakeFiles/armor_detector.dir/src/yolo.cpp.o.d -o CMakeFiles/armor_detector.dir/src/yolo.cpp.o -c /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolo.cpp
+
+CMakeFiles/armor_detector.dir/src/yolo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/armor_detector.dir/src/yolo.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolo.cpp > CMakeFiles/armor_detector.dir/src/yolo.cpp.i
+
+CMakeFiles/armor_detector.dir/src/yolo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/armor_detector.dir/src/yolo.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolo.cpp -o CMakeFiles/armor_detector.dir/src/yolo.cpp.s
+
+CMakeFiles/armor_detector.dir/src/yolov5.cpp.o: CMakeFiles/armor_detector.dir/flags.make
+CMakeFiles/armor_detector.dir/src/yolov5.cpp.o: /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolov5.cpp
+CMakeFiles/armor_detector.dir/src/yolov5.cpp.o: CMakeFiles/armor_detector.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ljoy/Robomaster/PIONEER/new_rv/build/armor_detector/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/armor_detector.dir/src/yolov5.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/armor_detector.dir/src/yolov5.cpp.o -MF CMakeFiles/armor_detector.dir/src/yolov5.cpp.o.d -o CMakeFiles/armor_detector.dir/src/yolov5.cpp.o -c /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolov5.cpp
+
+CMakeFiles/armor_detector.dir/src/yolov5.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/armor_detector.dir/src/yolov5.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolov5.cpp > CMakeFiles/armor_detector.dir/src/yolov5.cpp.i
+
+CMakeFiles/armor_detector.dir/src/yolov5.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/armor_detector.dir/src/yolov5.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolov5.cpp -o CMakeFiles/armor_detector.dir/src/yolov5.cpp.s
+
 # Object files for target armor_detector
 armor_detector_OBJECTS = \
 "CMakeFiles/armor_detector.dir/src/armor.cpp.o" \
@@ -160,7 +188,9 @@ armor_detector_OBJECTS = \
 "CMakeFiles/armor_detector.dir/src/ba_solver.cpp.o" \
 "CMakeFiles/armor_detector.dir/src/detector.cpp.o" \
 "CMakeFiles/armor_detector.dir/src/detector_node.cpp.o" \
-"CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.o"
+"CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.o" \
+"CMakeFiles/armor_detector.dir/src/yolo.cpp.o" \
+"CMakeFiles/armor_detector.dir/src/yolov5.cpp.o"
 
 # External object files for target armor_detector
 armor_detector_EXTERNAL_OBJECTS =
@@ -171,6 +201,8 @@ libarmor_detector.so: CMakeFiles/armor_detector.dir/src/ba_solver.cpp.o
 libarmor_detector.so: CMakeFiles/armor_detector.dir/src/detector.cpp.o
 libarmor_detector.so: CMakeFiles/armor_detector.dir/src/detector_node.cpp.o
 libarmor_detector.so: CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.o
+libarmor_detector.so: CMakeFiles/armor_detector.dir/src/yolo.cpp.o
+libarmor_detector.so: CMakeFiles/armor_detector.dir/src/yolov5.cpp.o
 libarmor_detector.so: CMakeFiles/armor_detector.dir/build.make
 libarmor_detector.so: /opt/ros/humble/lib/libcomponent_manager.so
 libarmor_detector.so: /opt/ros/humble/lib/libcv_bridge.so
@@ -366,7 +398,7 @@ libarmor_detector.so: /opt/ros/humble/lib/libunique_identifier_msgs__rosidl_gene
 libarmor_detector.so: /opt/ros/humble/lib/librosidl_runtime_c.so
 libarmor_detector.so: /opt/ros/humble/lib/librcutils.so
 libarmor_detector.so: CMakeFiles/armor_detector.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/ljoy/Robomaster/PIONEER/new_rv/build/armor_detector/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX shared library libarmor_detector.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/ljoy/Robomaster/PIONEER/new_rv/build/armor_detector/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX shared library libarmor_detector.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/armor_detector.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

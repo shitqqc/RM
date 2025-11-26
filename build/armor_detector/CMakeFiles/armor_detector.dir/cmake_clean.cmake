@@ -11,6 +11,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/armor_detector.dir/src/detector_node.cpp.o.d"
   "CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.o"
   "CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.o.d"
+  "CMakeFiles/armor_detector.dir/src/yolo.cpp.o"
+  "CMakeFiles/armor_detector.dir/src/yolo.cpp.o.d"
+  "CMakeFiles/armor_detector.dir/src/yolov5.cpp.o"
+  "CMakeFiles/armor_detector.dir/src/yolov5.cpp.o.d"
   "libarmor_detector.pdb"
   "libarmor_detector.so"
 )

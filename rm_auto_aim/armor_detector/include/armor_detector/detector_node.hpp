@@ -26,6 +26,9 @@
 #include <tf2/time.h>
 #include <tf2_ros/create_timer_ros.h>
 
+#include "yolo.hpp"
+#include "yolov5.hpp"
+#include "thread_pool.hpp"
 // STD
 #include <memory>
 #include <string>
@@ -38,7 +41,9 @@ class ArmorDetectorNode : public rclcpp::Node
 {
 public:
   ArmorDetectorNode(const rclcpp::NodeOptions & options);
+  ~ArmorDetectorNode();
 
+  std::atomic<int> frame_id{0};
 private:
   void imageCallback(const sensor_msgs::msg::Image::ConstSharedPtr img_msg);
   void initDetector();
@@ -52,9 +57,22 @@ private:
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr task_sub_;
   bool is_aim_task_;
   void taskCallback(const std_msgs::msg::String::SharedPtr task_msg);
-
+  int n = 3;
   // Armor Detector
-  std::unique_ptr<MultiThreadDetector> detector_;
+  std::unique_ptr<Detector> detector_;
+  std::unique_ptr<YOLOV5> yolo_;
+
+  // //thread pool
+  bool use_thread_pool;
+  OrderedQueue frame_queue;
+  std::thread process_thread_;
+  std::vector<std::unique_ptr<YOLO>> yolos;
+  std::mutex yolo_mutex_;
+  int num_yolo_thread;
+  std::unique_ptr<ThreadPool> thread_pool_;
+  std::vector<bool> yolo_used;
+  void init_pool();
+  void processLoop();
 
   // Detected armors publisher
   auto_aim_interfaces::msg::Armors armors_msg_;
@@ -79,8 +97,6 @@ private:
   bool debug_;
   std::shared_ptr<rclcpp::ParameterEventHandler> debug_param_sub_;
   std::shared_ptr<rclcpp::ParameterCallbackHandle> debug_cb_handle_;
-  // rclcpp::Publisher<auto_aim_interfaces::msg::DebugLights>::SharedPtr lights_data_pub_;
-  // rclcpp::Publisher<auto_aim_interfaces::msg::DebugArmors>::SharedPtr armors_data_pub_;
   image_transport::Publisher binary_img_pub_;
   image_transport::Publisher number_img_pub_;
   image_transport::Publisher result_img_pub_;

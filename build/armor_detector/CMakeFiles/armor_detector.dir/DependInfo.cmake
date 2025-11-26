@@ -14,6 +14,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/detector.cpp" "CMakeFiles/armor_detector.dir/src/detector.cpp.o" "gcc" "CMakeFiles/armor_detector.dir/src/detector.cpp.o.d"
   "/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/detector_node.cpp" "CMakeFiles/armor_detector.dir/src/detector_node.cpp.o" "gcc" "CMakeFiles/armor_detector.dir/src/detector_node.cpp.o.d"
   "/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/graph_optimator.cpp" "CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.o" "gcc" "CMakeFiles/armor_detector.dir/src/graph_optimator.cpp.o.d"
+  "/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolo.cpp" "CMakeFiles/armor_detector.dir/src/yolo.cpp.o" "gcc" "CMakeFiles/armor_detector.dir/src/yolo.cpp.o.d"
+  "/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/src/yolov5.cpp" "CMakeFiles/armor_detector.dir/src/yolov5.cpp.o" "gcc" "CMakeFiles/armor_detector.dir/src/yolov5.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

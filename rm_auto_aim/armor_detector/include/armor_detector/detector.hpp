@@ -14,34 +14,19 @@ namespace rm_auto_aim
 {
 
 
-class MultiThreadDetector
+class Detector
 {
 public:
-  MultiThreadDetector(const std::string & model_path, const std::string & device, bool debug = false);
-
-  void push(cv::Mat img);
-  cv::Mat draw_result(const std::vector<Armor> armor, cv::Mat  img);
-  inline double sigmoid(double x) {
-      return 1.0 / (1.0 + std::exp(-x));
-  }
-  std::vector<Armor> pop();
-  std::tuple<cv::Mat, std::vector<Armor>> debug_pop();
-  std::vector<Armor> parse(double scale, cv::Mat & output, const cv::Mat & bgr_img);
+  Detector();
 
   bool traditional_correct(Armor &armor, const cv::Mat & img);
+  cv::Mat draw_result(const std::vector<Armor> armors, cv::Mat img, double latency);
   cv::Mat get_all_binary_img(std::vector<Armor> armors);
-  bool check_name(const Armor & armor) const;
-  bool check_type(const Armor & armor) const;
   bool check_geometry(const Lightbar & lightbar) const;
-  cv::Point2f get_center_norm(const cv::Mat & bgr_img, const cv::Point2f & center) const;
-  void lightbar_points_corrector(Lightbar & lightbar, const cv::Mat & gray_img) const;
+  void pca_corrector(Lightbar & lightbar, const cv::Mat & gray_img) const;
   void zy_corrector(Lightbar & lightbar) const;
 
-    double score_threshold_;
-    double nms_threshold_;
-    double min_confidence_;
-    std::string device_;
-    std::string model_path_;
+
     cv::Mat result_img;
     int binary_thres;
     bool use_traditional_;
@@ -55,15 +40,6 @@ public:
     bool use_pca;
     double tolerate;
 
-private:
- 
-  cv::Mat tmp_img_;
-  ov::Core core_;
-  ov::CompiledModel compiled_model_;
-
-  rm_auto_aim::ThreadSafeQueue<
-  std::tuple<cv::Mat, ov::InferRequest>>
-  queue_{16, [] { std::cout<<"[MultiThreadDetector] queue is full!"<<std::endl; }};
 };
 
 

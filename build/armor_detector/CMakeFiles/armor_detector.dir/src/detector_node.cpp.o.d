@@ -1294,6 +1294,12 @@ CMakeFiles/armor_detector.dir/src/detector_node.cpp.o: \
  /opt/ros/humble/include/tf2_ros/tf2_ros/qos.hpp \
  /opt/ros/humble/include/tf2_ros/tf2_ros/transform_listener.h \
  /opt/ros/humble/include/tf2_ros/tf2_ros/create_timer_ros.h \
+ /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/yolo.hpp \
+ /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/yolov5.hpp \
+ /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/detector.hpp \
+ /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/thread_pool.hpp \
+ /opt/ros/humble/include/std_msgs/std_msgs/msg/header.hpp \
+ /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/header__builder.hpp \
  /home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/include/rm_tools/math.hpp \
  /usr/include/opencv4/opencv2/core/eigen.hpp \
  /usr/include/eigen3/unsupported/Eigen/CXX11/Tensor \
