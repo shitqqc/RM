@@ -62,6 +62,8 @@ private:
   std::unique_ptr<Detector> detector_;
   std::unique_ptr<YOLOV5> yolo_;
 
+  void single_yolo_process(cv::Mat img, std_msgs::msg::Header header);
+  void yolo_pool_process(cv::Mat img, std_msgs::msg::Header header);
   // //thread pool
   bool use_thread_pool;
   OrderedQueue frame_queue;

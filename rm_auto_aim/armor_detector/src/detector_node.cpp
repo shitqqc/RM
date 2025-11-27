@@ -221,11 +221,18 @@ void ArmorDetectorNode::processLoop()
 
 void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstSharedPtr img_msg)
 {
-  if(!use_thread_pool)
-  {
   // Convert ROS img to cv::Mat
   auto img = cv_bridge::toCvShare(img_msg, "rgb8")->image;
-  auto timestamp = rclcpp::Time(img_msg->header.stamp);
+  auto header = img_msg->header;
+  if(!use_thread_pool)
+  single_yolo_process(img, header); 
+  else
+  yolo_pool_process(img,header);
+}
+
+void ArmorDetectorNode::single_yolo_process(cv::Mat img, std_msgs::msg::Header header)
+{
+   auto timestamp = rclcpp::Time(header.stamp);
   yolo_->push(img,timestamp.nanoseconds());
   
   while(yolo_->queue_.more_than(n))
@@ -238,12 +245,12 @@ void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstShared
     detector_->result_img = detector_->draw_result(armors, debug_img, latency);
     if(debug_)
       {
-      result_img_pub_.publish(cv_bridge::CvImage(img_msg->header, "rgb8", detector_->result_img).toImageMsg());
+      result_img_pub_.publish(cv_bridge::CvImage(header, "rgb8", detector_->result_img).toImageMsg());
       auto all_binary_img = detector_->get_all_binary_img(armors);
-      binary_img_pub_.publish(cv_bridge::CvImage(img_msg->header, "mono8", all_binary_img).toImageMsg());
+      binary_img_pub_.publish(cv_bridge::CvImage(header, "mono8", all_binary_img).toImageMsg());
       }  
     if (armor_pose_estimator_ != nullptr) {
-      armors_msg_.header = img_msg->header;
+      armors_msg_.header = header;
       //only reserve enemy
       armors.erase(
         std::remove_if(armors.begin(), armors.end(), [this](const Armor& armor) {
@@ -253,9 +260,9 @@ void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstShared
             );
               // Get the transform from odom to gimbal
         try {
-          rclcpp::Time target_time = img_msg->header.stamp;
+          rclcpp::Time target_time = header.stamp;
           auto odom_to_gimbal = tf2_buffer_->lookupTransform(
-              odom_frame_, img_msg->header.frame_id, target_time,
+              odom_frame_, header.frame_id, target_time,
               rclcpp::Duration::from_seconds(0.01));
           auto msg_q = odom_to_gimbal.transform.rotation;
           tf2::Quaternion tf_q;
@@ -298,12 +305,10 @@ void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstShared
             armors_pub_->publish(armors_msg_);
     }        
 }
-  }
-  else
-  {
-  // Convert ROS img to cv::Mat
-  cv::Mat img = cv_bridge::toCvShare(img_msg, "rgb8")->image;
-  auto header = img_msg->header;
+}
+
+void ArmorDetectorNode::yolo_pool_process(cv::Mat img, std_msgs::msg::Header header)
+{
   cv::Mat img_clone = img.clone();
 
   auto timestamp = rclcpp::Time(header.stamp);
@@ -338,7 +343,6 @@ void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstShared
       else
       RCLCPP_WARN(this->get_logger(), "YOLO Pool is full!");
     });
-  }
 }
 void ArmorDetectorNode::initDetector()
 {
