@@ -66,7 +66,7 @@ public:
 
   std::string tracked_id;
   std::string last_tracked_id;
-  Armor tracked_armor;
+  Armor first_tracked_armor;
   ArmorsNum tracked_armors_num;
   int armorNumAsInt;
 
@@ -117,6 +117,8 @@ private:
   int update_count_;
 
   int id;
+  int last_id;
+  int unmatched_count;
 
   bool jumped;
   double last_yaw_;
