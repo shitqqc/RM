@@ -62,6 +62,7 @@ class GimbalCmd(metaclass=Metaclass_GimbalCmd):
 
     __slots__ = [
         '_header',
+        '_control',
         '_fire',
         '_target_yaw',
         '_target_pitch',
@@ -75,6 +76,7 @@ class GimbalCmd(metaclass=Metaclass_GimbalCmd):
 
     _fields_and_field_types = {
         'header': 'std_msgs/Header',
+        'control': 'boolean',
         'fire': 'boolean',
         'target_yaw': 'double',
         'target_pitch': 'double',
@@ -88,6 +90,7 @@ class GimbalCmd(metaclass=Metaclass_GimbalCmd):
 
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['std_msgs', 'msg'], 'Header'),  # noqa: E501
+        rosidl_parser.definition.BasicType('boolean'),  # noqa: E501
         rosidl_parser.definition.BasicType('boolean'),  # noqa: E501
         rosidl_parser.definition.BasicType('double'),  # noqa: E501
         rosidl_parser.definition.BasicType('double'),  # noqa: E501
@@ -105,6 +108,7 @@ class GimbalCmd(metaclass=Metaclass_GimbalCmd):
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from std_msgs.msg import Header
         self.header = kwargs.get('header', Header())
+        self.control = kwargs.get('control', bool())
         self.fire = kwargs.get('fire', bool())
         self.target_yaw = kwargs.get('target_yaw', float())
         self.target_pitch = kwargs.get('target_pitch', float())
@@ -146,6 +150,8 @@ class GimbalCmd(metaclass=Metaclass_GimbalCmd):
             return False
         if self.header != other.header:
             return False
+        if self.control != other.control:
+            return False
         if self.fire != other.fire:
             return False
         if self.target_yaw != other.target_yaw:
@@ -184,6 +190,19 @@ class GimbalCmd(metaclass=Metaclass_GimbalCmd):
                 isinstance(value, Header), \
                 "The 'header' field must be a sub message of type 'Header'"
         self._header = value
+
+    @builtins.property
+    def control(self):
+        """Message field 'control'."""
+        return self._control
+
+    @control.setter
+    def control(self, value):
+        if __debug__:
+            assert \
+                isinstance(value, bool), \
+                "The 'control' field must be of type 'bool'"
+        self._control = value
 
     @builtins.property
     def fire(self):

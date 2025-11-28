@@ -33,6 +33,7 @@ struct ReceivePacket
 struct SendPacket
 {
   uint8_t header = 0xA5;
+  uint8_t control;
   uint8_t fire;       // 0-false 1-true
   float target_yaw;
   float target_pitch;

@@ -37,7 +37,7 @@ void auto_aim_interfaces__msg__GimbalCmd__rosidl_typesupport_introspection_c__Gi
   auto_aim_interfaces__msg__GimbalCmd__fini(message_memory);
 }
 
-static rosidl_typesupport_introspection_c__MessageMember auto_aim_interfaces__msg__GimbalCmd__rosidl_typesupport_introspection_c__GimbalCmd_message_member_array[10] = {
+static rosidl_typesupport_introspection_c__MessageMember auto_aim_interfaces__msg__GimbalCmd__rosidl_typesupport_introspection_c__GimbalCmd_message_member_array[11] = {
   {
     "header",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE,  // type
@@ -47,6 +47,23 @@ static rosidl_typesupport_introspection_c__MessageMember auto_aim_interfaces__ms
     0,  // array size
     false,  // is upper bound
     offsetof(auto_aim_interfaces__msg__GimbalCmd, header),  // bytes offset in struct
+    NULL,  // default value
+    NULL,  // size() function pointer
+    NULL,  // get_const(index) function pointer
+    NULL,  // get(index) function pointer
+    NULL,  // fetch(index, &value) function pointer
+    NULL,  // assign(index, value) function pointer
+    NULL  // resize(index) function pointer
+  },
+  {
+    "control",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_BOOLEAN,  // type
+    0,  // upper bound of string
+    NULL,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(auto_aim_interfaces__msg__GimbalCmd, control),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -213,7 +230,7 @@ static rosidl_typesupport_introspection_c__MessageMember auto_aim_interfaces__ms
 static const rosidl_typesupport_introspection_c__MessageMembers auto_aim_interfaces__msg__GimbalCmd__rosidl_typesupport_introspection_c__GimbalCmd_message_members = {
   "auto_aim_interfaces__msg",  // message namespace
   "GimbalCmd",  // message name
-  10,  // number of fields
+  11,  // number of fields
   sizeof(auto_aim_interfaces__msg__GimbalCmd),
   auto_aim_interfaces__msg__GimbalCmd__rosidl_typesupport_introspection_c__GimbalCmd_message_member_array,  // message members
   auto_aim_interfaces__msg__GimbalCmd__rosidl_typesupport_introspection_c__GimbalCmd_init_function,  // function to initialize message memory (memory has to be allocated)

@@ -43,6 +43,7 @@ struct GimbalCmd_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
+      this->control = false;
       this->fire = false;
       this->target_yaw = 0.0;
       this->target_pitch = 0.0;
@@ -61,6 +62,7 @@ struct GimbalCmd_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
+      this->control = false;
       this->fire = false;
       this->target_yaw = 0.0;
       this->target_pitch = 0.0;
@@ -77,6 +79,9 @@ struct GimbalCmd_
   using _header_type =
     std_msgs::msg::Header_<ContainerAllocator>;
   _header_type header;
+  using _control_type =
+    bool;
+  _control_type control;
   using _fire_type =
     bool;
   _fire_type fire;
@@ -110,6 +115,12 @@ struct GimbalCmd_
     const std_msgs::msg::Header_<ContainerAllocator> & _arg)
   {
     this->header = _arg;
+    return *this;
+  }
+  Type & set__control(
+    const bool & _arg)
+  {
+    this->control = _arg;
     return *this;
   }
   Type & set__fire(
@@ -210,6 +221,9 @@ struct GimbalCmd_
   bool operator==(const GimbalCmd_ & other) const
   {
     if (this->header != other.header) {
+      return false;
+    }
+    if (this->control != other.control) {
       return false;
     }
     if (this->fire != other.fire) {

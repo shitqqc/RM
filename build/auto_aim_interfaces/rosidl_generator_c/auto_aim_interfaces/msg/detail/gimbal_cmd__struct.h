@@ -25,6 +25,7 @@ extern "C"
 typedef struct auto_aim_interfaces__msg__GimbalCmd
 {
   std_msgs__msg__Header header;
+  bool control;
   bool fire;
   double target_yaw;
   double target_pitch;

@@ -8,7 +8,7 @@
     # frame_id: "optical_frame"     # If not set, it will be set as <camera_name>_optical_frame
     # camera_topic: "image"         # If not set, it will be set as <camera_name>/image
 
-    acquisition_frame_rate: 150.0   # Unit: Hz
+    acquisition_frame_rate: 250.0   # Unit: Hz
     exposure_time: 3000             # Unit: us
     gain: 16.0                      # Range: 0.0 ~ 16.9, Unit: dB
 
@@ -27,13 +27,13 @@
     model_name: yolov5.xml
     device: CPU
     is_use_thread_pool: false
-    async_queue_number: 3
+    async_queue_number: 0
     confidence_threshole: 0.8
-    num_yolo_thread: 8
-    detect_color: 1
+    num_yolo_thread: 6
+    detect_color: 0
     use_traditional: true
     use_pca: false
-    use_ba: true
+    use_ba: false
     binary_threshold: 80
     max_angle_error: 45 # degree
     min_lightbar_ratio: 1.5
@@ -63,6 +63,34 @@
 
       tracking_thres: 5
       lost_time_thres: 1.0
+
+/planner:
+  ros__parameters:
+    debug: true
+    prediction_delay: 0.01
+    compensator_type: ideal
+    iteration_times: 20
+    bullet_speed: 20
+    gravity: 9.8
+    resistance: 0.001
+    fire_thresh: 0.003
+    
+    gimbal:
+     max_yaw_acc: 50
+     max_pitch_acc: 100
+
+    pitch_offset: [
+        "5.0 6.0 -1.0 0.4 0.0",
+        "5.0 6.0  0.4 0.8 0.0",
+        "5.0 6.0  0.8 1.2 0.0",
+        "6.0 7.0 -1.0 0.4 0.0",
+        "6.0 7.0  0.4 0.8 0.0",
+        "6.0 7.0  0.8 1.2 0.0",
+        "7.0 8.0 -1.0 0.4 0.0",
+        "7.0 8.0  0.4 0.8 0.0",
+        "7.0 8.0  0.8 1.2 0.0",
+      ]
+
 
 /buff_detector:
   ros__parameters:

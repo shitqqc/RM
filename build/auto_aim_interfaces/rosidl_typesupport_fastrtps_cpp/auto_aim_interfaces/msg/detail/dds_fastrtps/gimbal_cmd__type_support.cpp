@@ -60,6 +60,8 @@ cdr_serialize(
   std_msgs::msg::typesupport_fastrtps_cpp::cdr_serialize(
     ros_message.header,
     cdr);
+  // Member: control
+  cdr << (ros_message.control ? true : false);
   // Member: fire
   cdr << (ros_message.fire ? true : false);
   // Member: target_yaw
@@ -90,6 +92,13 @@ cdr_deserialize(
   // Member: header
   std_msgs::msg::typesupport_fastrtps_cpp::cdr_deserialize(
     cdr, ros_message.header);
+
+  // Member: control
+  {
+    uint8_t tmp;
+    cdr >> tmp;
+    ros_message.control = tmp ? true : false;
+  }
 
   // Member: fire
   {
@@ -143,6 +152,12 @@ get_serialized_size(
   current_alignment +=
     std_msgs::msg::typesupport_fastrtps_cpp::get_serialized_size(
     ros_message.header, current_alignment);
+  // Member: control
+  {
+    size_t item_size = sizeof(ros_message.control);
+    current_alignment += item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
   // Member: fire
   {
     size_t item_size = sizeof(ros_message.fire);
@@ -238,6 +253,14 @@ max_serialized_size_GimbalCmd(
       full_bounded &= inner_full_bounded;
       is_plain &= inner_is_plain;
     }
+  }
+
+  // Member: control
+  {
+    size_t array_size = 1;
+
+    last_member_size = array_size * sizeof(uint8_t);
+    current_alignment += array_size * sizeof(uint8_t);
   }
 
   // Member: fire

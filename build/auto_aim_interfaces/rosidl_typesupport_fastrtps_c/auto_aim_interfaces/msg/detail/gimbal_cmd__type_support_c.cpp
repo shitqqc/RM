@@ -78,6 +78,11 @@ static bool _GimbalCmd__cdr_serialize(
     }
   }
 
+  // Field name: control
+  {
+    cdr << (ros_message->control ? true : false);
+  }
+
   // Field name: fire
   {
     cdr << (ros_message->fire ? true : false);
@@ -149,6 +154,13 @@ static bool _GimbalCmd__cdr_deserialize(
     }
   }
 
+  // Field name: control
+  {
+    uint8_t tmp;
+    cdr >> tmp;
+    ros_message->control = tmp ? true : false;
+  }
+
   // Field name: fire
   {
     uint8_t tmp;
@@ -217,6 +229,12 @@ size_t get_serialized_size_auto_aim_interfaces__msg__GimbalCmd(
 
   current_alignment += get_serialized_size_std_msgs__msg__Header(
     &(ros_message->header), current_alignment);
+  // field.name control
+  {
+    size_t item_size = sizeof(ros_message->control);
+    current_alignment += item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
   // field.name fire
   {
     size_t item_size = sizeof(ros_message->fire);
@@ -318,6 +336,13 @@ size_t max_serialized_size_auto_aim_interfaces__msg__GimbalCmd(
       full_bounded &= inner_full_bounded;
       is_plain &= inner_is_plain;
     }
+  }
+  // member: control
+  {
+    size_t array_size = 1;
+
+    last_member_size = array_size * sizeof(uint8_t);
+    current_alignment += array_size * sizeof(uint8_t);
   }
   // member: fire
   {

@@ -37,7 +37,7 @@ void GimbalCmd_fini_function(void * message_memory)
   typed_message->~GimbalCmd();
 }
 
-static const ::rosidl_typesupport_introspection_cpp::MessageMember GimbalCmd_message_member_array[10] = {
+static const ::rosidl_typesupport_introspection_cpp::MessageMember GimbalCmd_message_member_array[11] = {
   {
     "header",  // name
     ::rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE,  // type
@@ -47,6 +47,23 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember GimbalCmd_mes
     0,  // array size
     false,  // is upper bound
     offsetof(auto_aim_interfaces::msg::GimbalCmd, header),  // bytes offset in struct
+    nullptr,  // default value
+    nullptr,  // size() function pointer
+    nullptr,  // get_const(index) function pointer
+    nullptr,  // get(index) function pointer
+    nullptr,  // fetch(index, &value) function pointer
+    nullptr,  // assign(index, value) function pointer
+    nullptr  // resize(index) function pointer
+  },
+  {
+    "control",  // name
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BOOLEAN,  // type
+    0,  // upper bound of string
+    nullptr,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(auto_aim_interfaces::msg::GimbalCmd, control),  // bytes offset in struct
     nullptr,  // default value
     nullptr,  // size() function pointer
     nullptr,  // get_const(index) function pointer
@@ -213,7 +230,7 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember GimbalCmd_mes
 static const ::rosidl_typesupport_introspection_cpp::MessageMembers GimbalCmd_message_members = {
   "auto_aim_interfaces::msg",  // message namespace
   "GimbalCmd",  // message name
-  10,  // number of fields
+  11,  // number of fields
   sizeof(auto_aim_interfaces::msg::GimbalCmd),
   GimbalCmd_message_member_array,  // message members
   GimbalCmd_init_function,  // function to initialize message memory (memory has to be allocated)

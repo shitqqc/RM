@@ -130,7 +130,7 @@ auto_aim_interfaces::msg::GimbalCmd Planner:: plan(const auto_aim_interfaces::ms
       traj(0, HALF_HORIZON + shoot_offset_) - yaw_solver_->work->x(0, HALF_HORIZON + shoot_offset_),
       traj(2, HALF_HORIZON + shoot_offset_) -
         pitch_solver_->work->x(0, HALF_HORIZON + shoot_offset_)) < fire_thresh_;
-
+  cmd.control = plan.control;
   cmd.fire = plan.fire;
   cmd.target_yaw = plan.target_yaw;
   cmd.target_pitch = -plan.target_pitch;

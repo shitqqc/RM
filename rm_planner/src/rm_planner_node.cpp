@@ -28,7 +28,7 @@ RMPlannerNode::RMPlannerNode(const rclcpp::NodeOptions &options)
 
   RCLCPP_INFO(this->get_logger(), "Starting RMPlannerNode!");
 
-  debug_mode_ = this->declare_parameter("debug", false);
+  debug_mode_ = this->declare_parameter("debug", true);
   // enable_ = this->declare_parameter("planner_enable",true);
 
 
@@ -94,6 +94,7 @@ void RMPlannerNode::timerCallback() {
   // If target never detected
   if (armor_target_.header.frame_id.empty()) {
     control_msg.header = armor_target_.header;
+    control_msg.control = false;
     control_msg.fire = false;
     control_msg.target_yaw = 0;
     control_msg.target_pitch = 0;
@@ -109,17 +110,20 @@ void RMPlannerNode::timerCallback() {
 
   if (armor_target_.tracking) {
     try {
-        planner_->prediction_delay_ = get_parameter("planner.prediction_delay").as_double();
+        planner_->prediction_delay_ = get_parameter("prediction_delay").as_double();
         control_msg = planner_->plan(armor_target_, 20, this->now(), tf2_buffer_);
         control_msg.header = armor_target_.header;
     } catch (const std::exception& e) {
         RCLCPP_ERROR(get_logger(), "Planner error: %s", e.what());
+        control_msg.control = false;
         control_msg.fire = false;
     } catch (...) {
         RCLCPP_ERROR(get_logger(), "Unknown error in planner!");
+        control_msg.control = false;
         control_msg.fire = false;
     }
   } else {
+    control_msg.control = false;
     control_msg.fire = false;
   }
   gimbal_pub_->publish(control_msg);
@@ -158,12 +162,12 @@ void RMPlannerNode::initMarkers() noexcept {
   armors_marker_.scale.z = 0.125;
   armors_marker_.color.a = 1.0;
   armors_marker_.color.b = 1.0;
-  // selection_marker_.ns = "selection";
-  // selection_marker_.type = visualization_msgs::msg::Marker::SPHERE;
-  // selection_marker_.scale.x = selection_marker_.scale.y = selection_marker_.scale.z = 0.1;
-  // selection_marker_.color.a = 1.0;
-  // selection_marker_.color.g = 1.0;
-  // selection_marker_.color.r = 1.0;
+  selection_marker_.ns = "selection";
+  selection_marker_.type = visualization_msgs::msg::Marker::SPHERE;
+  selection_marker_.scale.x = selection_marker_.scale.y = selection_marker_.scale.z = 0.1;
+  selection_marker_.color.a = 1.0;
+  selection_marker_.color.g = 1.0;
+  selection_marker_.color.r = 1.0;
   trajectory_marker_.ns = "trajectory";
   trajectory_marker_.type = visualization_msgs::msg::Marker::POINTS;
   trajectory_marker_.scale.x = 0.01;
@@ -193,6 +197,7 @@ void RMPlannerNode::publishMarkers(const auto_aim_interfaces::msg::Target &targe
     double yaw = target_msg.yaw, r = target_msg.radius, dr = target_msg.d_radius;
     double xc = target_msg.position.x, yc = target_msg.position.y, zc = target_msg.position.z;
     double vx = target_msg.velocity.x, vy = target_msg.velocity.y, vz = target_msg.velocity.z;
+    double distance = sqrt(xc*xc + yc*yc + zc*zc);
     double dz = target_msg.dz;
     position_marker_.action = visualization_msgs::msg::Marker::ADD;
     position_marker_.pose.position.x = xc;
@@ -244,11 +249,11 @@ void RMPlannerNode::publishMarkers(const auto_aim_interfaces::msg::Target &targe
       marker_array.markers.emplace_back(armors_marker_);
     }
 
-    // selection_marker_.action = visualization_msgs::msg::Marker::ADD;
-    // selection_marker_.points.clear();
-    // selection_marker_.pose.position.y = gimbal_cmd.distance * sin(gimbal_cmd.yaw * M_PI / 180);
-    // selection_marker_.pose.position.x = gimbal_cmd.distance * cos(gimbal_cmd.yaw * M_PI / 180);
-    // selection_marker_.pose.position.z = gimbal_cmd.distance * sin(gimbal_cmd.pitch * M_PI / 180);
+    selection_marker_.action = visualization_msgs::msg::Marker::ADD;
+    selection_marker_.points.clear();
+    selection_marker_.pose.position.y = distance * sin(gimbal_cmd.yaw * M_PI / 180);
+    selection_marker_.pose.position.x = distance * cos(gimbal_cmd.yaw * M_PI / 180);
+    selection_marker_.pose.position.z = distance * sin(gimbal_cmd.pitch * M_PI / 180);
 
     trajectory_marker_.action = visualization_msgs::msg::Marker::ADD;
     trajectory_marker_.points.clear();
@@ -270,12 +275,12 @@ void RMPlannerNode::publishMarkers(const auto_aim_interfaces::msg::Target &targe
     }
 
   } else {
-    position_marker_.action = visualization_msgs::msg::Marker::DELETE;
-    linear_v_marker_.action = visualization_msgs::msg::Marker::DELETE;
-    angular_v_marker_.action = visualization_msgs::msg::Marker::DELETE;
-    armors_marker_.action = visualization_msgs::msg::Marker::DELETE;
-    trajectory_marker_.action = visualization_msgs::msg::Marker::DELETE;
-    // selection_marker_.action = visualization_msgs::msg::Marker::DELETE;
+    position_marker_.action = visualization_msgs::msg::Marker::DELETEALL;
+    linear_v_marker_.action = visualization_msgs::msg::Marker::DELETEALL;
+    angular_v_marker_.action = visualization_msgs::msg::Marker::DELETEALL;
+    armors_marker_.action = visualization_msgs::msg::Marker::DELETEALL;
+    trajectory_marker_.action = visualization_msgs::msg::Marker::DELETEALL;
+    selection_marker_.action = visualization_msgs::msg::Marker::DELETEALL;
   }
 
   marker_array.markers.emplace_back(position_marker_);
@@ -283,19 +288,19 @@ void RMPlannerNode::publishMarkers(const auto_aim_interfaces::msg::Target &targe
   marker_array.markers.emplace_back(linear_v_marker_);
   marker_array.markers.emplace_back(angular_v_marker_);
   marker_array.markers.emplace_back(armors_marker_);
-  // marker_array.markers.emplace_back(selection_marker_);
+  marker_array.markers.emplace_back(selection_marker_);
   marker_pub_->publish(marker_array);
 }
 
 void RMPlannerNode::init_planner()
 {
-  planner_->prediction_delay_ = this->declare_parameter("planner.prediction_delay", 0.0);
-  auto compenstator_type = this->declare_parameter("planner.compensator_type", "ideal");
+  planner_->prediction_delay_ = this->declare_parameter("prediction_delay", 0.0);
+  auto compenstator_type = this->declare_parameter("compensator_type", "ideal");
   planner_->trajectory_compensator_ = rm_tools::CompensatorFactory::createCompensator(compenstator_type);
-  planner_->trajectory_compensator_->iteration_times = this->declare_parameter("planner.iteration_times", 20);
-  planner_->trajectory_compensator_->velocity = this->declare_parameter("planner.bullet_speed", 20.0);
-  planner_->trajectory_compensator_->gravity = this->declare_parameter("planner.gravity", 9.8);
-  planner_->trajectory_compensator_->resistance = this->declare_parameter("planner.resistance", 0.001);
+  planner_->trajectory_compensator_->iteration_times = this->declare_parameter("iteration_times", 20);
+  planner_->trajectory_compensator_->velocity = this->declare_parameter("bullet_speed", 20.0);
+  planner_->trajectory_compensator_->gravity = this->declare_parameter("gravity", 9.8);
+  planner_->trajectory_compensator_->resistance = this->declare_parameter("resistance", 0.001);
 
   planner_->max_yaw_acc = this->declare_parameter("gimbal.max_yaw_acc", 50);
   planner_->max_pitch_acc = this->declare_parameter("gimbal.max_pitch_acc", 100);
@@ -309,7 +314,7 @@ void RMPlannerNode::init_planner()
   planner_->R_pitch = this->declare_parameter("gimbal.R_pitch", std::vector<double>{1});
   planner_->init_planner();
   planner_->manual_compensator_ = std::make_unique<rm_tools::ManualCompensator>();
-  auto angle_offset = this->declare_parameter("planner.angle_offset", std::vector<std::string>{});
+  auto angle_offset = this->declare_parameter("angle_offset", std::vector<std::string>{});
   if(!planner_->manual_compensator_->updateMapFlow(angle_offset)) {
     RCLCPP_WARN(this->get_logger(), "Manual compensator update failed!");
   }

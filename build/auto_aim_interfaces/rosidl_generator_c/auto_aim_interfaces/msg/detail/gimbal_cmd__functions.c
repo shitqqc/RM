@@ -26,6 +26,7 @@ auto_aim_interfaces__msg__GimbalCmd__init(auto_aim_interfaces__msg__GimbalCmd * 
     auto_aim_interfaces__msg__GimbalCmd__fini(msg);
     return false;
   }
+  // control
   // fire
   // target_yaw
   // target_pitch
@@ -46,6 +47,7 @@ auto_aim_interfaces__msg__GimbalCmd__fini(auto_aim_interfaces__msg__GimbalCmd * 
   }
   // header
   std_msgs__msg__Header__fini(&msg->header);
+  // control
   // fire
   // target_yaw
   // target_pitch
@@ -67,6 +69,10 @@ auto_aim_interfaces__msg__GimbalCmd__are_equal(const auto_aim_interfaces__msg__G
   if (!std_msgs__msg__Header__are_equal(
       &(lhs->header), &(rhs->header)))
   {
+    return false;
+  }
+  // control
+  if (lhs->control != rhs->control) {
     return false;
   }
   // fire
@@ -122,6 +128,8 @@ auto_aim_interfaces__msg__GimbalCmd__copy(
   {
     return false;
   }
+  // control
+  output->control = input->control;
   // fire
   output->fire = input->fire;
   // target_yaw

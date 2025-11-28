@@ -213,6 +213,7 @@ void RMSerialDriver::sendArmorData(
 
   try {
     SendPacket packet;
+    packet.control = msg->control;
     packet.fire = msg->fire;
     packet.target_yaw = msg->target_yaw;
     packet.target_pitch = msg->target_pitch;

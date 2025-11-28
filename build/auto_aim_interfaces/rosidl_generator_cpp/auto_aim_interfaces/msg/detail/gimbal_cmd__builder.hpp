@@ -165,16 +165,32 @@ private:
   ::auto_aim_interfaces::msg::GimbalCmd msg_;
 };
 
+class Init_GimbalCmd_control
+{
+public:
+  explicit Init_GimbalCmd_control(::auto_aim_interfaces::msg::GimbalCmd & msg)
+  : msg_(msg)
+  {}
+  Init_GimbalCmd_fire control(::auto_aim_interfaces::msg::GimbalCmd::_control_type arg)
+  {
+    msg_.control = std::move(arg);
+    return Init_GimbalCmd_fire(msg_);
+  }
+
+private:
+  ::auto_aim_interfaces::msg::GimbalCmd msg_;
+};
+
 class Init_GimbalCmd_header
 {
 public:
   Init_GimbalCmd_header()
   : msg_(::rosidl_runtime_cpp::MessageInitialization::SKIP)
   {}
-  Init_GimbalCmd_fire header(::auto_aim_interfaces::msg::GimbalCmd::_header_type arg)
+  Init_GimbalCmd_control header(::auto_aim_interfaces::msg::GimbalCmd::_header_type arg)
   {
     msg_.header = std::move(arg);
-    return Init_GimbalCmd_fire(msg_);
+    return Init_GimbalCmd_control(msg_);
   }
 
 private:

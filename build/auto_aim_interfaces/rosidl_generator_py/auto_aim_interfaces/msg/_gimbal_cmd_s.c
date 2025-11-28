@@ -65,6 +65,15 @@ bool auto_aim_interfaces__msg__gimbal_cmd__convert_from_py(PyObject * _pymsg, vo
     }
     Py_DECREF(field);
   }
+  {  // control
+    PyObject * field = PyObject_GetAttrString(_pymsg, "control");
+    if (!field) {
+      return false;
+    }
+    assert(PyBool_Check(field));
+    ros_message->control = (Py_True == field);
+    Py_DECREF(field);
+  }
   {  // fire
     PyObject * field = PyObject_GetAttrString(_pymsg, "fire");
     if (!field) {
@@ -176,6 +185,17 @@ PyObject * auto_aim_interfaces__msg__gimbal_cmd__convert_to_py(void * raw_ros_me
     }
     {
       int rc = PyObject_SetAttrString(_pymessage, "header", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // control
+    PyObject * field = NULL;
+    field = PyBool_FromLong(ros_message->control ? 1 : 0);
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "control", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;

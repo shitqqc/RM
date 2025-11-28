@@ -1,4 +1,5 @@
 std_msgs/Header header
+bool control
 bool fire
 float64 target_yaw
 float64 target_pitch

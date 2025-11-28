@@ -9,6 +9,8 @@ module auto_aim_interfaces {
     struct GimbalCmd {
       std_msgs::msg::Header header;
 
+      boolean control;
+
       boolean fire;
 
       double target_yaw;

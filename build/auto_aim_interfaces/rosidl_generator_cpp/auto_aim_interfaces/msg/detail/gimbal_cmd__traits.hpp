@@ -36,6 +36,13 @@ inline void to_flow_style_yaml(
     out << ", ";
   }
 
+  // member: control
+  {
+    out << "control: ";
+    rosidl_generator_traits::value_to_yaml(msg.control, out);
+    out << ", ";
+  }
+
   // member: fire
   {
     out << "fire: ";
@@ -111,6 +118,16 @@ inline void to_block_style_yaml(
     }
     out << "header:\n";
     to_block_style_yaml(msg.header, out, indentation + 2);
+  }
+
+  // member: control
+  {
+    if (indentation > 0) {
+      out << std::string(indentation, ' ');
+    }
+    out << "control: ";
+    rosidl_generator_traits::value_to_yaml(msg.control, out);
+    out << "\n";
   }
 
   // member: fire
