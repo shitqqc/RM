@@ -8,7 +8,7 @@
     # frame_id: "optical_frame"     # If not set, it will be set as <camera_name>_optical_frame
     # camera_topic: "image"         # If not set, it will be set as <camera_name>/image
 
-    acquisition_frame_rate: 250.0   # Unit: Hz
+    acquisition_frame_rate: 200.0   # Unit: Hz
     exposure_time: 3000             # Unit: us
     gain: 8.0                      # Range: 0.0 ~ 16.9, Unit: dB
 
@@ -27,13 +27,12 @@
     model_name: yolov5.xml
     device: CPU
     is_use_thread_pool: false
-    async_queue_number: 0
     confidence_threshole: 0.8
     num_yolo_thread: 6
     detect_color: 0
     use_traditional: true
     use_pca: false
-    use_ba: false
+    use_ba: true
     binary_threshold: 80
     max_angle_error: 45 # degree
     min_lightbar_ratio: 1.5
@@ -49,8 +48,8 @@
     ekf:
       sigma2_q_xyz_max: 100.0
       sigma2_q_xyz_min: 80.0
-      sigma2_q_yaw_max: 4.0
-      sigma2_q_yaw_min: 3.0
+      sigma2_q_yaw_max: 400.0
+      sigma2_q_yaw_min: 300.0
       sigma2_q_r: 40.0
 
       r_py: 4e-3
@@ -60,7 +59,7 @@
     tracker:
       max_match_distance: 0.5
       max_match_yaw_diff: 0.8
-      max_match_angle_diff: 0.5
+      max_match_angle_diff: 1.0
       tracking_thres: 5
       lost_time_thres: 0.5
 

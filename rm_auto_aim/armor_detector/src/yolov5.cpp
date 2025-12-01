@@ -131,18 +131,18 @@ void YOLOV5::push(cv::Mat img, int64_t t)
   auto h = static_cast<int>(img.rows * scale);
   auto w = static_cast<int>(img.cols * scale);
 
-  // preproces
-  auto input = cv::Mat(640, 640, CV_8UC3, cv::Scalar(0, 0, 0));
-  auto roi = cv::Rect(0, 0, w, h);
-  cv::resize(img, input(roi), {w, h});
-
-  auto input_port = compiled_model_.input();
   auto infer_request = compiled_model_.create_infer_request();
-  ov::Tensor input_tensor(ov::element::u8, {1, 640, 640, 3}, input.data);
+  auto input_tensor = infer_request.get_input_tensor();
 
-  infer_request.set_input_tensor(input_tensor);
+  cv::Mat wrapper(640, 640, CV_8UC3, input_tensor.data<uint8_t>());
+
+  wrapper = cv::Scalar(0, 0, 0); 
+
+  auto roi = cv::Rect(0, 0, w, h);
+  cv::resize(img, wrapper(roi), {w, h});
   infer_request.start_async();
   queue_.push({img.clone(), t, std::move(infer_request)});
+  
 }
 
 std::tuple<std::vector<Armor>, int64_t> YOLOV5::pop()

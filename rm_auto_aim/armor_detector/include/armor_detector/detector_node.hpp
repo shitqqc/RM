@@ -53,17 +53,23 @@ private:
 
   void publishMarkers();
   int detect_color;
+  bool use_traditional;
   //  task subscriber
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr task_sub_;
   bool is_aim_task_;
   void taskCallback(const std_msgs::msg::String::SharedPtr task_msg);
-  int n = 3;
   // Armor Detector
   std::unique_ptr<Detector> detector_;
   std::unique_ptr<YOLOV5> yolo_;
 
-  void single_yolo_process(cv::Mat img, std_msgs::msg::Header header);
-  void yolo_pool_process(cv::Mat img, std_msgs::msg::Header header);
+  void single_yolo_process(const cv::Mat & img, const std_msgs::msg::Header header);
+  void yolo_pool_process(const cv::Mat & img, const std_msgs::msg::Header header);
+
+  //single yolo
+  std::string frame_id_;
+  void single_yolo_loop();
+  std::thread detect_thread_;
+  std::atomic<bool> detect_thread_running_{false};
   // //thread pool
   bool use_thread_pool;
   OrderedQueue frame_queue;
@@ -74,7 +80,8 @@ private:
   std::unique_ptr<ThreadPool> thread_pool_;
   std::vector<bool> yolo_used;
   void init_pool();
-  void processLoop();
+  void yolo_pool_loop();
+  int count = 0;
 
   // Detected armors publisher
   auto_aim_interfaces::msg::Armors armors_msg_;

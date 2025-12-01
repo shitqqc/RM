@@ -626,5 +626,6 @@ CMakeFiles/armor_detector.dir/src/yolo.cpp.o: \
  /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/armor.hpp \
  /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/thread_safe_quene.hpp \
  /usr/include/c++/11/condition_variable /usr/include/c++/11/optional \
+ /usr/include/c++/11/shared_mutex \
  /home/ljoy/Robomaster/PIONEER/new_rv/rm_tools/include/rm_tools/pnp_solver.hpp \
  /home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/yolo.hpp

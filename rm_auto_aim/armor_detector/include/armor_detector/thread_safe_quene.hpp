@@ -7,6 +7,7 @@
 #include <mutex>
 #include <queue>
 #include <optional>
+#include <shared_mutex>
 
 namespace rm_auto_aim
 {
@@ -48,10 +49,23 @@ public:
       return std::make_optional(std::move(value));
   }
 
+bool try_pop_if_more_than(size_t n, T& value)
+{
+    std::unique_lock<std::mutex> lock(mutex_);
+
+    if (queue_.size() <= n) {
+        return false;  // 队列元素数量不足，立即返回
+    }
+
+    value = std::move(queue_.front());
+    queue_.pop();
+    return true;
+}
 
   bool more_than(size_t n) const
   {
     std::unique_lock<std::mutex> lock(mutex_);
+    //std::shared_lock<std::shared_mutex> lock(mutex__);
     return queue_.size() > n;
   }
   void push(const T & value)
@@ -97,6 +111,18 @@ public:
     return (value);
   }
 
+
+T pop_if_more_than(size_t n)
+{
+    std::unique_lock<std::mutex> lock(mutex_);
+    
+    not_empty_condition_.wait(lock, [this, n] { return queue_.size() > n; });
+    
+    // Pop and return the front element
+    T value = std::move(queue_.front());
+    queue_.pop();
+    return value;
+}
   T front()
   {
     std::unique_lock<std::mutex> lock(mutex_);
@@ -133,10 +159,12 @@ public:
     not_empty_condition_.notify_all();  // 如果其他线程正在等待队列不为空，这样可以唤醒它们
   }
 
+
 private:
   std::queue<T> queue_;
   size_t max_size_;
   mutable std::mutex mutex_;
+  //mutable std::shared_mutex mutex__;
   std::condition_variable not_empty_condition_;
   std::function<void(void)> full_handler_;
 };

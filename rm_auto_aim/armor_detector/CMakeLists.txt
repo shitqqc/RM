@@ -4,13 +4,13 @@ set(OpenVINO_LIBRARIES openvino::runtime)
 cmake_minimum_required(VERSION 3.8)
 project(armor_detector)
 
-## Use C++14
-set(CMAKE_CXX_STANDARD 14)
+## Use C++17
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ## By adding -Wall and -Werror, the compiler does not ignore warnings anymore,
 ## enforcing cleaner code.
-add_definitions(-Wall -Werror)
+
 
 ## Export compile commands for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
