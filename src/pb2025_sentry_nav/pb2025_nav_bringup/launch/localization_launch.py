@@ -133,9 +133,13 @@ def generate_launch_description():
     start_fast_lio_node =  Node(
         package='fast_lio',
         executable='fastlio_mapping',
+        name="fast_lio",
+        respawn=use_respawn,
+        respawn_delay=2.0,
         parameters=[configured_params,
                     {'use_sim_time': use_sim_time}],
-        output='screen'
+        output='screen',
+        arguments=["--ros-args", "--log-level", log_level],
     )
 
     load_nodes = GroupAction(
@@ -227,8 +231,8 @@ def generate_launch_description():
     ld.add_action(declare_log_level_cmd)
 
     # Add the actions to launch all of the localiztion nodes
-    ld.add_action(start_point_lio_node)
-    # ld.add_action(start_fast_lio_node)
+    # ld.add_action(start_point_lio_node)
+    ld.add_action(start_fast_lio_node)
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
 

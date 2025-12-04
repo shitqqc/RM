@@ -31,7 +31,7 @@ def generate_launch_description():
     remappings = [("/tf", "tf"), ("/tf_static", "tf_static")]
 
     declare_namespace = DeclareLaunchArgument(
-        "namespace", default_value="", description="Namespace for the node"
+        "namespace", default_value="red_standard_robot1", description="Namespace for the node"
     )
 
     start_loam_interface = Node(
