@@ -28,12 +28,14 @@ namespace sentry_control
         geometry_msgs::msg::Twist::SharedPtr out_cmd_vel_;
 
         rclcpp::TimerBase::SharedPtr timer_;
+        rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr yaw_sub_;
         rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
         rclcpp::Subscription<control_interface::msg::ChassisMod>::SharedPtr chassis_mod_sub_;
         rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
 
         void load_params();
         void timer_callback();
+        void yaw_callback(const std_msgs::msg::Float32 msg);
         void cmd_vel_callback(const geometry_msgs::msg::Twist msg);
         void chassis_mod_callback(const control_interface::msg::ChassisMod msg);
         

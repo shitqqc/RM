@@ -17,11 +17,12 @@ namespace sentry_control
         pid_ = std::make_shared<PID>(dt_/1000.0, v_angular_max_, v_angular_min_, kp, kd, ki, deadband);
 
         this->chassis_mod_ = std::make_shared<control_interface::msg::ChassisMod>();
-        this->chassis_mod_->type = control_interface::msg::ChassisMod::AIMSPEED;
-        this->chassis_mod_->aim_speed = 1.0f;
+        this->chassis_mod_->type = control_interface::msg::ChassisMod::AIMANGLE;
+        this->chassis_mod_->aim_angle = M_PI/2;
 
         this->cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_control_result", 10);
 
+        this->yaw_sub_ = this->create_subscription<std_msgs::msg::Float32>("odom2chassis_yaw", 10, std::bind(&SentryControlNode::yaw_callback, this, std::placeholders::_1));
         this->chassis_mod_sub_ = this->create_subscription<control_interface::msg::ChassisMod>("chassis_mod", 10, std::bind(&SentryControlNode::chassis_mod_callback, this, std::placeholders::_1));
         this->cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel_nav2_result", 10, std::bind(&SentryControlNode::cmd_vel_callback, this, std::placeholders::_1));
         this->timer_ = this->create_wall_timer(std::chrono::milliseconds(dt_), std::bind(&SentryControlNode::timer_callback, this));
@@ -59,7 +60,6 @@ namespace sentry_control
         }
         if(this->chassis_mod_ != nullptr)
         {
-            RCLCPP_INFO(this->get_logger(), "chassis_mod_ type: %d", chassis_mod_->type);
             switch (chassis_mod_->type)
             {
             case control_interface::msg::ChassisMod::AIMANGLE:
@@ -93,6 +93,11 @@ namespace sentry_control
     void SentryControlNode::chassis_mod_callback(const control_interface::msg::ChassisMod msg)
     {
         this->chassis_mod_ = std::make_shared<control_interface::msg::ChassisMod>(msg);
+    }
+
+    void SentryControlNode::yaw_callback(const std_msgs::msg::Float32 msg)
+    {
+        this->yaw_ = msg.data;
     }
 
 }
