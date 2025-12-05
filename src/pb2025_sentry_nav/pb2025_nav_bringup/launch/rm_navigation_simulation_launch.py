@@ -90,7 +90,7 @@ def generate_launch_description():
             # TextSubstitution(text=os.path.join(bringup_dir, "pcd", "simulation", "")),
             # world,
             # TextSubstitution(text=".pcd"),
-            os.path.join(bringup_dir, "pcd", "simulation", "scans.pcd"),
+            os.path.join(bringup_dir, "pcd", "simulation", "rmuc_2026.pcd"),
         ],
         description="Full path to prior pcd file to load",
     )
