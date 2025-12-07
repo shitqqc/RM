@@ -671,7 +671,27 @@ sentry_control:
       kp: 3.0
       ki: 0.1
       kd: 0.3
-      max_: 1.0
+      max_: 2.0
       min_: -1.0
       deadband: 0.01
+
+sentry_mod:
+  ros__parameters:
+    spin_speed: 1.0
+
+path_checker:
+  ros__parameters:
+    path_topic: "plan"
+
+    friend_bumpy_area:
+      x_max: 3.3
+      x_min: 1.0
+      y_max: -6.0
+      y_min: -8.0
+    
+    enermy_bumpy_area:
+      x_max: 18.5
+      x_min: 16.5
+      y_max: 6.5
+      y_min: 4.5
 

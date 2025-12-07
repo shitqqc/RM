@@ -7,18 +7,19 @@ namespace path_checker
         RCLCPP_INFO(this->get_logger(), "PathCheckerNode is started");
         this->get_param();
         in_bumpy_area_ = false;
-        RCLCPP_INFO(this->get_logger(), "friend bumpy area x:[%.2lf, %.2lf], y:[%.2lf, %.2lf]", friend_bumpy_area_.x_min, friend_bumpy_area_.x_max, friend_bumpy_area_.y_min, friend_bumpy_area_.y_max);
+        // RCLCPP_INFO(this->get_logger(), "friend bumpy area x:[%.2lf, %.2lf], y:[%.2lf, %.2lf]", friend_bumpy_area_.x_min, friend_bumpy_area_.x_max, friend_bumpy_area_.y_min, friend_bumpy_area_.y_max);
         path_subscriber_ = this->create_subscription<nav_msgs::msg::Path>(
             path_topic_,
             10,
             std::bind(&PathCheckerNode::path_callback, this, std::placeholders::_1));
-        timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(100),
-            std::bind(&PathCheckerNode::timer_callback, this));
+        in_bumpy_area_publisher_ = this->create_publisher<std_msgs::msg::Bool>("in_bumpy_area", 10);
+        // timer_ = this->create_wall_timer(
+        //     std::chrono::milliseconds(100),
+        //     std::bind(&PathCheckerNode::timer_callback, this));
     }
     void PathCheckerNode::get_param()
     {
-        this->declare_parameter<std::string>("path_topic");
+        this->declare_parameter<std::string>("path_topic", "path");
         this->declare_parameter<double>("friend_bumpy_area.x_max", 5.0);
         this->declare_parameter<double>("friend_bumpy_area.x_min", -5.0);
         this->declare_parameter<double>("friend_bumpy_area.y_max", 5.0);
@@ -39,6 +40,11 @@ namespace path_checker
         this->get_parameter("enermy_bumpy_area.y_min", enermy_bumpy_area_.y_min);
     }
 
+    // void PathCheckerNode::timer_callback()
+    // {
+
+    // }
+
     void PathCheckerNode::path_callback(const nav_msgs::msg::Path::SharedPtr msg)
     {
         if (msg->poses.size() < 10)
@@ -57,6 +63,8 @@ namespace path_checker
                 if (in_bumpy_area_) break;
             }
         }
+        in_bumpy_area_msg_.data = in_bumpy_area_;
+        in_bumpy_area_publisher_->publish(in_bumpy_area_msg_);
     }
 
     bool PathCheckerNode::bumpy_area_check(double pose_x, double pose_y, Bumpy_area friend_bumpy_area, Bumpy_area enermy_bumpy_area)

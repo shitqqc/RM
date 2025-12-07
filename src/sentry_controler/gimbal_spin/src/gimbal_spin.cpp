@@ -17,7 +17,7 @@ namespace gimbal_spin
 
     void GimbalSpinNode::gimbal_spin_timer_callback()
     {
-        *gimbal_angle_ += 0.1;
+        *gimbal_angle_ += 1.0;
 
         msg->yaw_type = rmoss_interfaces::msg::GimbalCmd::ABSOLUTE_ANGLE;
         msg->pitch_type = rmoss_interfaces::msg::GimbalCmd::ABSOLUTE_ANGLE;
