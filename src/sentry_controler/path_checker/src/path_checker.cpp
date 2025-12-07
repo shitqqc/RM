@@ -7,7 +7,7 @@ namespace path_checker
         RCLCPP_INFO(this->get_logger(), "PathCheckerNode is started");
         this->get_param();
         in_bumpy_area_ = false;
-        RCLCPP_INFO(this->get_logger(), "friend bumpy area x:[%.2lf, %.2lf], y:[%.2lf, %.2lf]", friend_bumpy_area_.x_min, friend_bumpy_area_.x_max, friend_bumpy_area_.y_min, friend_bumpy_area_.y_max);
+        // RCLCPP_INFO(this->get_logger(), "friend bumpy area x:[%.2lf, %.2lf], y:[%.2lf, %.2lf]", friend_bumpy_area_.x_min, friend_bumpy_area_.x_max, friend_bumpy_area_.y_min, friend_bumpy_area_.y_max);
         path_subscriber_ = this->create_subscription<nav_msgs::msg::Path>(
             path_topic_,
             10,
@@ -19,7 +19,7 @@ namespace path_checker
     }
     void PathCheckerNode::get_param()
     {
-        this->declare_parameter<std::string>("path_topic");
+        this->declare_parameter<std::string>("path_topic", "path");
         this->declare_parameter<double>("friend_bumpy_area.x_max", 5.0);
         this->declare_parameter<double>("friend_bumpy_area.x_min", -5.0);
         this->declare_parameter<double>("friend_bumpy_area.y_max", 5.0);

@@ -3,18 +3,34 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, GroupAction
+from launch.conditions import LaunchConfigurationEquals, LaunchConfigurationNotEquals
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.descriptions import ParameterFile
-from nav2_common.launch import RewrittenYaml
+from nav2_common.launch import RewrittenYaml, ReplaceString
 
 def generate_launch_description():
+    bringup_dir = get_package_share_directory("pb2025_nav_bringup")
+    launch_dir = os.path.join(bringup_dir, "launch")
+    
     use_sim_time = LaunchConfiguration("use_sim_time")
     namespace = LaunchConfiguration("namespace")
     params_file = LaunchConfiguration("params_file")
     log_level = LaunchConfiguration("log_level")
     
     param_rewrites = {"use_sim_time": use_sim_time}
+    
+    params_file = ReplaceString(
+        source_file=params_file,
+        replacements={"<robot_namespace>": ("")},
+        condition=LaunchConfigurationEquals("namespace", ""),
+    )
+
+    params_file = ReplaceString(
+        source_file=params_file,
+        replacements={"<robot_namespace>": ("/", namespace)},
+        condition=LaunchConfigurationNotEquals("namespace", ""),
+    )
     
     configured_params = ParameterFile(
         RewrittenYaml(
@@ -40,7 +56,7 @@ def generate_launch_description():
     
     declare_params_file_cmd = DeclareLaunchArgument(
         "params_file",
-        default_value=os.path.join(get_package_share_directory("sentry_control"), "config", "sentry_control.yaml"),
+        default_value=os.path.join(bringup_dir, "config", "simulation", "nav2_params.yaml"),
         description="Default config file path"
     )
     
@@ -75,7 +91,28 @@ def generate_launch_description():
             ],
             arguments=["--ros-args", "--log-level", log_level],
             output="screen"
-        )
+        ),
+        Node(
+            package="sentry_mod",
+            executable="sentry_mod_node",
+            name="sentry_mod",
+            parameters=[
+                configured_params
+            ],
+            arguments=["--ros-args", "--log-level", log_level],
+            output="screen"
+            ),
+        Node(
+            package="path_checker",
+            executable="path_checker_node",
+            name="path_checker",
+            parameters=[
+                configured_params
+            ],
+            arguments=["--ros-args", "--log-level", log_level],
+            output="screen"
+            )
+        
     ])
     
     ld = LaunchDescription()

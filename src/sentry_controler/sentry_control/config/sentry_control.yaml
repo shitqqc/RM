@@ -3,7 +3,7 @@ sentry_control:
     dt: 20 
 
     pid:
-      kp: 1.0
+      kp: 3.0
       ki: 0.0
       kd: 0.0
       max_output: 3.14

@@ -16,9 +16,6 @@ namespace sentry_control
 
         pid_ = std::make_shared<PID>(dt_/1000.0, v_angular_max_, v_angular_min_, kp, kd, ki, deadband);
 
-        this->chassis_mod_ = std::make_shared<control_interface::msg::ChassisMod>();
-        this->chassis_mod_->type = control_interface::msg::ChassisMod::AIMANGLE;
-        this->chassis_mod_->aim_angle = M_PI/2;
 
         this->cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_control_result", 10);
 
@@ -46,7 +43,6 @@ namespace sentry_control
         this->get_parameter("pid.ki", ki);
         this->get_parameter("pid.kd", kd);
         this->get_parameter("pid.deadband", deadband);
-
     }
 
     void SentryControlNode::timer_callback()
@@ -64,6 +60,11 @@ namespace sentry_control
             {
             case control_interface::msg::ChassisMod::AIMANGLE:
                 this->exp_spin_ =  this->pid_->calculate(this->yaw_, this->chassis_mod_->aim_angle);
+                if(std::abs(this->yaw_ - this->chassis_mod_->aim_angle) > 0.01)
+                {
+                    this->out_cmd_vel_->linear.set__x(0.0);
+                    this->out_cmd_vel_->linear.set__y(0.0);
+                }
                 break;
             case control_interface::msg::ChassisMod::AIMSPEED:
                 this->exp_spin_ = chassis_mod_->aim_speed;

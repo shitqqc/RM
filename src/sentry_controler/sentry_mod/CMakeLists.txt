@@ -28,7 +28,7 @@ ament_auto_add_library(${PROJECT_NAME} SHARED
 )
 
 rclcpp_components_register_node(${PROJECT_NAME}
-  PLUGIN sentry_mod::SentryMode
+  PLUGIN sentry_mod::SentryMod
   EXECUTABLE ${PROJECT_NAME}_node
 )
 
