@@ -231,8 +231,8 @@ def generate_launch_description():
     ld.add_action(declare_log_level_cmd)
 
     # Add the actions to launch all of the localiztion nodes
-    # ld.add_action(start_point_lio_node)
-    ld.add_action(start_fast_lio_node)
+    ld.add_action(start_point_lio_node)
+    # ld.add_action(start_fast_lio_node)
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
 
