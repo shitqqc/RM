@@ -60,7 +60,7 @@ namespace sentry_control
             {
             case control_interface::msg::ChassisMod::AIMANGLE:
                 this->exp_spin_ =  this->pid_->calculate(this->yaw_, this->chassis_mod_->aim_angle);
-                if(std::abs(this->yaw_ - this->chassis_mod_->aim_angle) > 0.01)
+                if(std::abs(this->yaw_ - this->chassis_mod_->aim_angle) > deadband)
                 {
                     this->out_cmd_vel_->linear.set__x(0.0);
                     this->out_cmd_vel_->linear.set__y(0.0);
