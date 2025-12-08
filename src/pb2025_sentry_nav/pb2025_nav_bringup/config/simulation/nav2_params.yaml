@@ -666,6 +666,7 @@ chassis_angle:
 sentry_control:
   ros__parameters:
     dt: 50
+    have_bumpy_area: true
 
     pid:
       kp: 3.0

@@ -1,6 +1,7 @@
 sentry_control:
   ros__parameters:
     dt: 20 
+    have_bumpy_area: true
 
     pid:
       kp: 3.0

@@ -12,15 +12,17 @@ namespace sentry_control
         RCLCPP_INFO(this->get_logger(), "Sentry control node start");
 
         this->load_params();
-        // RCLCPP_INFO(this->get_logger(), "Parameters loaded: dt=%d, max=%f, min=%f, kp=%f, kd=%f, ki=%f, deadband=%f", dt_, v_angular_max_, v_angular_min_, kp, kd, ki, deadband);
 
         pid_ = std::make_shared<PID>(dt_/1000.0, v_angular_max_, v_angular_min_, kp, kd, ki, deadband);
+        sentry_mod_ = std::make_shared<SentryMod>(have_bumpy_area_);
 
+        this->chassis_mod_ = std::make_shared<control_interface::msg::ChassisMod>();
 
         this->cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel_control_result", 10);
 
         this->yaw_sub_ = this->create_subscription<std_msgs::msg::Float32>("odom2chassis_yaw", 10, std::bind(&SentryControlNode::yaw_callback, this, std::placeholders::_1));
-        this->chassis_mod_sub_ = this->create_subscription<control_interface::msg::ChassisMod>("chassis_mod", 10, std::bind(&SentryControlNode::chassis_mod_callback, this, std::placeholders::_1));
+        this->use_spin_sub_ = this->create_subscription<std_msgs::msg::Bool>("use_spin", 10, std::bind(&SentryControlNode::use_spin_callback, this, std::placeholders::_1));
+        this->in_bumpy_area_sub_ = this->create_subscription<std_msgs::msg::Bool>("in_bumpy_area", 10, std::bind(&SentryControlNode::in_bumpy_area_callback, this, std::placeholders::_1));
         this->cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel_nav2_result", 10, std::bind(&SentryControlNode::cmd_vel_callback, this, std::placeholders::_1));
         this->timer_ = this->create_wall_timer(std::chrono::milliseconds(dt_), std::bind(&SentryControlNode::timer_callback, this));
     }
@@ -28,6 +30,7 @@ namespace sentry_control
     void SentryControlNode::load_params()
     {
         this->declare_parameter<int32_t>("dt", 50);
+        this->declare_parameter<bool>("have_bumpy_area", false);
         this->declare_parameter<double>("pid.max_", 3.0);
         this->declare_parameter<double>("pid.min_", -3.0);
         this->declare_parameter<double>("pid.kp", 3.0);
@@ -37,6 +40,7 @@ namespace sentry_control
 
 
         this->get_parameter("dt", dt_);
+        this->get_parameter("have_bumpy_area", have_bumpy_area_);
         this->get_parameter("pid.max_", v_angular_max_);
         this->get_parameter("pid.min_", v_angular_min_);
         this->get_parameter("pid.kp", kp);
@@ -54,8 +58,10 @@ namespace sentry_control
             RCLCPP_WARN(this->get_logger(), "cmd_vel input is empty!!!");
             return;
         }
-        if(this->chassis_mod_ != nullptr)
+        sentry_mod_->getChassisMod(chassis_mod_);
+        if (this->chassis_mod_ != nullptr)
         {
+            RCLCPP_INFO(this->get_logger(), "chassis_mod_ type: %d", chassis_mod_->type);
             switch (chassis_mod_->type)
             {
             case control_interface::msg::ChassisMod::AIMANGLE:
@@ -78,7 +84,6 @@ namespace sentry_control
             RCLCPP_WARN(this->get_logger(), "chassis_mod_ is nullptr");
             return;
         }
-        // RCLCPP_INFO(this->get_logger(), "yaw_: %.2lf exp_yaw_: %.2lf exp_spin_speed: %.2lf", this->yaw_, this->exp_yaw_, this->exp_spin_);
         this->out_cmd_vel_->angular.set__z(exp_spin_);
         this->cmd_vel_pub_->publish(*this->out_cmd_vel_);
     }
@@ -91,16 +96,22 @@ namespace sentry_control
         nav_start = true;
     }
 
-    void SentryControlNode::chassis_mod_callback(const control_interface::msg::ChassisMod msg)
-    {
-        this->chassis_mod_ = std::make_shared<control_interface::msg::ChassisMod>(msg);
-    }
-
     void SentryControlNode::yaw_callback(const std_msgs::msg::Float32 msg)
     {
         this->yaw_ = msg.data;
     }
 
+    void SentryControlNode::in_bumpy_area_callback(const std_msgs::msg::Bool msg)
+    {
+        this->sentry_mod_->inBumpyArea(msg.data);
+        // if(msg.data)
+        // RCLCPP_INFO(this->get_logger(), "in bumpy area");
+    }
+
+    void SentryControlNode::use_spin_callback(const std_msgs::msg::Bool msg)
+    {
+        this->sentry_mod_->useSpin(msg.data);
+    }
 }
 
 #include "rclcpp_components/register_node_macro.hpp"
