@@ -31,22 +31,22 @@ namespace sentry_control
     {
         this->declare_parameter<int32_t>("dt", 50);
         this->declare_parameter<bool>("have_bumpy_area", false);
+        this->declare_parameter<double>("deadband", 0.05);
         this->declare_parameter<double>("pid.max_", 3.0);
         this->declare_parameter<double>("pid.min_", -3.0);
         this->declare_parameter<double>("pid.kp", 3.0);
         this->declare_parameter<double>("pid.ki", 0.1);
         this->declare_parameter<double>("pid.kd", 0.3);
-        this->declare_parameter<double>("pid.deadband", 0.05);
 
 
         this->get_parameter("dt", dt_);
         this->get_parameter("have_bumpy_area", have_bumpy_area_);
+        this->get_parameter("deadband", deadband); 
         this->get_parameter("pid.max_", v_angular_max_);
         this->get_parameter("pid.min_", v_angular_min_);
         this->get_parameter("pid.kp", kp);
         this->get_parameter("pid.ki", ki);
         this->get_parameter("pid.kd", kd);
-        this->get_parameter("pid.deadband", deadband);
     }
 
     void SentryControlNode::timer_callback()
@@ -66,7 +66,7 @@ namespace sentry_control
             {
             case control_interface::msg::ChassisMod::AIMANGLE:
                 this->exp_spin_ =  this->pid_->calculate(this->yaw_, this->chassis_mod_->aim_angle);
-                if(std::abs(this->yaw_ - this->chassis_mod_->aim_angle) > 0.01)
+                if(std::abs(this->yaw_ - this->chassis_mod_->aim_angle) > deadband * 1.5)
                 {
                     this->out_cmd_vel_->linear.set__x(0.0);
                     this->out_cmd_vel_->linear.set__y(0.0);

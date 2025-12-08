@@ -667,6 +667,7 @@ sentry_control:
   ros__parameters:
     dt: 50
     have_bumpy_area: true
+    deadband: 0.01
 
     pid:
       kp: 3.0
@@ -674,7 +675,6 @@ sentry_control:
       kd: 0.3
       max_: 2.0
       min_: -1.0
-      deadband: 0.01
 
 sentry_mod:
   ros__parameters:
