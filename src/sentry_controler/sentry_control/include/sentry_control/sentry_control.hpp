@@ -53,7 +53,8 @@ namespace sentry_control
         void use_spin_callback(const std_msgs::msg::Bool msg);
         void cmd_vel_callback(const geometry_msgs::msg::Twist msg);
         void path_callback(const nav_msgs::msg::Path::SharedPtr msg);
-        
+        double get_aim_yaw();
+
     public:
         explicit SentryControlNode(const rclcpp::NodeOptions &options);
     };

@@ -20,7 +20,6 @@ namespace sentry_control
         if(in_bumpy_area_)
         {
             chassis_mod_->type = control_interface::msg::ChassisMod::AIMANGLE;
-            chassis_mod_->aim_angle = 0.0;
         }else if (!in_bumpy_area_ && use_spin_)
         {
             chassis_mod_->type = control_interface::msg::ChassisMod::AIMSPEED;

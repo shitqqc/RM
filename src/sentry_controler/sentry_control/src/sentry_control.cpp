@@ -85,6 +85,8 @@ namespace sentry_control
             switch (chassis_mod_->type)
             {
             case control_interface::msg::ChassisMod::AIMANGLE:
+                this->chassis_mod_->aim_angle = this->get_aim_yaw();
+                RCLCPP_INFO(this->get_logger(), "aim_angle: %f", this->chassis_mod_->aim_angle);
                 this->exp_spin_ =  this->pid_->calculate(this->yaw_, this->chassis_mod_->aim_angle);
                 if(std::abs(this->yaw_ - this->chassis_mod_->aim_angle) > deadband * 1.5)
                 {
@@ -108,7 +110,17 @@ namespace sentry_control
         this->cmd_vel_pub_->publish(*this->out_cmd_vel_);
     }
 
-
+    double SentryControlNode::get_aim_yaw()
+    {
+        double aim_yaw_list_[4] = {0.0, -M_PI/2, M_PI, M_PI/2};
+        auto current_yaw_ = this->yaw_;
+        for(int i = 0; i < 4; i++)
+        {
+            if(std::abs(current_yaw_ - aim_yaw_list_[i]) < M_PI/4)
+                return aim_yaw_list_[i];
+        }
+        return 0.0; // 默认返回值，如果没有匹配的角度
+    }
 
     void SentryControlNode::cmd_vel_callback(const geometry_msgs::msg::Twist msg)
     {
