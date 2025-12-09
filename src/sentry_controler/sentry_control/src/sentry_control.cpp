@@ -15,6 +15,9 @@ namespace sentry_control
 
         pid_ = std::make_shared<PID>(dt_/1000.0, v_angular_max_, v_angular_min_, kp, kd, ki, deadband);
         sentry_mod_ = std::make_shared<SentryMod>(have_bumpy_area_);
+        path_checker_ = std::make_shared<path_checker>();
+
+        path_checker_->set_bumpy_area(friend_bumpy_area_, enermy_bumpy_area_);
 
         this->chassis_mod_ = std::make_shared<control_interface::msg::ChassisMod>();
 
@@ -22,8 +25,8 @@ namespace sentry_control
 
         this->yaw_sub_ = this->create_subscription<std_msgs::msg::Float32>("odom2chassis_yaw", 10, std::bind(&SentryControlNode::yaw_callback, this, std::placeholders::_1));
         this->use_spin_sub_ = this->create_subscription<std_msgs::msg::Bool>("use_spin", 10, std::bind(&SentryControlNode::use_spin_callback, this, std::placeholders::_1));
-        this->in_bumpy_area_sub_ = this->create_subscription<std_msgs::msg::Bool>("in_bumpy_area", 10, std::bind(&SentryControlNode::in_bumpy_area_callback, this, std::placeholders::_1));
         this->cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel_nav2_result", 10, std::bind(&SentryControlNode::cmd_vel_callback, this, std::placeholders::_1));
+        this->path_sub_ = this->create_subscription<nav_msgs::msg::Path>(path_topic_, 10, std::bind(&SentryControlNode::path_callback, this, std::placeholders::_1));
         this->timer_ = this->create_wall_timer(std::chrono::milliseconds(dt_), std::bind(&SentryControlNode::timer_callback, this));
     }
 
@@ -31,22 +34,39 @@ namespace sentry_control
     {
         this->declare_parameter<int32_t>("dt", 50);
         this->declare_parameter<bool>("have_bumpy_area", false);
+        this->declare_parameter<std::string>("path_topic", "path");
         this->declare_parameter<double>("deadband", 0.05);
         this->declare_parameter<double>("pid.max_", 3.0);
         this->declare_parameter<double>("pid.min_", -3.0);
         this->declare_parameter<double>("pid.kp", 3.0);
         this->declare_parameter<double>("pid.ki", 0.1);
         this->declare_parameter<double>("pid.kd", 0.3);
-
+        this->declare_parameter<double>("friend_bumpy_area.x_max", 5.0);
+        this->declare_parameter<double>("friend_bumpy_area.x_min", -5.0);
+        this->declare_parameter<double>("friend_bumpy_area.y_max", 5.0);
+        this->declare_parameter<double>("friend_bumpy_area.y_min", -5.0);
+        this->declare_parameter<double>("enermy_bumpy_area.x_max", 5.0);
+        this->declare_parameter<double>("enermy_bumpy_area.x_min", -5.0);
+        this->declare_parameter<double>("enermy_bumpy_area.y_max", 5.0);
+        this->declare_parameter<double>("enermy_bumpy_area.y_min", -5.0);
 
         this->get_parameter("dt", dt_);
         this->get_parameter("have_bumpy_area", have_bumpy_area_);
+        this->get_parameter("path_topic", path_topic_);
         this->get_parameter("deadband", deadband); 
         this->get_parameter("pid.max_", v_angular_max_);
         this->get_parameter("pid.min_", v_angular_min_);
         this->get_parameter("pid.kp", kp);
         this->get_parameter("pid.ki", ki);
         this->get_parameter("pid.kd", kd);
+        this->get_parameter("friend_bumpy_area.x_max", friend_bumpy_area_.x_max);
+        this->get_parameter("friend_bumpy_area.x_min", friend_bumpy_area_.x_min);
+        this->get_parameter("friend_bumpy_area.y_max", friend_bumpy_area_.y_max);
+        this->get_parameter("friend_bumpy_area.y_min", friend_bumpy_area_.y_min);
+        this->get_parameter("enermy_bumpy_area.x_max", enermy_bumpy_area_.x_max);
+        this->get_parameter("enermy_bumpy_area.x_min", enermy_bumpy_area_.x_min);
+        this->get_parameter("enermy_bumpy_area.y_max", enermy_bumpy_area_.y_max);
+        this->get_parameter("enermy_bumpy_area.y_min", enermy_bumpy_area_.y_min);
     }
 
     void SentryControlNode::timer_callback()
@@ -61,7 +81,7 @@ namespace sentry_control
         sentry_mod_->getChassisMod(chassis_mod_);
         if (this->chassis_mod_ != nullptr)
         {
-            RCLCPP_INFO(this->get_logger(), "chassis_mod_ type: %d", chassis_mod_->type);
+            // RCLCPP_INFO(this->get_logger(), "chassis_mod_ type: %d", chassis_mod_->type);
             switch (chassis_mod_->type)
             {
             case control_interface::msg::ChassisMod::AIMANGLE:
@@ -101,16 +121,15 @@ namespace sentry_control
         this->yaw_ = msg.data;
     }
 
-    void SentryControlNode::in_bumpy_area_callback(const std_msgs::msg::Bool msg)
-    {
-        this->sentry_mod_->inBumpyArea(msg.data);
-        // if(msg.data)
-        // RCLCPP_INFO(this->get_logger(), "in bumpy area");
-    }
-
     void SentryControlNode::use_spin_callback(const std_msgs::msg::Bool msg)
     {
         this->sentry_mod_->useSpin(msg.data);
+    }
+
+    void SentryControlNode::path_callback(const nav_msgs::msg::Path::SharedPtr msg)
+    {
+        this->path_checker_->get_path(msg);
+        this->sentry_mod_->inBumpyArea(this->path_checker_->is_in_bumpy_area());
     }
 }
 
