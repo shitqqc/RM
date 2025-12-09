@@ -116,7 +116,7 @@ namespace sentry_control
         auto current_yaw_ = this->yaw_;
         for(int i = 0; i < 4; i++)
         {
-            if(std::abs(current_yaw_ - aim_yaw_list_[i]) < M_PI/4)
+            if(std::abs(current_yaw_ - aim_yaw_list_[i]) <= M_PI/4)
                 return aim_yaw_list_[i];
         }
         return 0.0; // 默认返回值，如果没有匹配的角度
