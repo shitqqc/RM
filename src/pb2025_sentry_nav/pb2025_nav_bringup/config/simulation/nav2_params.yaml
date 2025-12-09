@@ -668,21 +668,14 @@ sentry_control:
     dt: 50
     have_bumpy_area: true
     deadband: 0.01
+    path_topic: "plan"
 
     pid:
-      kp: 3.0
-      ki: 0.1
-      kd: 0.3
-      max_: 2.0
-      min_: -1.0
-
-sentry_mod:
-  ros__parameters:
-    spin_speed: 1.0
-
-path_checker:
-  ros__parameters:
-    path_topic: "plan"
+      kp: 5.0
+      ki: 0.2
+      kd: 0.4
+      max_: 3.0
+      min_: -3.0
 
     friend_bumpy_area:
       x_max: 3.3
@@ -695,4 +688,3 @@ path_checker:
       x_min: 16.5
       y_max: 6.5
       y_min: 4.5
-

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "rclcpp/rclcpp.hpp"
-
 #include "control_interface/msg/chassis_mod.hpp"
 
 namespace sentry_control

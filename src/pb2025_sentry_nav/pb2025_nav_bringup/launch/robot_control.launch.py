@@ -102,16 +102,16 @@ def generate_launch_description():
         #     arguments=["--ros-args", "--log-level", log_level],
         #     output="screen"
         #     ),
-        Node(
-            package="path_checker",
-            executable="path_checker_node",
-            name="path_checker",
-            parameters=[
-                configured_params
-            ],
-            arguments=["--ros-args", "--log-level", log_level],
-            output="screen"
-            )
+        # Node(
+        #     package="path_checker",
+        #     executable="path_checker_node",
+        #     name="path_checker",
+        #     parameters=[
+        #         configured_params
+        #     ],
+        #     arguments=["--ros-args", "--log-level", log_level],
+        #     output="screen"
+        #     )
         
     ])
     
