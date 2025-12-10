@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/tomoon/Code/Code/ROS2/rm_vision/build/rm_imu_driver/librm_imu_driver.so" "TARGETS" "rm_imu_driver" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

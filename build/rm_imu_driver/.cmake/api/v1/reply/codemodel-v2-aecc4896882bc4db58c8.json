@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-5b2e3d5b545679481eb9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "rm_imu_driver",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "rm_imu_driver::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-rm_imu_driver-cb74e4ec81af3d78a9aa.json",
+					"name" : "rm_imu_driver",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "rm_imu_driver_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-rm_imu_driver_node-496f439cff2cad7eeb8c.json",
+					"name" : "rm_imu_driver_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "rm_imu_driver_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-rm_imu_driver_uninstall-876726907c902af3b85e.json",
+					"name" : "rm_imu_driver_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-5b687673daba99d89c80.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/tomoon/Code/Code/ROS2/rm_vision/build/rm_imu_driver",
+		"source" : "/home/tomoon/Code/Code/ROS2/rm_vision/src/rm_imu_driver"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
