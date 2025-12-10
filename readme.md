@@ -1,3 +1,7 @@
 # 华南师范大学PIONEER战队2026赛季导航开发仓库
 
-## 基于深北莫polorbear战队pb2025_sentry_nav开发
+| 基于深北莫polorbear战队pb2025_sentry_nav开发
+
+## 目前完成功能
+1. 指定角度的pid底盘控制，限制速度下通过指定区域
+2. 自动录包，保存在`...ws/bags`下
