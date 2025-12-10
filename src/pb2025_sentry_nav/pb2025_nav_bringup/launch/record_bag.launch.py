@@ -11,7 +11,7 @@ def launch_setup(context, *args, **kwargs):
     output_dir = LaunchConfiguration('output_dir').perform(context)
 
     # 自动生成时间戳文件夹
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).strftime("%Y%m%d_%H%M%S")
     bag_output_path = f"{output_dir}/bag_{timestamp}"
 
     # 录制话题（此时 namespace 是字符串，可以直接拼）
