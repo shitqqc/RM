@@ -41,6 +41,7 @@ typedef struct auto_aim_interfaces__msg__Target
   double radius;
   double d_radius;
   double dz;
+  double debug_yaw;
 } auto_aim_interfaces__msg__Target;
 
 // Struct for a sequence of auto_aim_interfaces__msg__Target.

@@ -132,6 +132,8 @@ cdr_serialize(
   cdr << ros_message.d_radius;
   // Member: dz
   cdr << ros_message.dz;
+  // Member: debug_yaw
+  cdr << ros_message.debug_yaw;
   return true;
 }
 
@@ -180,6 +182,9 @@ cdr_deserialize(
 
   // Member: dz
   cdr >> ros_message.dz;
+
+  // Member: debug_yaw
+  cdr >> ros_message.debug_yaw;
 
   return true;
 }
@@ -255,6 +260,12 @@ get_serialized_size(
   // Member: dz
   {
     size_t item_size = sizeof(ros_message.dz);
+    current_alignment += item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
+  // Member: debug_yaw
+  {
+    size_t item_size = sizeof(ros_message.debug_yaw);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -414,6 +425,15 @@ max_serialized_size_Target(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint64_t));
   }
 
+  // Member: debug_yaw
+  {
+    size_t array_size = 1;
+
+    last_member_size = array_size * sizeof(uint64_t);
+    current_alignment += array_size * sizeof(uint64_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint64_t));
+  }
+
   size_t ret_val = current_alignment - initial_alignment;
   if (is_plain) {
     // All members are plain, and type is not empty.
@@ -422,7 +442,7 @@ max_serialized_size_Target(
     using DataType = auto_aim_interfaces::msg::Target;
     is_plain =
       (
-      offsetof(DataType, dz) +
+      offsetof(DataType, debug_yaw) +
       last_member_size
       ) == ret_val;
   }

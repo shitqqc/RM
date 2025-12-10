@@ -47,7 +47,7 @@ void auto_aim_interfaces__msg__Target__rosidl_typesupport_introspection_c__Targe
   auto_aim_interfaces__msg__Target__fini(message_memory);
 }
 
-static rosidl_typesupport_introspection_c__MessageMember auto_aim_interfaces__msg__Target__rosidl_typesupport_introspection_c__Target_message_member_array[11] = {
+static rosidl_typesupport_introspection_c__MessageMember auto_aim_interfaces__msg__Target__rosidl_typesupport_introspection_c__Target_message_member_array[12] = {
   {
     "header",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE,  // type
@@ -234,13 +234,30 @@ static rosidl_typesupport_introspection_c__MessageMember auto_aim_interfaces__ms
     NULL,  // fetch(index, &value) function pointer
     NULL,  // assign(index, value) function pointer
     NULL  // resize(index) function pointer
+  },
+  {
+    "debug_yaw",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_DOUBLE,  // type
+    0,  // upper bound of string
+    NULL,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(auto_aim_interfaces__msg__Target, debug_yaw),  // bytes offset in struct
+    NULL,  // default value
+    NULL,  // size() function pointer
+    NULL,  // get_const(index) function pointer
+    NULL,  // get(index) function pointer
+    NULL,  // fetch(index, &value) function pointer
+    NULL,  // assign(index, value) function pointer
+    NULL  // resize(index) function pointer
   }
 };
 
 static const rosidl_typesupport_introspection_c__MessageMembers auto_aim_interfaces__msg__Target__rosidl_typesupport_introspection_c__Target_message_members = {
   "auto_aim_interfaces__msg",  // message namespace
   "Target",  // message name
-  11,  // number of fields
+  12,  // number of fields
   sizeof(auto_aim_interfaces__msg__Target),
   auto_aim_interfaces__msg__Target__rosidl_typesupport_introspection_c__Target_message_member_array,  // message members
   auto_aim_interfaces__msg__Target__rosidl_typesupport_introspection_c__Target_init_function,  // function to initialize message memory (memory has to be allocated)

@@ -54,6 +54,7 @@ auto_aim_interfaces__msg__Target__init(auto_aim_interfaces__msg__Target * msg)
   // radius
   // d_radius
   // dz
+  // debug_yaw
   return true;
 }
 
@@ -78,6 +79,7 @@ auto_aim_interfaces__msg__Target__fini(auto_aim_interfaces__msg__Target * msg)
   // radius
   // d_radius
   // dz
+  // debug_yaw
 }
 
 bool
@@ -138,6 +140,10 @@ auto_aim_interfaces__msg__Target__are_equal(const auto_aim_interfaces__msg__Targ
   if (lhs->dz != rhs->dz) {
     return false;
   }
+  // debug_yaw
+  if (lhs->debug_yaw != rhs->debug_yaw) {
+    return false;
+  }
   return true;
 }
 
@@ -187,6 +193,8 @@ auto_aim_interfaces__msg__Target__copy(
   output->d_radius = input->d_radius;
   // dz
   output->dz = input->dz;
+  // debug_yaw
+  output->debug_yaw = input->debug_yaw;
   return true;
 }
 

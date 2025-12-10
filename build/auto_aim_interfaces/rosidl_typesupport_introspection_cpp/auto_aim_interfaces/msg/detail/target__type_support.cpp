@@ -37,7 +37,7 @@ void Target_fini_function(void * message_memory)
   typed_message->~Target();
 }
 
-static const ::rosidl_typesupport_introspection_cpp::MessageMember Target_message_member_array[11] = {
+static const ::rosidl_typesupport_introspection_cpp::MessageMember Target_message_member_array[12] = {
   {
     "header",  // name
     ::rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE,  // type
@@ -224,13 +224,30 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember Target_messag
     nullptr,  // fetch(index, &value) function pointer
     nullptr,  // assign(index, value) function pointer
     nullptr  // resize(index) function pointer
+  },
+  {
+    "debug_yaw",  // name
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_DOUBLE,  // type
+    0,  // upper bound of string
+    nullptr,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(auto_aim_interfaces::msg::Target, debug_yaw),  // bytes offset in struct
+    nullptr,  // default value
+    nullptr,  // size() function pointer
+    nullptr,  // get_const(index) function pointer
+    nullptr,  // get(index) function pointer
+    nullptr,  // fetch(index, &value) function pointer
+    nullptr,  // assign(index, value) function pointer
+    nullptr  // resize(index) function pointer
   }
 };
 
 static const ::rosidl_typesupport_introspection_cpp::MessageMembers Target_message_members = {
   "auto_aim_interfaces::msg",  // message namespace
   "Target",  // message name
-  11,  // number of fields
+  12,  // number of fields
   sizeof(auto_aim_interfaces::msg::Target),
   Target_message_member_array,  // message members
   Target_init_function,  // function to initialize message memory (memory has to be allocated)

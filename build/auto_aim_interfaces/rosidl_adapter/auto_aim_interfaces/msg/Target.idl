@@ -30,6 +30,8 @@ module auto_aim_interfaces {
       double d_radius;
 
       double dz;
+
+      double debug_yaw;
     };
   };
 };

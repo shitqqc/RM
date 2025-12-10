@@ -176,6 +176,15 @@ bool auto_aim_interfaces__msg__target__convert_from_py(PyObject * _pymsg, void *
     ros_message->dz = PyFloat_AS_DOUBLE(field);
     Py_DECREF(field);
   }
+  {  // debug_yaw
+    PyObject * field = PyObject_GetAttrString(_pymsg, "debug_yaw");
+    if (!field) {
+      return false;
+    }
+    assert(PyFloat_Check(field));
+    ros_message->debug_yaw = PyFloat_AS_DOUBLE(field);
+    Py_DECREF(field);
+  }
 
   return true;
 }
@@ -328,6 +337,17 @@ PyObject * auto_aim_interfaces__msg__target__convert_to_py(void * raw_ros_messag
     field = PyFloat_FromDouble(ros_message->dz);
     {
       int rc = PyObject_SetAttrString(_pymessage, "dz", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // debug_yaw
+    PyObject * field = NULL;
+    field = PyFloat_FromDouble(ros_message->debug_yaw);
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "debug_yaw", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;

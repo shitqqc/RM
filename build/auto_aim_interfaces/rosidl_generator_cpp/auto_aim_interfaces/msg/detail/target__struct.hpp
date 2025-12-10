@@ -57,6 +57,7 @@ struct Target_
       this->radius = 0.0;
       this->d_radius = 0.0;
       this->dz = 0.0;
+      this->debug_yaw = 0.0;
     }
   }
 
@@ -77,6 +78,7 @@ struct Target_
       this->radius = 0.0;
       this->d_radius = 0.0;
       this->dz = 0.0;
+      this->debug_yaw = 0.0;
     }
   }
 
@@ -114,6 +116,9 @@ struct Target_
   using _dz_type =
     double;
   _dz_type dz;
+  using _debug_yaw_type =
+    double;
+  _debug_yaw_type debug_yaw;
 
   // setters for named parameter idiom
   Type & set__header(
@@ -180,6 +185,12 @@ struct Target_
     const double & _arg)
   {
     this->dz = _arg;
+    return *this;
+  }
+  Type & set__debug_yaw(
+    const double & _arg)
+  {
+    this->debug_yaw = _arg;
     return *this;
   }
 
@@ -256,6 +267,9 @@ struct Target_
       return false;
     }
     if (this->dz != other.dz) {
+      return false;
+    }
+    if (this->debug_yaw != other.debug_yaw) {
       return false;
     }
     return true;

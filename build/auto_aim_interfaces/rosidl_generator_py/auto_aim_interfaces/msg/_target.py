@@ -80,6 +80,7 @@ class Target(metaclass=Metaclass_Target):
         '_radius',
         '_d_radius',
         '_dz',
+        '_debug_yaw',
     ]
 
     _fields_and_field_types = {
@@ -94,6 +95,7 @@ class Target(metaclass=Metaclass_Target):
         'radius': 'double',
         'd_radius': 'double',
         'dz': 'double',
+        'debug_yaw': 'double',
     }
 
     SLOT_TYPES = (
@@ -103,6 +105,7 @@ class Target(metaclass=Metaclass_Target):
         rosidl_parser.definition.BasicType('int32'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['geometry_msgs', 'msg'], 'Point'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['geometry_msgs', 'msg'], 'Vector3'),  # noqa: E501
+        rosidl_parser.definition.BasicType('double'),  # noqa: E501
         rosidl_parser.definition.BasicType('double'),  # noqa: E501
         rosidl_parser.definition.BasicType('double'),  # noqa: E501
         rosidl_parser.definition.BasicType('double'),  # noqa: E501
@@ -128,6 +131,7 @@ class Target(metaclass=Metaclass_Target):
         self.radius = kwargs.get('radius', float())
         self.d_radius = kwargs.get('d_radius', float())
         self.dz = kwargs.get('dz', float())
+        self.debug_yaw = kwargs.get('debug_yaw', float())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -179,6 +183,8 @@ class Target(metaclass=Metaclass_Target):
         if self.d_radius != other.d_radius:
             return False
         if self.dz != other.dz:
+            return False
+        if self.debug_yaw != other.debug_yaw:
             return False
         return True
 
@@ -344,3 +350,18 @@ class Target(metaclass=Metaclass_Target):
             assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
                 "The 'dz' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._dz = value
+
+    @builtins.property
+    def debug_yaw(self):
+        """Message field 'debug_yaw'."""
+        return self._debug_yaw
+
+    @debug_yaw.setter
+    def debug_yaw(self, value):
+        if __debug__:
+            assert \
+                isinstance(value, float), \
+                "The 'debug_yaw' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'debug_yaw' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
+        self._debug_yaw = value

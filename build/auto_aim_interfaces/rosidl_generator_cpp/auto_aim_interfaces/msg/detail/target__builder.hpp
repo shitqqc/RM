@@ -21,16 +21,32 @@ namespace msg
 namespace builder
 {
 
+class Init_Target_debug_yaw
+{
+public:
+  explicit Init_Target_debug_yaw(::auto_aim_interfaces::msg::Target & msg)
+  : msg_(msg)
+  {}
+  ::auto_aim_interfaces::msg::Target debug_yaw(::auto_aim_interfaces::msg::Target::_debug_yaw_type arg)
+  {
+    msg_.debug_yaw = std::move(arg);
+    return std::move(msg_);
+  }
+
+private:
+  ::auto_aim_interfaces::msg::Target msg_;
+};
+
 class Init_Target_dz
 {
 public:
   explicit Init_Target_dz(::auto_aim_interfaces::msg::Target & msg)
   : msg_(msg)
   {}
-  ::auto_aim_interfaces::msg::Target dz(::auto_aim_interfaces::msg::Target::_dz_type arg)
+  Init_Target_debug_yaw dz(::auto_aim_interfaces::msg::Target::_dz_type arg)
   {
     msg_.dz = std::move(arg);
-    return std::move(msg_);
+    return Init_Target_debug_yaw(msg_);
   }
 
 private:
