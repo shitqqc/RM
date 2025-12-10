@@ -2,11 +2,11 @@
 
 namespace sentry_control
 {
-    SentryMod::SentryMod(const bool have_bumpy_area) : have_bumpy_area_(have_bumpy_area){}
+    SentryMod::SentryMod(){}
 
     void SentryMod::inBumpyArea(const bool in_bumpy_area)
     {
-        this->have_bumpy_area_ ? in_bumpy_area_ = in_bumpy_area : in_bumpy_area_ = false;
+        in_bumpy_area_ = in_bumpy_area;
     }
 
     void SentryMod::useSpin(const bool use_spin)

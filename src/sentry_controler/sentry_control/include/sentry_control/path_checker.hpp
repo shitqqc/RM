@@ -17,13 +17,14 @@ namespace sentry_control
     {
     private:
         bool in_bumpy_area_;
+        bool have_bumpy_area_;
 
         bumpy_area friend_bumpy_area_;
         bumpy_area enermy_bumpy_area_;
 
         nav_msgs::msg::Path::SharedPtr path_;
     public:
-        path_checker();
+        path_checker(const bool have_bumpy_area = false);
         void get_path(const nav_msgs::msg::Path::SharedPtr &path);
         void set_bumpy_area(const bumpy_area &friend_area, const bumpy_area &enermy_area);
         bool is_in_bumpy_area();

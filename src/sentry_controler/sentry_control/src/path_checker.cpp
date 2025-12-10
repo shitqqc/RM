@@ -2,7 +2,7 @@
 
 namespace sentry_control
 {
-    path_checker::path_checker() {}
+    path_checker::path_checker(const bool have_bumpy_area) : have_bumpy_area_(have_bumpy_area) {}
 
     void path_checker::get_path(const nav_msgs::msg::Path::SharedPtr &path)
     {
@@ -34,7 +34,10 @@ namespace sentry_control
 
     bool path_checker::is_in_bumpy_area()
     {
-        return this->in_bumpy_area_;
+        if(!have_bumpy_area_)
+            return false;
+        else
+            return this->in_bumpy_area_;
     }
 
     bool path_checker::bumpy_area_check(const geometry_msgs::msg::Pose &pose, const bumpy_area &friend_area, const bumpy_area &enermy_area)

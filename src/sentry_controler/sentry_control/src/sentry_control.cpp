@@ -14,8 +14,8 @@ namespace sentry_control
         this->load_params();
 
         pid_ = std::make_shared<PID>(dt_/1000.0, v_angular_max_, v_angular_min_, kp, kd, ki, deadband);
-        sentry_mod_ = std::make_shared<SentryMod>(have_bumpy_area_);
-        path_checker_ = std::make_shared<path_checker>();
+        sentry_mod_ = std::make_shared<SentryMod>();
+        path_checker_ = std::make_shared<path_checker>(have_bumpy_area_);
 
         path_checker_->set_bumpy_area(friend_bumpy_area_, enermy_bumpy_area_);
 
