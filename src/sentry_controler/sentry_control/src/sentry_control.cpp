@@ -88,10 +88,9 @@ namespace sentry_control
             {
             case control_interface::msg::ChassisMod::AIMANGLE:
                 this->chassis_mod_->aim_angle = this->get_aim_yaw();
-                RCLCPP_INFO(this->get_logger(), "aim_angle: %f", this->chassis_mod_->aim_angle);
                 this->exp_spin_ =  this->pid_->calculate(this->yaw_, this->chassis_mod_->aim_angle);
                 this->speed_limit(this->out_cmd_vel_);
-                if(std::abs(this->yaw_ - this->chassis_mod_->aim_angle) > deadband * 1.5)
+                if(std::abs(exp_spin_) >  deadband * this->kp)
                 {
                     this->out_cmd_vel_->linear.set__x(0.0);
                     this->out_cmd_vel_->linear.set__y(0.0);
@@ -119,7 +118,7 @@ namespace sentry_control
         auto current_yaw_ = this->yaw_;
         for(int i = 0; i < 4; i++)
         {
-            if(std::abs(current_yaw_ - aim_yaw_list_[i]) <= M_PI/4)
+            if(std::abs(std::abs(current_yaw_) - aim_yaw_list_[i]) <= M_PI/4)
                 return aim_yaw_list_[i];
         }
         return 0.0; // 默认返回值，如果没有匹配的角度

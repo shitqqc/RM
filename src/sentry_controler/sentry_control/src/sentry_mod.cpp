@@ -23,7 +23,7 @@ namespace sentry_control
         }else if (!in_bumpy_area_ && use_spin_)
         {
             chassis_mod_->type = control_interface::msg::ChassisMod::AIMSPEED;
-            chassis_mod_->aim_speed = 0.5;
+            chassis_mod_->aim_speed = 1.0;
         }else
         {
             chassis_mod_->type = control_interface::msg::ChassisMod::AIMSPEED;
