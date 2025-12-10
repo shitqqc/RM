@@ -205,6 +205,14 @@ def generate_launch_description():
                     "params_file": params_file,
                     "log_level": log_level,
                 }.items()
+            ),
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    os.path.join(launch_dir, "record_bag.launch.py")
+                ),
+                launch_arguments={
+                    "namespace": namespace,
+                }.items()
             )
         ]
     )
