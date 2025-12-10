@@ -20,6 +20,7 @@ namespace sentry_control
         bool use_spin_= false;
         double yaw_;
         double exp_spin_;
+        double speed_limit_;
         
         uint32_t dt_;
         bool have_bumpy_area_;
@@ -51,8 +52,9 @@ namespace sentry_control
         void timer_callback();
         void yaw_callback(const std_msgs::msg::Float32 msg);
         void use_spin_callback(const std_msgs::msg::Bool msg);
-        void cmd_vel_callback(const geometry_msgs::msg::Twist msg);
+        void cmd_vel_callback(const geometry_msgs::msg::Twist::SharedPtr msg);
         void path_callback(const nav_msgs::msg::Path::SharedPtr msg);
+        void speed_limit(geometry_msgs::msg::Twist::SharedPtr &cmd_vel);
         double get_aim_yaw();
 
     public:

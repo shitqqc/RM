@@ -35,6 +35,7 @@ namespace sentry_control
         this->declare_parameter<int32_t>("dt", 50);
         this->declare_parameter<bool>("have_bumpy_area", false);
         this->declare_parameter<std::string>("path_topic", "path");
+        this->declare_parameter<double>("speed_limit", 1.0);
         this->declare_parameter<double>("deadband", 0.05);
         this->declare_parameter<double>("pid.max_", 3.0);
         this->declare_parameter<double>("pid.min_", -3.0);
@@ -53,6 +54,7 @@ namespace sentry_control
         this->get_parameter("dt", dt_);
         this->get_parameter("have_bumpy_area", have_bumpy_area_);
         this->get_parameter("path_topic", path_topic_);
+        this->get_parameter("speed_limit", speed_limit_);
         this->get_parameter("deadband", deadband); 
         this->get_parameter("pid.max_", v_angular_max_);
         this->get_parameter("pid.min_", v_angular_min_);
@@ -88,6 +90,7 @@ namespace sentry_control
                 this->chassis_mod_->aim_angle = this->get_aim_yaw();
                 RCLCPP_INFO(this->get_logger(), "aim_angle: %f", this->chassis_mod_->aim_angle);
                 this->exp_spin_ =  this->pid_->calculate(this->yaw_, this->chassis_mod_->aim_angle);
+                this->speed_limit(this->out_cmd_vel_);
                 if(std::abs(this->yaw_ - this->chassis_mod_->aim_angle) > deadband * 1.5)
                 {
                     this->out_cmd_vel_->linear.set__x(0.0);
@@ -122,9 +125,20 @@ namespace sentry_control
         return 0.0; // 默认返回值，如果没有匹配的角度
     }
 
-    void SentryControlNode::cmd_vel_callback(const geometry_msgs::msg::Twist msg)
+    void SentryControlNode::speed_limit(geometry_msgs::msg::Twist::SharedPtr &cmd_vel)
     {
-        this->out_cmd_vel_ = std::make_shared<geometry_msgs::msg::Twist>(msg);
+        double linear_speed = std::hypot(cmd_vel->linear.x, cmd_vel->linear.y);
+        if(linear_speed > speed_limit_)
+        {
+            double scale = speed_limit_ / linear_speed;
+            cmd_vel->linear.x *= scale;
+            cmd_vel->linear.y *= scale;
+        }
+    }
+
+    void SentryControlNode::cmd_vel_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
+    {
+        this->out_cmd_vel_ = msg;
         nav_start = true;
     }
 
