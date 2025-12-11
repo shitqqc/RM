@@ -50,7 +50,7 @@ def generate_launch_description():
     # Declare the launch arguments
     declare_namespace_cmd = DeclareLaunchArgument(
         "namespace",
-        default_value="",
+        default_value="nav",
         description="Top-level namespace",
     )
 
@@ -234,8 +234,8 @@ def generate_launch_description():
     ld.add_action(start_robot_state_publisher_cmd)
     ld.add_action(start_livox_ros_driver2_node)
     ld.add_action(bringup_cmd)
-    ld.add_action(joy_teleop_cmd)
-    ld.add_action(serial_cmd)
+    # ld.add_action(joy_teleop_cmd)
+    # ld.add_action(serial_cmd)
     ld.add_action(rviz_cmd)
 
     return ld

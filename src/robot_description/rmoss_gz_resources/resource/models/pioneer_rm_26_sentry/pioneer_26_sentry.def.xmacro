@@ -128,7 +128,7 @@
                 <xmacro_block name="geometry_box" x="0.065" y="0.117" z="0.177"/>
             </collision>
         </link>
-        <joint name="gimbal_big_yaw_joint" type="fixed">
+        <!-- <joint name="gimbal_big_yaw_joint" type="fixed">
             <pose relative_to='gimbal_yaw'>0 0 0.05 0 0 0</pose>
             <parent>gimbal_yaw</parent>
             <child>gimbal_big_yaw</child>
@@ -147,7 +147,7 @@
                     </cylinder>
                 </geometry>
             </visual>
-        </link>
+        </link> -->
         <!--gimbal pitch module-->
         <joint name="gimbal_pitch_joint" type="revolute">
             <pose relative_to='gimbal_yaw'>0 0 ${gimbal_pitch_height} 0 0 0</pose>
