@@ -610,3 +610,15 @@ pb_teleop_twist_joy_node:
       roll: 0.0
       pitch: -1.5
       yaw: 3.5
+
+joint_state_publisher:
+  ros__parameters:
+    use_sim_time: false
+    rate: 200
+    source_list: ["serial/gimbal_joint_state"]
+    offset_timestamp: 0.0
+
+robot_state_publisher:
+  ros__parameters:
+    use_sim_time: false
+    publish_frequency: 200.0
