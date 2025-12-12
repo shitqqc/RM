@@ -1,0 +1,7 @@
+/dm_imu_driver: 
+  ros__parameters:
+    device_name: /dev/ttyACM0
+    baud_rate: 921600
+    header_frame_id: odom
+    child_frame_id: gimbal_link
+  
