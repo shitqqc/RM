@@ -4,6 +4,7 @@
 *.cache/
 *.install/
 */build/
+build/
 # 忽略编译后的文件
 *.o
 *.out
