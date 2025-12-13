@@ -199,8 +199,14 @@ def generate_launch_description():
     )
     
     serial_cmd = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(launch_dir, "serial_launch.py")),
-        condition=IfCondition(use_serial)
+        PythonLaunchDescriptionSource(os.path.join(launch_dir, "serial.launch.py")),
+        condition=IfCondition(use_serial),
+        launch_arguments={
+            "namespace": namespace,
+            "use_sim_time": use_sim_time,
+            "map": map_yaml_file,
+            "prior_pcd_file": prior_pcd_file,
+        }.items(),
     )
 
     joy_teleop_cmd = IncludeLaunchDescription(

@@ -162,7 +162,7 @@ void RMSerialDriver::receiveData()
 
             // RCLCPP_INFO(this->get_logger(), "localColor : %d", packet.vision.localColor);
 
-            // gimbal_pub->publish(msg);
+            gimbal_pub->publish(msg);
 
         } else {
           RCLCPP_ERROR(get_logger(), "CRC error!");

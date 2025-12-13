@@ -622,3 +622,12 @@ robot_state_publisher:
   ros__parameters:
     use_sim_time: false
     publish_frequency: 200.0
+
+rm_serial_driver:
+  ros__parameters:
+    nav_device_name: /dev/ttyACM0
+    baud_rate: 115200
+    flow_control: "none"
+    parity: "none"
+    stop_bits: "1"
+    
