@@ -36,6 +36,7 @@ def generate_launch_description():
     slam = LaunchConfiguration("slam")
     world = LaunchConfiguration("world")
     map_yaml_file = LaunchConfiguration("map")
+    have_prior_pcd = LaunchConfiguration("have_prior_pcd")
     prior_pcd_file = LaunchConfiguration("prior_pcd_file")
     use_sim_time = LaunchConfiguration("use_sim_time")
     params_file = LaunchConfiguration("params_file")
@@ -84,6 +85,12 @@ def generate_launch_description():
         description="Full path to map file to load",
     )
 
+    declare_have_prior_pcd_cmd = DeclareLaunchArgument(
+        "have_prior_pcd",
+        default_value="True",
+        description="Whether have prior pcd file for localization",
+    )
+    
     declare_prior_pcd_file_cmd = DeclareLaunchArgument(
         "prior_pcd_file",
         default_value=[
@@ -168,6 +175,7 @@ def generate_launch_description():
             "autostart": autostart,
             "use_composition": use_composition,
             "use_respawn": use_respawn,
+            "have_prior_pcd": have_prior_pcd,
         }.items(),
     )
 
@@ -187,6 +195,7 @@ def generate_launch_description():
     ld.add_action(declare_slam_cmd)
     ld.add_action(declare_world_cmd)
     ld.add_action(declare_map_yaml_cmd)
+    ld.add_action(declare_have_prior_pcd_cmd)
     ld.add_action(declare_prior_pcd_file_cmd)
     ld.add_action(declare_use_sim_time_cmd)
     ld.add_action(declare_params_file_cmd)

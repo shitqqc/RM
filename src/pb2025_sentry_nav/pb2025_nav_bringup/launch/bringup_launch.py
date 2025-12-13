@@ -43,6 +43,7 @@ def generate_launch_description():
     namespace = LaunchConfiguration("namespace")
     slam = LaunchConfiguration("slam")
     map_yaml_file = LaunchConfiguration("map")
+    have_prior_pcd = LaunchConfiguration("have_prior_pcd")
     prior_pcd_file = LaunchConfiguration("prior_pcd_file")
     use_sim_time = LaunchConfiguration("use_sim_time")
     params_file = LaunchConfiguration("params_file")
@@ -96,6 +97,10 @@ def generate_launch_description():
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         "map", description="Full path to map yaml file to load"
+    )
+
+    declare_have_prior_pcd_cmd = DeclareLaunchArgument(
+        "have_prior_pcd", description="Whether have prior pcd file for localization"
     )
 
     declare_prior_pcd_file_cmd = DeclareLaunchArgument(
@@ -175,6 +180,7 @@ def generate_launch_description():
                     "use_sim_time": use_sim_time,
                     "autostart": autostart,
                     "params_file": params_file,
+                    "have_prior_pcd": have_prior_pcd,
                     "prior_pcd_file": prior_pcd_file,
                     "use_composition": use_composition,
                     "use_respawn": use_respawn,
@@ -228,6 +234,7 @@ def generate_launch_description():
     ld.add_action(declare_namespace_cmd)
     ld.add_action(declare_slam_cmd)
     ld.add_action(declare_map_yaml_cmd)
+    ld.add_action(declare_have_prior_pcd_cmd)
     ld.add_action(declare_prior_pcd_file_cmd)
     ld.add_action(declare_use_sim_time_cmd)
     ld.add_action(declare_params_file_cmd)
