@@ -20,3 +20,6 @@ namespace test_publisher
                     test_msg_->linear.x, test_msg_->angular.z);
     }
 }
+
+#include "rclcpp_components/register_node_macro.hpp"
+RCLCPP_COMPONENTS_REGISTER_NODE(test_publisher::testPublisher)
