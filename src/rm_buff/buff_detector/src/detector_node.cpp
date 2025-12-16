@@ -33,6 +33,8 @@ BuffDetectorNode::BuffDetectorNode(const rclcpp::NodeOptions & options)
   frame_id = 0;
   frame_id_ = "camera_optical_frame";
   use_thread_pool = this->declare_parameter("is_use_thread_pool",false);
+  binary_thres = this->declare_parameter("binary_thres",80);
+  threshold_ratio = this->declare_parameter("threshold_ratio",0.4);
   RCLCPP_INFO(this->get_logger(), "Starting DetectorNode!");
 
     cam_info_sub_ = this->create_subscription<sensor_msgs::msg::CameraInfo>(
@@ -102,6 +104,7 @@ void BuffDetectorNode::single_yolo_loop()
     std_msgs::msg::Header header;
     header.stamp = rclcpp::Time(time);
     header.frame_id = frame_id_;
+    traditional_check(blades,debug_img);
     auto t = (this->now()).seconds() * 1000.0;
     auto time_ms = time / 1e6;
     auto latency = t - time_ms;
@@ -172,6 +175,7 @@ void BuffDetectorNode::yolo_pool_loop()
     auto t = process_frame.t;
     auto header = process_frame.header;
     auto timestamp = rclcpp::Time(t);
+    traditional_check(blades,img);
     auto end = this->get_clock()->now();
     double latency = (end.seconds() - timestamp.seconds()) * 1000.0;
     result_img = draw_result(blades, img, latency);
@@ -335,6 +339,41 @@ cv::Mat BuffDetectorNode::draw_result(const std::vector<Blade> blades, const cv:
     cv::circle(result_img_, blade.m_r, 5, cv::Scalar(255, 0, 255), -1);  // 紫色，半径为5
   }
   return result_img_;
+}
+
+void BuffDetectorNode::traditional_check(std::vector<Blade>& blades, const cv::Mat& img)
+{
+
+    blades.erase(
+        std::remove_if(blades.begin(), blades.end(), [&](Blade& blade) {
+            // 计算矩形的左上角和右下角
+            cv::Rect blade_rect(
+                cv::Point(std::min({blade.m_top.x, blade.m_bottom.x, blade.m_left.x, blade.m_right.x}),
+                          std::min({blade.m_top.y, blade.m_bottom.y, blade.m_left.y, blade.m_right.y})),
+                cv::Point(std::max({blade.m_top.x, blade.m_bottom.x, blade.m_left.x, blade.m_right.x}),
+                          std::max({blade.m_top.y, blade.m_bottom.y, blade.m_left.y, blade.m_right.y}))
+            );
+
+            if (blade_rect.x < 0 || blade_rect.y < 0 || blade_rect.x + blade_rect.width >= img.cols || blade_rect.y + blade_rect.height >= img.rows)
+                return true;
+
+            // 提取矩形区域
+            cv::Mat region = img(blade_rect);
+
+            // 二值化
+            cv::Mat binary;
+            cv::threshold(region, binary, binary_thres, 255, cv::THRESH_BINARY);
+
+            // 计算白色像素的占比
+            double white_pixel_count = cv::countNonZero(binary);  // 计算非零（白色）像素数
+            double area = blade_rect.area();
+            double white_ratio = white_pixel_count / area;
+
+            // 如果白色像素占比小于阈值，则过滤掉该矩形
+            return white_ratio < threshold_ratio;
+        }),
+        blades.end()
+    );
 }
 }  // namespace rm_buff
 

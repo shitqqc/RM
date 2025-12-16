@@ -34,6 +34,8 @@ class BuffDetectorNode : public rclcpp::Node
 {
 public:
   BuffDetectorNode(const rclcpp::NodeOptions & options);
+  double threshold_ratio;
+  int binary_thres;
   ~BuffDetectorNode();
 
   std::atomic<int> frame_id{0};
@@ -77,6 +79,7 @@ private:
   int count = 0;
 
   cv::Mat draw_result(const std::vector<Blade> blades, const cv::Mat &img, const float latency);
+  void traditional_check(std::vector<Blade>& blades, const cv::Mat &img);
   // Detected armors publisher
   buff_interfaces::msg::BladeArray blades_msg_;
   rclcpp::Publisher<buff_interfaces::msg::BladeArray>::SharedPtr blades_pub_;
