@@ -1,0 +1,17 @@
+description: Ultralytics YOLOv8n-pose model trained on buff.yaml
+author: Ultralytics
+license: AGPL-3.0 https://ultralytics.com/license
+date: '2025-12-10T22:14:14.277777'
+version: 8.1.5
+stride: 32
+task: pose
+batch: 1
+imgsz:
+- 640
+- 480
+names:
+  0: R
+  1: B
+kpt_shape:
+- 5
+- 3
