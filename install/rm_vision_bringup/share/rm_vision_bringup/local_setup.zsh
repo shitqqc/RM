@@ -1,1 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_vision_bringup/ament_cmake_environment_hooks/local_setup.zsh

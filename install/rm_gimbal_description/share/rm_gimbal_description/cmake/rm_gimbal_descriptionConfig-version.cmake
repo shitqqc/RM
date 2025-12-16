@@ -1,1 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_gimbal_description/ament_cmake_core/rm_gimbal_descriptionConfig-version.cmake

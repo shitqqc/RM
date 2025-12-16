@@ -1,1 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/auto_aim_interfaces/msg/Target.msg

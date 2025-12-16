@@ -1,1 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_gimbal_description/ament_cmake_environment_hooks/local_setup.bash

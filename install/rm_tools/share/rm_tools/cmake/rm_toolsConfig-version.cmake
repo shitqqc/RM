@@ -1,1 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/build/rm_tools/ament_cmake_core/rm_toolsConfig-version.cmake

@@ -20,20 +20,20 @@ def generate_launch_description():
                    'armor_detector:='+launch_params['armor_detector_log_level']],
     )
 
-    # buff_detector_node = Node(
-    #     package='buff_detector',
-    #     executable='buff_detector_node',
-    #     emulate_tty=True,
-    #     output='both',
-    #     parameters=[node_params],
-    #     arguments=['--ros-args', '--log-level',
-    #                'buff_detector:='+launch_params['buff_detector_log_level']],
-    # )
+    buff_detector_node = Node(
+        package='buff_detector',
+        executable='buff_detector_node',
+        emulate_tty=True,
+        output='both',
+        parameters=[node_params],
+        arguments=['--ros-args', '--log-level',
+                   'buff_detector:='+launch_params['buff_detector_log_level']],
+    )
 
     return LaunchDescription([
         robot_state_publisher,
         armor_detector_node,
-        #buff_detector_node,
+        buff_detector_node,
         armor_tracker_node,
         #buff_tracker_node
     ])

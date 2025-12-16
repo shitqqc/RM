@@ -1,1 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/rm_auto_aim/armor_detector/include/armor_detector/armor_pose_estimator.hpp

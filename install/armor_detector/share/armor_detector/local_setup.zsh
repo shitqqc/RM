@@ -1,1 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/build/armor_detector/ament_cmake_environment_hooks/local_setup.zsh

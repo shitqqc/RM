@@ -1,1 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/build/hik_camera/ament_cmake_environment_hooks/local_setup.sh

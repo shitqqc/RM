@@ -1,3 +1,0 @@
-/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/lib/librm_tools.so
-/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/share/rm_tools/cmake/rm_toolsExport.cmake
-/home/ljoy/Robomaster/PIONEER/new_rv/install/rm_tools/share/rm_tools/cmake/rm_toolsExport-noconfig.cmake
