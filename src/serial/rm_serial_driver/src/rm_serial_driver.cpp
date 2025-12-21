@@ -95,36 +95,51 @@ void RMSerialDriver::receiveData()
 {
   std::vector<uint8_t> header(1);
   std::vector<uint8_t> data;
-  if(rclcpp::ok())
-  {
-    try {
-      serial_driver_->port()->receive(header);
+  // if(rclcpp::ok())
+  // {
+  //   try {
+  //     serial_driver_->port()->receive(header);
 
-      if (header[0] == 0x6A) {
-        data.reserve(sizeof(NaviReceivePacket));
-      }
-      else if(header[0] == 0X5A)
-      {
-        data.reserve(sizeof(VisionReceivePacket));
-      } else {
-        RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 20, "Invalid header: %02X", header[0]);
-      }
-  } catch (const std::exception & ex) {
-      RCLCPP_ERROR(get_logger(), "Error receiving data: %s", ex.what());
-      throw ex;
-    }
-  }
+  //     if (header[0] == 0x6A) {
+  //       data.reserve(sizeof(NaviReceivePacket));
+  //     }
+  //     else if(header[0] == 0X5A)
+  //     {
+  //       data.reserve(sizeof(VisionReceivePacket));
+  //     } else {
+  //       RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 20, "Invalid header: %02X", header[0]);
+  //     }
+  // } catch (const std::exception & ex) {
+  //     RCLCPP_ERROR(get_logger(), "Error receiving data: %s", ex.what());
+  //     throw ex;
+  //   }
+  // }
   // data.reserve(sizeof(ReceivePacket));
   // RCLCPP_INFO(this->get_logger(), "In receive data.");
 
   while (rclcpp::ok()) {
     try {
       serial_driver_->port()->receive(header);
+      try{
+        if(header[0] == 0x6A)
+        {
+          data.reserve(sizeof(NaviReceivePacket));
+        }
+        else if(header[0] == 0X5A)
+        {
+          data.reserve(sizeof(VisionReceivePacket));
+        }else{
+          RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 20, "Invalid header: %02X", header[0]);
+          continue;
+        }
+      }catch(const std::exception & ex) {
+        RCLCPP_ERROR(get_logger(), "Error receiving data: %s", ex.what());
+      }
       // RCLCPP_INFO(this->get_logger(), "Receive header.");
       if (header[0] == 0x6A) {
         data.resize(sizeof(NaviReceivePacket) - 1);
         // data.resize(sizeof(ReceivePacket) - 1);
-        serial_driver_->port()->receive(data);
+        // serial_driver_->port()->receive(data);
 
         data.insert(data.begin(), header[0]);
         NaviReceivePacket packet = fromVector < NaviReceivePacket>(data);
@@ -171,7 +186,7 @@ void RMSerialDriver::receiveData()
       else if(header[0] == 0X5A)
       {
         data.resize(sizeof(VisionReceivePacket) - 1);
-        serial_driver_->port()->receive(data);
+        // serial_driver_->port()->receive(data);
 
         data.insert(data.begin(), header[0]);
         VisionReceivePacket packet = fromVector<VisionReceivePacket>(data);
