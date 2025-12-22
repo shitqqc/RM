@@ -8,7 +8,7 @@ namespace sentry_control
     {
     private:
         bool in_bumpy_area_;
-        bool use_spin_ = true;
+        bool use_spin_ = false;
 
         control_interface::msg::ChassisMod::SharedPtr chassis_mod_;
 
