@@ -18,6 +18,8 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <mutex>
+#include <atomic>
 
 #include "geometry_msgs/msg/pose_with_covariance_stamped.hpp"
 #include "pcl/io/pcd_io.h"
@@ -64,6 +66,9 @@ private:
   std::string robot_base_frame_;
   std::string lidar_frame_;
   std::string current_scan_frame_id_;
+  std::mutex result_mutex_;
+  std::mutex cloud_mutex_;
+  std::atomic<bool> have_valid_result_{false};
   rclcpp::Time last_scan_time_;
   Eigen::Isometry3d result_t_;
   Eigen::Isometry3d previous_result_t_;
