@@ -55,6 +55,7 @@ private:
   float map_resolution_;
   int thres_point_count_;
   std::string pcd_file_;
+  std::string pcd_save_file_;
   std::string map_topic_name_;
   std::vector<double> odom_to_lidar_odom_;
 
