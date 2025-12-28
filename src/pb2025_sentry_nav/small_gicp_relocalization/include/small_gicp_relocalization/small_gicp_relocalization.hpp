@@ -51,6 +51,7 @@ private:
 
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr pcd_sub_;
   rclcpp::Subscription<geometry_msgs::msg::PoseWithCovarianceStamped>::SharedPtr initial_pose_sub_;
+  rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr global_map_pub_;
 
   int num_threads_;
   int num_neighbors_;
@@ -58,6 +59,7 @@ private:
   float registered_leaf_size_;
   float max_dist_sq_;
   std::vector<double> init_pose_;
+  std::shared_ptr<sensor_msgs::msg::PointCloud2> global_map_msg_;
 
   std::string map_frame_;
   std::string odom_frame_;

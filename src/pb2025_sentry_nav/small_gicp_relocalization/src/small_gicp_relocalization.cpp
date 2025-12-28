@@ -56,6 +56,7 @@ SmallGicpRelocalizationNode::SmallGicpRelocalizationNode(const rclcpp::NodeOptio
   global_map_ = std::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
   register_ = std::make_shared<
     small_gicp::Registration<small_gicp::GICPFactor, small_gicp::ParallelReductionOMP>>();
+  global_map_msg_ = std::make_shared<sensor_msgs::msg::PointCloud2>();
 
   tf_buffer_ = std::make_unique<tf2_ros::Buffer>(this->get_clock());
   tf_listener_ = std::make_unique<tf2_ros::TransformListener>(*tf_buffer_);
@@ -67,6 +68,9 @@ SmallGicpRelocalizationNode::SmallGicpRelocalizationNode(const rclcpp::NodeOptio
   target_ = small_gicp::voxelgrid_sampling_omp<
     pcl::PointCloud<pcl::PointXYZ>, pcl::PointCloud<pcl::PointCovariance>>(
     *global_map_, global_leaf_size_);
+
+  pcl::toROSMsg(*global_map_, *global_map_msg_);
+  global_map_msg_->header.frame_id = base_frame_;
 
   // Estimate covariances of points
   small_gicp::estimate_covariances_omp(*target_, num_neighbors_, num_threads_);
@@ -82,6 +86,9 @@ SmallGicpRelocalizationNode::SmallGicpRelocalizationNode(const rclcpp::NodeOptio
   initial_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseWithCovarianceStamped>(
     "initialpose", 10,
     std::bind(&SmallGicpRelocalizationNode::initialPoseCallback, this, std::placeholders::_1));
+
+  global_map_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(
+    "global_map", 10);
 
   register_timer_ = this->create_wall_timer(
     std::chrono::milliseconds(500),  // 2 Hz
@@ -190,6 +197,9 @@ void SmallGicpRelocalizationNode::performRegistration()
   }
 
   accumulated_cloud_->clear();
+
+  global_map_msg_->header.stamp = this->get_clock()->now();
+  global_map_pub_->publish(*global_map_msg_);
 }
 
 void SmallGicpRelocalizationNode::publishTransform()
