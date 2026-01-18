@@ -212,7 +212,7 @@ std::vector<Armor> YOLOV5::parse(
     cv::minMaxLoc(color_scores, NULL, &score_color, NULL, &color_id);
     _class_id = class_id.x;
     _color_id = color_id.x;
-
+    //从左上角开始，顺时针
     armor_key_points.push_back(
       cv::Point2f(output.at<float>(r, 0) / scale, output.at<float>(r, 1) / scale));
     armor_key_points.push_back(

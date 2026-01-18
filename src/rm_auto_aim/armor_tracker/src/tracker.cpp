@@ -251,16 +251,19 @@ void Tracker::initEKF(const Armor & a)
   Eigen::VectorXd P0_dig(11);
   if(a.number == "6")//outpost
   {
-    P0_dig << 1, 64, 1, 64, 1, 81, 0.4, 100, 1e-4, 0, 0;
+    //P0_dig << 1, 64, 1, 64, 1, 81, 0.4, 100, 1e-4, 0, 0;
+    P0_dig<<0.01, 4, 0.01 ,4, 0.01, 0.01, 0.16, 16, 1e-6, 0, 0;
   }
   else if(a.number == "7" || a.number == "8" )//base
   {
-    P0_dig << 1, 64, 1, 64, 1, 64, 0.4, 100, 1e-4, 0, 0;
+    //P0_dig << 1, 64, 1, 64, 1, 64, 0.4, 100, 1e-4, 0, 0;
+    P0_dig<<0.01, 4, 0.01 ,4, 0.01, 0.01, 0.16, 16, 1e-6, 0, 0;
   }
   else
   {
-    P0_dig << 1, 64, 1, 64, 1, 64, 0.4, 100, 1, 1, 1;
-   //P0_dig<<1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1;
+    //P0_dig << 1, 64, 1, 64, 1, 64, 0.4, 100, 1, 1, 1;
+   //0_dig<<1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1;
+   P0_dig<<0.01, 4, 0.01 ,4, 0.01, 0.01, 0.16, 16, 0.01, 0.01, 0.0025;
   }
   double r = 0.2;
   if(a.number == "6")
@@ -285,16 +288,17 @@ void Tracker::update_ypda(const Armor & armor, int id)
 {
   //观测jacobi
   Eigen::MatrixXd H = h_jacobian(ekf.x, id);
-  // Eigen::VectorXd R_dig{{4e-3, 4e-3, 1, 9e-2}};
+  //Eigen::VectorXd R_dig{{4e-3, 4e-3, 1, 9e-2}};
   auto p = armor.pose.position;
   Eigen::Vector3d vec(p.x, p.y, p.z);
   double distance = vec.norm();
   auto center_yaw = std::atan2(p.y, p.x);
   double yaw = orientationToYaw(armor.pose.orientation, 0);
+  // //弧度制
   auto delta_angle = rm_tools::limit_rad(yaw - center_yaw);
   Eigen::VectorXd R_dig{
-    {r_py, r_py, log(std::abs(delta_angle) + 1) + 1,
-     log(distance + 1) / 200 + 9e-2}};
+    {r_py, r_py, log(std::abs(delta_angle) + 1) + r_d,
+     log(distance + 1) / 200 + r_yaw}};
 
   //测量过程噪声偏差的方差
   Eigen::MatrixXd R = R_dig.asDiagonal();

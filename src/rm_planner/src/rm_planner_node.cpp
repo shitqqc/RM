@@ -246,6 +246,11 @@ void RMPlannerNode::publishMarkers(const auto_aim_interfaces::msg::Target &targe
       tf2::Quaternion q;
       q.setRPY(0, target_msg.id == "outpost" ? -0.2618 : 0.2618, tmp_yaw);
       armors_marker_.pose.orientation = tf2::toMsg(q);
+      
+      // Add text label with the ID of the armor
+      armors_marker_.type = visualization_msgs::msg::Marker::TEXT_VIEW_FACING;
+      armors_marker_.text = std::to_string(i);  // Use armor's ID as the text
+      armors_marker_.scale.z = 0.2;  // Set font size for the label
       marker_array.markers.emplace_back(armors_marker_);
     }
 

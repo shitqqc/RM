@@ -7,5 +7,7 @@ geometry_msgs/Pose pose
 geometry_msgs/Point[] kpts
 float32 yaw_raw
 float32 yaw
+float32 pitch
+float32 roll
 float32 dyaw
 int32 priority

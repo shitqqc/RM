@@ -362,11 +362,11 @@ void ArmorDetectorNode::single_yolo_process(const cv::Mat & img, int64_t t)
     
     if (armor_pose_estimator_ != nullptr) {
       armors_msg_.header = header;
-      armors.erase(
-        std::remove_if(armors.begin(), armors.end(), [this](const Armor& armor) {
-            return static_cast<int>(armor.color) != detect_color;}),
-            armors.end()
-      );
+      // armors.erase(
+      //   std::remove_if(armors.begin(), armors.end(), [this](const Armor& armor) {
+      //       return static_cast<int>(armor.color) != detect_color;}),
+      //       armors.end()
+      // );
       
       try {
         rclcpp::Time target_time = header.stamp;

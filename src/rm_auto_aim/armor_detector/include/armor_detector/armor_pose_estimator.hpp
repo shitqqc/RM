@@ -28,6 +28,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/camera_info.hpp>
 #include <tf2_ros/buffer.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 // project
 #include "auto_aim_interfaces/msg/armor.hpp"
 #include "rm_tools/pnp_solver.hpp"
