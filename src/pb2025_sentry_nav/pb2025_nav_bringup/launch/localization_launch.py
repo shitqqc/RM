@@ -277,6 +277,6 @@ def generate_launch_description():
     ld.add_action(start_point_lio_node_no_prior_pcd)
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
-    ld.add_action(start_static_transform_node)
+    # ld.add_action(start_static_transform_node)
 
     return ld

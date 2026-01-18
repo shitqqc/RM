@@ -69,8 +69,11 @@ SmallGicpRelocalizationNode::SmallGicpRelocalizationNode(const rclcpp::NodeOptio
     pcl::PointCloud<pcl::PointXYZ>, pcl::PointCloud<pcl::PointCovariance>>(
     *global_map_, global_leaf_size_);
 
-  pcl::toROSMsg(*global_map_, *global_map_msg_);
-  global_map_msg_->header.frame_id = base_frame_;
+  auto filtered_global_map = std::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
+  voxelGridFilter(global_map_, filtered_global_map, 0.1);
+
+  pcl::toROSMsg(*filtered_global_map, *global_map_msg_);
+  global_map_msg_->header.frame_id = odom_frame_;
 
   // Estimate covariances of points
   small_gicp::estimate_covariances_omp(*target_, num_neighbors_, num_threads_);
@@ -97,6 +100,17 @@ SmallGicpRelocalizationNode::SmallGicpRelocalizationNode(const rclcpp::NodeOptio
   transform_timer_ = this->create_wall_timer(
     std::chrono::milliseconds(100),  // 20 Hz
     std::bind(&SmallGicpRelocalizationNode::publishTransform, this));
+}
+
+void SmallGicpRelocalizationNode::voxelGridFilter(
+  const pcl::PointCloud<pcl::PointXYZ>::Ptr & input_cloud,
+  pcl::PointCloud<pcl::PointXYZ>::Ptr & filtered_cloud,
+  float leaf_size)
+{
+  pcl::VoxelGrid<pcl::PointXYZ> sor;
+  sor.setInputCloud(input_cloud);
+  sor.setLeafSize(leaf_size, leaf_size, leaf_size);
+  sor.filter(*filtered_cloud);
 }
 
 void SmallGicpRelocalizationNode::loadGlobalMap(const std::string & file_name)
