@@ -16,7 +16,7 @@ namespace rm_auto_aim
 class YOLOV5 : public YOLOBase
 {
 public:
-  YOLOV5(const std::string & model_path, double conf_threshold, const std::string & device);
+  YOLOV5(const std::string & model_path, double conf_threshold, const std::string & device, int inference_mode);
 
   std::vector<Armor> detect(const cv::Mat & bgr_img) override;
 

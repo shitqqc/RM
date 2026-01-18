@@ -26,13 +26,14 @@
     debug: true
     model_name: yolov5.xml
     device: CPU
-    is_use_thread_pool: false
+    # 0:single 1: async 2: pool
+    detect_mode: 0
     confidence_threshole: 0.8
     num_yolo_thread: 6
     detect_color: 0
     use_traditional: false
     use_pca: false
-    use_ba: true
+    use_ba: false
     binary_threshold: 85
     max_angle_error: 45 # degree
     min_lightbar_ratio: 1.5

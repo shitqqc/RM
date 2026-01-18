@@ -36,13 +36,13 @@ def generate_launch_description():
                     parameters=[node_params],
                     extra_arguments=[{'use_intra_process_comms': True}]
                 ),
-                ComposableNode(
-                    package='buff_detector',
-                    plugin='rm_buff::BuffDetectorNode',
-                    name='buff_detector',
-                    parameters=[node_params],
-                    extra_arguments=[{'use_intra_process_comms': True}]
-                )
+                # ComposableNode(
+                #     package='buff_detector',
+                #     plugin='rm_buff::BuffDetectorNode',
+                #     name='buff_detector',
+                #     parameters=[node_params],
+                #     extra_arguments=[{'use_intra_process_comms': True}]
+                # )
             ],
             output='both',
             emulate_tty=True,

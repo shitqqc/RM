@@ -33,7 +33,7 @@ def generate_launch_description():
     return LaunchDescription([
         robot_state_publisher,
         armor_detector_node,
-        buff_detector_node,
+        #buff_detector_node,
         armor_tracker_node,
         #buff_tracker_node
     ])

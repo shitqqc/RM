@@ -62,16 +62,18 @@ private:
   std::unique_ptr<Detector> detector_;
   std::unique_ptr<YOLOV5> yolo_;
 
-  void single_yolo_process(const cv::Mat & img, const std_msgs::msg::Header header);
-  void yolo_pool_process(const cv::Mat & img, const std_msgs::msg::Header header);
+  void single_yolo_process(const cv::Mat & img, int64_t timestampe);
+  void async_yolo_process(const cv::Mat & img, int64_t timestampe);
+  void yolo_pool_process(const cv::Mat & img, int64_t timestampe);
 
-  //single yolo
+  //async yolo
   std::string frame_id_;
-  void single_yolo_loop();
+  void async_yolo_loop();
   std::thread detect_thread_;
   std::atomic<bool> detect_thread_running_{false};
   // //thread pool
-  bool use_thread_pool;
+  //bool use_thread_pool;
+  int detect_mode;
   OrderedQueue frame_queue;
   std::thread process_thread_;
   std::vector<std::unique_ptr<YOLO>> yolos;
@@ -83,6 +85,8 @@ private:
   void yolo_pool_loop();
   int count = 0;
 
+  const int LATENCY_MODE = 0;
+  const int THROUGHPUT_MODE = 1;
   // Detected armors publisher
   auto_aim_interfaces::msg::Armors armors_msg_;
   rclcpp::Publisher<auto_aim_interfaces::msg::Armors>::SharedPtr armors_pub_;

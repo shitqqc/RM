@@ -19,7 +19,7 @@ public:
 class YOLO
 {
 public:
-  YOLO(const std::string & model_path, double conf_threshold, const std::string & device);
+  YOLO(const std::string & model_path, double conf_threshold, const std::string & device, int inference_mode);
 
   std::vector<Armor> detect(const cv::Mat & img);
 

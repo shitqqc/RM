@@ -4,7 +4,7 @@
 
 namespace rm_auto_aim
 {
-YOLOV5::YOLOV5(const std::string & model_path, double conf_threshold, const std::string & device)
+YOLOV5::YOLOV5(const std::string & model_path, double conf_threshold, const std::string & device, int inference_mode)
 {
   auto model = core_.read_model(model_path);
   ov::preprocess::PrePostProcessor ppp(model);
@@ -25,8 +25,16 @@ YOLOV5::YOLOV5(const std::string & model_path, double conf_threshold, const std:
     .scale(255.0);
   device_ = device;
   model = ppp.build();
+  if(inference_mode == 0)
+  {
   compiled_model_ = core_.compile_model(
-    model, device_, ov::hint::performance_mode(ov::hint::PerformanceMode::THROUGHPUT));//THROUGHPUT
+    model, device_, ov::hint::performance_mode(ov::hint::PerformanceMode::LATENCY));
+  }
+  else
+  {
+  compiled_model_ = core_.compile_model(
+    model, device_, ov::hint::performance_mode(ov::hint::PerformanceMode::THROUGHPUT));   
+  }
   score_threshold_ = conf_threshold;
   RCLCPP_INFO(rclcpp::get_logger("armor_detector"), "yolo initialized !");
 }

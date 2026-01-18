@@ -5,9 +5,9 @@
 namespace rm_auto_aim
 {
 
-YOLO::YOLO(const std::string & model_path, double conf_threshold, const std::string & device)
+YOLO::YOLO(const std::string & model_path, double conf_threshold, const std::string & device, int inference_mode)
 {
-    yolo_ = std::make_unique<YOLOV5>(model_path, conf_threshold, device);
+    yolo_ = std::make_unique<YOLOV5>(model_path, conf_threshold, device, inference_mode);
 }
 std::vector<Armor> YOLO::detect(const cv::Mat & img)
 {
