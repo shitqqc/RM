@@ -1,4 +1,4 @@
 chassis_angle:
   ros__parameters:
     chassis_frame: "chassis"
-    odom_frame: "gimbal_yaw_fake"
+    odom_frame: "map"
