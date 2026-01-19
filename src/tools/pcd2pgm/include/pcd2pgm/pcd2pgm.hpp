@@ -48,6 +48,7 @@ private:
 
   void applyTransform();
 
+  bool save_pcd_;
   float thre_z_min_;
   float thre_z_max_;
   float thre_radius_;

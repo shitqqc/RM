@@ -51,7 +51,11 @@ Pcd2PgmNode::Pcd2PgmNode(const rclcpp::NodeOptions & options) : Node("pcd2pgm", 
   timer_ =
     create_wall_timer(std::chrono::seconds(1), std::bind(&Pcd2PgmNode::publishCallback, this));
 
-  pcl::io::savePCDFileBinary(pcd_save_file_, *cloud_after_radius_);
+  if(save_pcd_)
+  {
+    pcl::io::savePCDFileBinary(pcd_save_file_, *cloud_after_radius_);
+    RCLCPP_INFO(get_logger(), "Saved pcd file: %s", pcd_save_file_.c_str());
+  }
 }
 
 
@@ -66,6 +70,7 @@ void Pcd2PgmNode::publishCallback()
 
 void Pcd2PgmNode::declareParameters()
 {
+  declare_parameter("save_pcd", false);
   declare_parameter("pcd_file", "");
   declare_parameter("pcd_save_file", "");
   declare_parameter("thre_z_min", 0.5);
@@ -81,6 +86,7 @@ void Pcd2PgmNode::declareParameters()
 
 void Pcd2PgmNode::getParameters()
 {
+  get_parameter("save_pcd", save_pcd_);
   get_parameter("pcd_file", pcd_file_);
   get_parameter("pcd_save_file", pcd_save_file_);
   get_parameter("thre_z_min", thre_z_min_);
