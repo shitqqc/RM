@@ -73,7 +73,7 @@ SmallGicpRelocalizationNode::SmallGicpRelocalizationNode(const rclcpp::NodeOptio
   voxelGridFilter(global_map_, filtered_global_map, 0.1);
 
   pcl::toROSMsg(*filtered_global_map, *global_map_msg_);
-  global_map_msg_->header.frame_id = odom_frame_;
+  global_map_msg_->header.frame_id = "map";
 
   // Estimate covariances of points
   small_gicp::estimate_covariances_omp(*target_, num_neighbors_, num_threads_);
@@ -149,35 +149,19 @@ void SmallGicpRelocalizationNode::registeredPcdCallback(
 
   pcl::PointCloud<pcl::PointXYZ>::Ptr scan(new pcl::PointCloud<pcl::PointXYZ>());
   pcl::fromROSMsg(*msg, *scan);
-  // *accumulated_cloud_ += *scan;
-  std::lock_guard<std::mutex> lock_guard(cloud_mutex_);
   *accumulated_cloud_ += *scan;
-
 }
 
 void SmallGicpRelocalizationNode::performRegistration()
 {
-  // if (accumulated_cloud_->empty()) {
-  //   RCLCPP_WARN(this->get_logger(), "No accumulated points to process.");
-  //   return;
-  // }
-  pcl::PointCloud<pcl::PointXYZ>::Ptr local_cloud(new pcl::PointCloud<pcl::PointXYZ>());
-  {
-    std::lock_guard<std::mutex> lock_guard(cloud_mutex_);
-    if(accumulated_cloud_->empty()) {
-      RCLCPP_WARN(this->get_logger(), "No accumulated points to process.");
-      return;
-    }
-    *local_cloud = *accumulated_cloud_;
+  if (accumulated_cloud_->empty()) {
+    RCLCPP_WARN(this->get_logger(), "No accumulated points to process.");
+    return;
   }
-
-  // source_ = small_gicp::voxelgrid_sampling_omp<
-  //   pcl::PointCloud<pcl::PointXYZ>, pcl::PointCloud<pcl::PointCovariance>>(
-  //   *accumulated_cloud_, registered_leaf_size_);
 
   source_ = small_gicp::voxelgrid_sampling_omp<
     pcl::PointCloud<pcl::PointXYZ>, pcl::PointCloud<pcl::PointCovariance>>(
-    *local_cloud, registered_leaf_size_);
+    *accumulated_cloud_, registered_leaf_size_);
 
   small_gicp::estimate_covariances_omp(*source_, num_neighbors_, num_threads_);
 
@@ -194,19 +178,9 @@ void SmallGicpRelocalizationNode::performRegistration()
 
   auto result = register_->align(*target_, *source_, *target_tree_, previous_result_t_);
 
-  if (result.converged) 
-  // {
-  //   result_t_ = previous_result_t_ = result.T_target_source;
-  // } 
-  {
-    {
-      std::lock_guard<std::mutex> lock_guard(result_mutex_);
-      result_t_ = previous_result_t_ = result.T_target_source;
-    }
-    have_valid_result_.store(true, std::memory_order_release);
-  }
-  else 
-  {
+  if (result.converged) {
+    result_t_ = previous_result_t_ = result.T_target_source;
+  } else {
     RCLCPP_WARN(this->get_logger(), "GICP did not converge.");
   }
 
@@ -218,31 +192,18 @@ void SmallGicpRelocalizationNode::performRegistration()
 
 void SmallGicpRelocalizationNode::publishTransform()
 {
-  // if (result_t_.matrix().isZero()) {
-  if(!have_valid_result_.load(std::memory_order_acquire)) {
+  if (result_t_.matrix().isZero()) {
     return;
-  }
-
-  Eigen::Isometry3d pose;
-  {
-    std::lock_guard<std::mutex> lock_guard(result_mutex_);
-    pose = result_t_;
   }
 
   geometry_msgs::msg::TransformStamped transform_stamped;
   // `+ 0.1` means transform into future. according to https://robotics.stackexchange.com/a/96615
-  // transform_stamped.header.stamp = last_scan_time_ + rclcpp::Duration::from_seconds(0.1);
-  transform_stamped.header.stamp = this->get_clock()->now(); 
-  // RCLCPP_INFO_STREAM(this->get_logger(), "publish transform at time: " << transform_stamped.header.stamp.sec << "."
-  //                                                                     << transform_stamped.header.stamp.nanosec/1e9);
+  transform_stamped.header.stamp = last_scan_time_ + rclcpp::Duration::from_seconds(0.1);
   transform_stamped.header.frame_id = map_frame_;
   transform_stamped.child_frame_id = odom_frame_;
 
-  // const Eigen::Vector3d translation = result_t_.translation();
-  // const Eigen::Quaterniond rotation(result_t_.rotation());
-
-  const Eigen::Vector3d translation = pose.translation();
-  const Eigen::Quaterniond rotation(pose.rotation());
+  const Eigen::Vector3d translation = result_t_.translation();
+  const Eigen::Quaterniond rotation(result_t_.rotation());
 
   transform_stamped.transform.translation.x = translation.x();
   transform_stamped.transform.translation.y = translation.y();
