@@ -1,0 +1,29 @@
+# 左相机配置
+left:
+  usb_camera:
+    ros__parameters:
+      video_device: "/dev/video4"
+      camera_name: "left_camera"
+      frame_width: 1280
+      frame_height: 720
+      fps: 60.0
+      exposure: 100.0
+      gamma: 100.0
+      gain: 2.0
+      pixel_format: "YUYV"
+      camera_info_url: "package://usb_camera/config/right_camera_info.yaml"
+
+# 右相机配置  
+right:
+  usb_camera:
+    ros__parameters:
+      video_device: "/dev/video2"
+      camera_name: "right_camera"
+      frame_width: 1280
+      frame_height: 720
+      fps: 60.0
+      exposure: 100.0
+      gamma: 100.0
+      gain: 2.0
+      pixel_format: "YUYV"
+      camera_info_url: "package://usb_camera/config/left_camera_info.yaml"

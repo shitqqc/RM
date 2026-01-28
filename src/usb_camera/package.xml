@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>usb_camera</name>
+  <version>0.1.0</version>
+  <description>USB免驱摄像头的ROS2节点,支持动态参数、标定信息与标准接口</description>
+  <maintainer email="your_email@example.com">Your Name</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>camera_info_manager</depend>
+  <depend>image_transport</depend>
+  <depend>OpenCV</depend>
+  <depend>rclcpp_components</depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>camera_calibration_parsers</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

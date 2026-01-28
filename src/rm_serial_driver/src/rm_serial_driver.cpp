@@ -139,7 +139,8 @@ void RMSerialDriver::processVisionPacket(const std_msgs::msg::UInt8MultiArray::S
   uint8_t detect_color = packet.detect_color;
   uint8_t task_mode = packet.task_mode;
   bool reset_tracker = packet.reset_tracker;
-  bool is_play = packet.is_play;
+  // rm_vision 当前不使用 is_play（录制控制逻辑已禁用/未接入）
+  (void)packet.is_play;
   bool change_target = packet.change_target;
   float roll = packet.roll;
   float pitch = packet.pitch;
