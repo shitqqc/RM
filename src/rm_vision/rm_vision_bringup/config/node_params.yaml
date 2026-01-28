@@ -20,6 +20,7 @@
     flow_control: none
     parity: none
     stop_bits: "1"
+    use_topic_subscription: true  # 设置为true时从话题订阅视觉数据，false时直接从串口读取
 
 /armor_detector:
   ros__parameters:

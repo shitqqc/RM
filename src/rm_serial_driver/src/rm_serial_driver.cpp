@@ -51,16 +51,30 @@ RMSerialDriver::RMSerialDriver(const rclcpp::NodeOptions & options)
   //Target change service cilent
   change_target_client_ = this->create_client<std_srvs::srv::Trigger>("/tracker/change");
 
-  try {
-    serial_driver_->init_port(device_name_, *device_config_);
-    if (!serial_driver_->port()->is_open()) {
-      serial_driver_->port()->open();
-      receive_thread_ = std::thread(&RMSerialDriver::receiveData, this);
+  // 检查是否使用话题订阅模式
+  use_topic_subscription_ = this->declare_parameter("use_topic_subscription", false);
+  
+  // 创建视觉发送数据发布器（无论是否使用话题订阅模式都创建）
+  vision_send_pub_ = this->create_publisher<std_msgs::msg::UInt8MultiArray>(
+    "serial/vision_send_packet", rclcpp::SensorDataQoS());
+  
+  if (use_topic_subscription_) {
+    RCLCPP_INFO(get_logger(), "Using topic subscription mode for vision packets");
+    vision_packet_sub_ = this->create_subscription<std_msgs::msg::UInt8MultiArray>(
+      "serial/vision_packet", rclcpp::SensorDataQoS(),
+      std::bind(&RMSerialDriver::processVisionPacket, this, std::placeholders::_1));
+  } else {
+    try {
+      serial_driver_->init_port(device_name_, *device_config_);
+      if (!serial_driver_->port()->is_open()) {
+        serial_driver_->port()->open();
+        receive_thread_ = std::thread(&RMSerialDriver::receiveData, this);
+      }
+    } catch (const std::exception & ex) {
+      RCLCPP_ERROR(
+        get_logger(), "Error creating serial port: %s - %s", device_name_.c_str(), ex.what());
+      throw ex;
     }
-  } catch (const std::exception & ex) {
-    RCLCPP_ERROR(
-      get_logger(), "Error creating serial port: %s - %s", device_name_.c_str(), ex.what());
-    throw ex;
   }
 
   // aiming_point_.header.frame_id = "odom";
@@ -88,17 +102,117 @@ RMSerialDriver::RMSerialDriver(const rclcpp::NodeOptions & options)
 }
 RMSerialDriver::~RMSerialDriver()
 {
-  if (receive_thread_.joinable()) {
-    receive_thread_.join();
+  if (!use_topic_subscription_) {
+    if (receive_thread_.joinable()) {
+      receive_thread_.join();
+    }
+
+    if (serial_driver_->port()->is_open()) {
+      serial_driver_->port()->close();
+    }
+
+    if (owned_ctx_) {
+      owned_ctx_->waitForExit();
+    }
+  }
+}
+
+void RMSerialDriver::processVisionPacket(const std_msgs::msg::UInt8MultiArray::SharedPtr msg)
+{
+  // 将字节数组转换为数据包格式
+  // 注意：self_nav 发送的是 VisionReceivePacket 的字节数组，但内存布局与 ReceivePacket 相同
+  if (msg->data.size() < sizeof(ReceivePacket)) {
+    RCLCPP_ERROR(get_logger(), "Received vision packet size too small: %zu, expected: %zu", 
+                 msg->data.size(), sizeof(ReceivePacket));
+    return;
+  }
+  
+  ReceivePacket packet = fromVector(msg->data);
+  
+  // 验证CRC
+  bool crc_ok = crc16::Verify_CRC16_Check_Sum(reinterpret_cast<const uint8_t *>(&packet), sizeof(packet));
+  if (!crc_ok) {
+    RCLCPP_ERROR(get_logger(), "CRC error in vision packet!");
+    return;
+  }
+  
+  uint8_t detect_color = packet.detect_color;
+  uint8_t task_mode = packet.task_mode;
+  bool reset_tracker = packet.reset_tracker;
+  bool is_play = packet.is_play;
+  bool change_target = packet.change_target;
+  float roll = packet.roll;
+  float pitch = packet.pitch;
+  float yaw = packet.yaw;
+  uint16_t game_time = packet.game_time;
+  uint32_t timestamp = packet.timestamp;
+
+  // 处理检测颜色参数
+  if (!initial_set_param_ || detect_color != previous_receive_color_) {
+    setParam(rclcpp::Parameter("detect_color", detect_color));
+    previous_receive_color_ = detect_color;
   }
 
-  if (serial_driver_->port()->is_open()) {
-    serial_driver_->port()->close();
+  // 处理tracker重置
+  if (reset_tracker) {
+    resetTracker();
   }
 
-  if (owned_ctx_) {
-    owned_ctx_->waitForExit();
+  // 处理目标切换
+  if (change_target) {
+    changeTarget();
   }
+
+  // 处理任务模式
+  std_msgs::msg::String task;
+  std::string theory_task;
+  if (
+    (game_time >= 329 && game_time <= 359) ||
+    (game_time >= 239 && game_time <= 269)) {
+    theory_task = "small_buff";
+  } else if (
+    (game_time >= 149 && game_time <= 179) ||
+    (game_time >= 74 && game_time <= 104) ||
+    (game_time > 0 && game_time <= 29)) {
+    theory_task = "large_buff";
+  } else {
+    theory_task = "aim";
+  }
+
+  if (task_mode == 0) {
+    task.data = theory_task;
+  } else if (task_mode == 1) {
+    task.data = "aim";
+  } else if (task_mode == 2) {
+    if (theory_task == "aim") {
+      task.data = "auto";
+    } else {
+      task.data = theory_task;
+    }
+  } else {
+    task.data = "aim";
+  }
+  task_pub_->publish(task);
+
+  // 发布TF变换
+  geometry_msgs::msg::TransformStamped t;
+  timestamp_offset_ = this->get_parameter("timestamp_offset").as_double();
+  t.header.stamp = this->now() - rclcpp::Duration::from_seconds(timestamp_offset_);
+  t.header.frame_id = "base_footprint";
+  t.child_frame_id = "gimbal_link";
+  tf2::Quaternion q;
+  q.setRPY(roll, pitch, yaw);
+  t.transform.rotation = tf2::toMsg(q);
+  t.transform.translation.x = 0.0;
+  t.transform.translation.y = 0.0;
+  t.transform.translation.z = 0.0;
+  tf_broadcaster_->sendTransform(t);
+
+  // 发布时间信息
+  auto_aim_interfaces::msg::TimeInfo aim_time_info;
+  aim_time_info.header = t.header;
+  aim_time_info.time = timestamp;
+  aim_time_info_pub_->publish(aim_time_info);
 }
 
 void RMSerialDriver::receiveData()
@@ -173,11 +287,14 @@ void RMSerialDriver::receiveData()
           geometry_msgs::msg::TransformStamped t;
           timestamp_offset_ = this->get_parameter("timestamp_offset").as_double();
           t.header.stamp = this->now() - rclcpp::Duration::from_seconds(timestamp_offset_);
-          t.header.frame_id = "odom";
+          t.header.frame_id = "base_footprint";
           t.child_frame_id = "gimbal_link";
           tf2::Quaternion q;
           q.setRPY(packet.roll, packet.pitch, packet.yaw);
           t.transform.rotation = tf2::toMsg(q);
+          t.transform.translation.x = 0.0;
+          t.transform.translation.y = 0.0;
+          t.transform.translation.z = 0.0;
           tf_broadcaster_->sendTransform(t);
 
           // publish time
@@ -192,9 +309,15 @@ void RMSerialDriver::receiveData()
           //   aiming_point_.pose.poaim_time_info_pub_sition.z = packet.aim_z;
           //   marker_pub_->publish(aiming_point_);
           // }
-        } else {
+        } 
+        else {
           RCLCPP_ERROR(get_logger(), "CRC error!");
         }
+      }
+      else if(header[0] == 0x6A){
+        data.resize(14);
+        serial_driver_->port()->receive(data);
+        RCLCPP_DEBUG_THROTTLE(get_logger(), *get_clock(),5000,"Skipping nav packet (0x6A), handled by nav serial driver");
       } else {
         RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 20, "Invalid header: %02X", header[0]);
       }
@@ -209,35 +332,37 @@ void RMSerialDriver::receiveData()
 void RMSerialDriver::sendArmorData(
   const auto_aim_interfaces::msg::GimbalCmd::ConstSharedPtr msg)
 {
-
-  try {
-    SendPacket packet;
-    packet.control = msg->control;
-    packet.fire = msg->fire;
-    packet.target_yaw = msg->target_yaw;
-    packet.target_pitch = msg->target_pitch;
-    packet.yaw = msg->yaw;
-    packet.yaw_vel = msg->yaw_vel;
-    packet.yaw_acc = msg->yaw_acc;
-    packet.pitch = msg->pitch;
-    packet.pitch_vel = msg->pitch_vel;
-    packet.pitch_acc = msg->pitch_acc;
-    // 20240329 ZY: Eliminate communication latency
-    crc16::Append_CRC16_Check_Sum(reinterpret_cast<uint8_t *>(&packet), sizeof(packet));
-
-    std::vector<uint8_t> data = toVector(packet);
-
-    serial_driver_->port()->send(data);
-    if(msg->control)
-    {
+  // 构造数据包（使用 packet.hpp 中的 SendPacket 结构体）
+  SendPacket packet;
+  packet.header = 0xA5;
+  packet.control = msg->control;
+  packet.fire = msg->fire;
+  packet.target_yaw = msg->target_yaw;
+  packet.target_pitch = msg->target_pitch;
+  packet.yaw = msg->yaw;
+  packet.yaw_vel = msg->yaw_vel;
+  packet.yaw_acc = msg->yaw_acc;
+  packet.pitch = msg->pitch;
+  packet.pitch_vel = msg->pitch_vel;
+  packet.pitch_acc = msg->pitch_acc;
+  
+  // 计算CRC
+  crc16::Append_CRC16_Check_Sum(reinterpret_cast<uint8_t *>(&packet), sizeof(packet));
+  
+  // 转换为字节数组并发布到话题
+  // 注意：SendPacket 的内存布局与 self_nav 的 VisionSendPacketSimple 相同
+  std::vector<uint8_t> data = toVector(packet);
+  std_msgs::msg::UInt8MultiArray vision_send_msg;
+  vision_send_msg.data = data;
+  
+  vision_send_pub_->publish(vision_send_msg);
+  
+  if(msg->control)
+  {
     std_msgs::msg::Float64 latency;
     latency.data = (this->now() - msg->header.stamp).seconds() * 1000.0;
     RCLCPP_DEBUG_STREAM(get_logger(), "Total latency: " + std::to_string(latency.data) + "ms");    
     latency_pub_->publish(latency);
-    }
-  } catch (const std::exception & ex) {
-    RCLCPP_ERROR(get_logger(), "Error while sending data: %s", ex.what());
-    reopenPort();
   }
 }
 

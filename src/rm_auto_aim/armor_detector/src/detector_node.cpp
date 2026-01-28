@@ -5,6 +5,7 @@
 #include <rmw/qos_profiles.h>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2/convert.h>
+#include <tf2/time.h>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
 #include <image_transport/image_transport.hpp>
@@ -35,17 +36,39 @@ ArmorDetectorNode::ArmorDetectorNode(const rclcpp::NodeOptions & options)
   frame_id_ = "camera_optical_frame";
   //use_thread_pool = this->declare_parameter("is_use_thread_pool",false);
   detect_mode = this->declare_parameter("detect_mode",0);
-  RCLCPP_INFO(this->get_logger(), "Starting DetectorNode!");
+  
+  // 是否启用姿态估计（默认启用）
+  bool enable_pose_estimation = this->declare_parameter("enable_pose_estimation", true);
+  RCLCPP_INFO(this->get_logger(), "Starting DetectorNode! Pose estimation: %s", 
+              enable_pose_estimation ? "enabled" : "disabled");
 
+  // 只有启用姿态估计时才订阅camera_info
+  if (enable_pose_estimation) {
+    odom_frame_ = this->declare_parameter("target_frame", "odom");
+    imu_to_camera_ = Eigen::Matrix3d::Identity();
+    tf2_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
+    tf2_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf2_buffer_);
+    
     cam_info_sub_ = this->create_subscription<sensor_msgs::msg::CameraInfo>(
-    "/camera_info", rclcpp::SensorDataQoS(),
-    [this](sensor_msgs::msg::CameraInfo::ConstSharedPtr camera_info) {
-      cam_center_ = cv::Point2f(camera_info->k[2], camera_info->k[5]);
-      cam_info_ = std::make_shared<sensor_msgs::msg::CameraInfo>(*camera_info);
-      armor_pose_estimator_ = std::make_unique<ArmorPoseEstimator>(cam_info_);
-      armor_pose_estimator_->use_ba_ = this->declare_parameter("use_ba",true);
-      cam_info_sub_.reset();
-    });
+      "/camera_info", rclcpp::SensorDataQoS(),
+      [this](sensor_msgs::msg::CameraInfo::ConstSharedPtr camera_info) {
+        cam_center_ = cv::Point2f(camera_info->k[2], camera_info->k[5]);
+        cam_info_ = std::make_shared<sensor_msgs::msg::CameraInfo>(*camera_info);
+        armor_pose_estimator_ = std::make_unique<ArmorPoseEstimator>(cam_info_);
+        armor_pose_estimator_->use_ba_ = this->declare_parameter("use_ba",true);
+        cam_info_sub_.reset();
+      });
+  } else {
+    // 禁用姿态估计时，只获取相机中心点
+    cam_info_sub_ = this->create_subscription<sensor_msgs::msg::CameraInfo>(
+      "/camera_info", rclcpp::SensorDataQoS(),
+      [this](sensor_msgs::msg::CameraInfo::ConstSharedPtr camera_info) {
+        cam_center_ = cv::Point2f(camera_info->k[2], camera_info->k[5]);
+        cam_info_ = std::make_shared<sensor_msgs::msg::CameraInfo>(*camera_info);
+        // 不创建armor_pose_estimator_，只做检测和分类
+        cam_info_sub_.reset();
+      });
+  }
     img_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
       "/image_raw", rclcpp::SensorDataQoS(),
       std::bind(&ArmorDetectorNode::imageCallback, this, std::placeholders::_1));
@@ -69,9 +92,6 @@ ArmorDetectorNode::ArmorDetectorNode(const rclcpp::NodeOptions & options)
     "/detector/armors", rclcpp::SensorDataQoS());
 
 
-    // Transform initialize
-    odom_frame_ = this->declare_parameter("target_frame", "odom");
-    imu_to_camera_ = Eigen::Matrix3d::Identity();
 
   // Task subscriber
   is_aim_task_ = true;
@@ -115,11 +135,14 @@ ArmorDetectorNode::ArmorDetectorNode(const rclcpp::NodeOptions & options)
       debug_ = p.as_bool();
       debug_ ? createDebugPublishers() : destroyDebugPublishers();
     });
-  tf2_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
-  auto timer_interface = std::make_shared<tf2_ros::CreateTimerROS>(
-      this->get_node_base_interface(), this->get_node_timers_interface());
-  tf2_buffer_->setCreateTimerInterface(timer_interface);
-  tf2_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf2_buffer_);
+  
+  // tf2_buffer_ 已在上面根据enable_pose_estimation条件初始化
+  // 如果启用姿态估计，需要设置timer接口
+  if (enable_pose_estimation && tf2_buffer_) {
+    auto timer_interface = std::make_shared<tf2_ros::CreateTimerROS>(
+        this->get_node_base_interface(), this->get_node_timers_interface());
+    tf2_buffer_->setCreateTimerInterface(timer_interface);
+  }
 
 }
 
@@ -193,11 +216,11 @@ void ArmorDetectorNode::async_yolo_loop()
         }),
         armors.end()
       );
+      bool tf_available = false;
       try {
-        rclcpp::Time target_time = header.stamp;
+        // 使用 tf2::TimePointZero 获取最新的可用变换，避免时间外推错误
         auto odom_to_gimbal = tf2_buffer_->lookupTransform(
-            odom_frame_, header.frame_id, target_time,
-            rclcpp::Duration::from_seconds(0.01));
+            odom_frame_, header.frame_id, tf2::TimePointZero);
             
         auto msg_q = odom_to_gimbal.transform.rotation;
         tf2::Quaternion tf_q;
@@ -207,11 +230,26 @@ void ArmorDetectorNode::async_yolo_loop()
         imu_to_camera_ << tf2_matrix.getRow(0)[0], tf2_matrix.getRow(0)[1], tf2_matrix.getRow(0)[2],
                           tf2_matrix.getRow(1)[0], tf2_matrix.getRow(1)[1], tf2_matrix.getRow(1)[2],
                           tf2_matrix.getRow(2)[0], tf2_matrix.getRow(2)[1], tf2_matrix.getRow(2)[2];
+        tf_available = true;
       } catch (const tf2::TransformException & ex) {
-        RCLCPP_WARN(this->get_logger(), "TF Error: %s", ex.what());
-        continue;
+        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
+            "TF lookup failed (odom->%s): %s. Skipping pose estimation.", header.frame_id.c_str(), ex.what());
+        // TF 不可用时，跳过姿态估计，但仍发布检测结果
+        armors_msg_.armors.clear();
+        for (const auto& armor : armors) {
+          auto_aim_interfaces::msg::Armor armor_msg;
+          armor_msg.type = ARMOR_TYPES[static_cast<int>(armor.type)];
+          armor_msg.number = ARMOR_NAMES[static_cast<int>(armor.name)];
+          armor_msg.color = COLORS[static_cast<int>(armor.color)];
+          // 不设置姿态信息，只发布检测结果
+          armors_msg_.armors.push_back(armor_msg);
+        }
+        armors_pub_->publish(armors_msg_);
+        return;
       }
-      armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
+      if (tf_available) {
+        armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
+      }
 
       if (debug_) {
           marker_array_.markers.clear();
@@ -232,6 +270,69 @@ void ArmorDetectorNode::async_yolo_loop()
           publishMarkers();
       }
 
+      armors_pub_->publish(armors_msg_);
+    } else {
+      // 无姿态估计模式：只发布检测和分类结果（用于USB相机）
+      armors_msg_.header = header;
+      
+      // 过滤颜色
+      armors.erase(
+        std::remove_if(armors.begin(), armors.end(), [this](const Armor& armor) {
+            return static_cast<int>(armor.color) != detect_color;
+        }),
+        armors.end()
+      );
+      
+      // 转换为消息格式（不包含姿态信息）
+      armors_msg_.armors.clear();
+      for (const auto &armor : armors) {
+        auto_aim_interfaces::msg::Armor armor_msg;
+        
+        // 填充基本信息（检测和分类）
+        armor_msg.type = ARMOR_TYPES[static_cast<int>(armor.type)];
+        armor_msg.number = ARMOR_NAMES[static_cast<int>(armor.name)];
+        armor_msg.color = COLORS[static_cast<int>(armor.color)];
+        armor_msg.prob = armor.confidence;
+        armor_msg.yaw_raw = armor.yaw_raw;
+        
+        // 姿态信息设为默认值（不使用）
+        armor_msg.pose.position.x = 0.0;
+        armor_msg.pose.position.y = 0.0;
+        armor_msg.pose.position.z = 0.0;
+        armor_msg.pose.orientation.x = 0.0;
+        armor_msg.pose.orientation.y = 0.0;
+        armor_msg.pose.orientation.z = 0.0;
+        armor_msg.pose.orientation.w = 1.0;
+        armor_msg.yaw = 0.0;
+        armor_msg.pitch = 0.0;
+        armor_msg.roll = 0.0;
+        armor_msg.dyaw = 0.0;
+        
+        // 计算到图像中心的距离
+        if (cam_info_) {
+          cv::Point2f image_center(cam_info_->k[2], cam_info_->k[5]);
+          armor_msg.distance_to_image_center = 
+              cv::norm(armor.center - image_center);
+        } else {
+          armor_msg.distance_to_image_center = 0.0;
+        }
+        
+        // 检测框的四个角点
+        armor_msg.kpts.clear();
+        for (const auto &pt : armor.points) {
+          geometry_msgs::msg::Point point;
+          point.x = pt.x;
+          point.y = pt.y;
+          point.z = 0.0;
+          armor_msg.kpts.emplace_back(point);
+        }
+        
+        armor_msg.priority = static_cast<int>(armor.priority);
+        
+        armors_msg_.armors.emplace_back(std::move(armor_msg));
+      }
+      
+      // 发布检测结果（仅包含检测和分类，无姿态）
       armors_pub_->publish(armors_msg_);
     }
   }
@@ -273,11 +374,12 @@ void ArmorDetectorNode::yolo_pool_loop()
             armors.end()
       );
       
+      bool tf_available = false;
       try {
         rclcpp::Time target_time = header.stamp;
+        // 使用 tf2::TimePointZero 获取最新的可用变换，避免时间外推错误
         auto odom_to_gimbal = tf2_buffer_->lookupTransform(
-            odom_frame_, header.frame_id, target_time,
-            rclcpp::Duration::from_seconds(0.01));
+            odom_frame_, header.frame_id, tf2::TimePointZero);
         auto msg_q = odom_to_gimbal.transform.rotation;
         tf2::Quaternion tf_q;
         tf2::fromMsg(msg_q, tf_q);
@@ -287,12 +389,42 @@ void ArmorDetectorNode::yolo_pool_loop()
             tf2_matrix.getRow(1)[1], tf2_matrix.getRow(1)[2],
             tf2_matrix.getRow(2)[0], tf2_matrix.getRow(2)[1],
             tf2_matrix.getRow(2)[2];
-      } catch (...) {
-        RCLCPP_ERROR(this->get_logger(), "Something Wrong when lookUpTransform");
-        continue;
+        tf_available = true;
+      } catch (const tf2::TransformException & ex) {
+        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
+            "TF lookup failed (odom->%s): %s. Skipping pose estimation.", header.frame_id.c_str(), ex.what());
+        // TF 不可用时，跳过姿态估计，但仍发布检测结果
+        armors_msg_.armors.clear();
+        for (const auto& armor : armors) {
+          auto_aim_interfaces::msg::Armor armor_msg;
+          armor_msg.type = ARMOR_TYPES[static_cast<int>(armor.type)];
+          armor_msg.number = ARMOR_NAMES[static_cast<int>(armor.name)];
+          armor_msg.color = COLORS[static_cast<int>(armor.color)];
+          // 不设置姿态信息，只发布检测结果
+          armors_msg_.armors.push_back(armor_msg);
+        }
+        armors_pub_->publish(armors_msg_);
+        return;
+      } catch (const std::exception & ex) {
+        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
+            "TF lookup error (odom->%s): %s. Skipping pose estimation.", header.frame_id.c_str(), ex.what());
+        // TF 不可用时，跳过姿态估计，但仍发布检测结果
+        armors_msg_.armors.clear();
+        for (const auto& armor : armors) {
+          auto_aim_interfaces::msg::Armor armor_msg;
+          armor_msg.type = ARMOR_TYPES[static_cast<int>(armor.type)];
+          armor_msg.number = ARMOR_NAMES[static_cast<int>(armor.name)];
+          armor_msg.color = COLORS[static_cast<int>(armor.color)];
+          // 不设置姿态信息，只发布检测结果
+          armors_msg_.armors.push_back(armor_msg);
+        }
+        armors_pub_->publish(armors_msg_);
+        return;
       }
       auto x1 = std::chrono::high_resolution_clock::now();
-      armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
+      if (tf_available) {
+        armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
+      }
       auto x2 = std::chrono::high_resolution_clock::now();
       auto total_time = std::chrono::duration_cast<std::chrono::microseconds>(x2 -x1);
       //std::cout<<"armor_pose_estimator_latency:"<<total_time.count()/1000.0<<std::endl;
@@ -368,11 +500,12 @@ void ArmorDetectorNode::single_yolo_process(const cv::Mat & img, int64_t t)
       //       armors.end()
       // );
       
+      bool tf_available = false;
       try {
         rclcpp::Time target_time = header.stamp;
+        // 使用 tf2::TimePointZero 获取最新的可用变换，避免时间外推错误
         auto odom_to_gimbal = tf2_buffer_->lookupTransform(
-            odom_frame_, header.frame_id, target_time,
-            rclcpp::Duration::from_seconds(0.01));
+            odom_frame_, header.frame_id, tf2::TimePointZero);
         auto msg_q = odom_to_gimbal.transform.rotation;
         tf2::Quaternion tf_q;
         tf2::fromMsg(msg_q, tf_q);
@@ -382,11 +515,42 @@ void ArmorDetectorNode::single_yolo_process(const cv::Mat & img, int64_t t)
             tf2_matrix.getRow(1)[1], tf2_matrix.getRow(1)[2],
             tf2_matrix.getRow(2)[0], tf2_matrix.getRow(2)[1],
             tf2_matrix.getRow(2)[2];
-      } catch (...) {
-        RCLCPP_ERROR(this->get_logger(), "Something Wrong when lookUpTransform");
+        tf_available = true;
+      } catch (const tf2::TransformException & ex) {
+        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
+            "TF lookup failed (odom->%s): %s. Skipping pose estimation.", header.frame_id.c_str(), ex.what());
+        // TF 不可用时，跳过姿态估计，但仍发布检测结果
+        armors_msg_.armors.clear();
+        for (const auto& armor : armors) {
+          auto_aim_interfaces::msg::Armor armor_msg;
+          armor_msg.type = ARMOR_TYPES[static_cast<int>(armor.type)];
+          armor_msg.number = ARMOR_NAMES[static_cast<int>(armor.name)];
+          armor_msg.color = COLORS[static_cast<int>(armor.color)];
+          // 不设置姿态信息，只发布检测结果
+          armors_msg_.armors.push_back(armor_msg);
+        }
+        armors_pub_->publish(armors_msg_);
+        return;
+      } catch (const std::exception & ex) {
+        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
+            "TF lookup error (odom->%s): %s. Skipping pose estimation.", header.frame_id.c_str(), ex.what());
+        // TF 不可用时，跳过姿态估计，但仍发布检测结果
+        armors_msg_.armors.clear();
+        for (const auto& armor : armors) {
+          auto_aim_interfaces::msg::Armor armor_msg;
+          armor_msg.type = ARMOR_TYPES[static_cast<int>(armor.type)];
+          armor_msg.number = ARMOR_NAMES[static_cast<int>(armor.name)];
+          armor_msg.color = COLORS[static_cast<int>(armor.color)];
+          // 不设置姿态信息，只发布检测结果
+          armors_msg_.armors.push_back(armor_msg);
+        }
+        armors_pub_->publish(armors_msg_);
+        return;
       }
       auto x1 = std::chrono::high_resolution_clock::now();
-      armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
+      if (tf_available) {
+        armors_msg_.armors = armor_pose_estimator_->extractArmorPoses(armors, imu_to_camera_);
+      }
       auto x2 = std::chrono::high_resolution_clock::now();
       auto total_time = std::chrono::duration_cast<std::chrono::microseconds>(x2 -x1);
       //std::cout<<"armor_pose_estimator_latency:"<<total_time.count()/1000.0<<std::endl;

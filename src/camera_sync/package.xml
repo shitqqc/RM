@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>camera_sync</name>
+  <version>1.0.0</version>
+  <description>Camera synchronization package for HIK and USB cameras</description>
+  <maintainer email="maintainer@example.com">Maintainer</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- C++ 依赖 -->
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>message_filters</depend>
+  <depend>image_transport</depend>
+  <depend>camera_info_manager</depend>
+  
+  <!-- 这两个既用于 C++ 也用于 Python，所以用 depend -->
+  <depend>sensor_msgs</depend>
+  <depend>cv_bridge</depend>
+  
+  <!-- 纯 Python 依赖 -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

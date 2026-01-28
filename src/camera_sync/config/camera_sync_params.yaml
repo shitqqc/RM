@@ -1,0 +1,8 @@
+camera_sync_node:
+  ros__parameters:
+    # 时间容差（毫秒），用于判断USB相机帧是否与HIK相机帧同步
+    max_time_diff_ms: 50.0
+    # 缓冲区大小（增加以容纳更多帧，提高匹配机会）
+    buffer_size: 100
+    # 是否使用传感器数据QoS
+    use_sensor_data_qos: true

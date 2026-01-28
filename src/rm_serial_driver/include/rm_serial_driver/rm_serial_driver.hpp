@@ -27,6 +27,7 @@
 
 #include "auto_aim_interfaces/msg/gimbal_cmd.hpp"
 #include "auto_aim_interfaces/msg/time_info.hpp"
+#include "std_msgs/msg/u_int8_multi_array.hpp"
 
 namespace rm_serial_driver
 {
@@ -41,6 +42,8 @@ private:
   void getParams();
 
   void receiveData();
+  
+  void processVisionPacket(const std_msgs::msg::UInt8MultiArray::SharedPtr msg);
 
   void sendArmorData(const auto_aim_interfaces::msg::GimbalCmd::ConstSharedPtr msg);
 
@@ -57,6 +60,7 @@ private:
   void changeTarget();
 
   // Serial port
+  bool use_topic_subscription_ = false;
   std::unique_ptr<IoContext> owned_ctx_;
   std::string device_name_;
   std::unique_ptr<drivers::serial_driver::SerialPortConfig> device_config_;
@@ -83,6 +87,8 @@ private:
   std::unique_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
 
   rclcpp::Subscription<auto_aim_interfaces::msg::GimbalCmd>::SharedPtr aim_sub_;
+  rclcpp::Subscription<std_msgs::msg::UInt8MultiArray>::SharedPtr vision_packet_sub_;
+  rclcpp::Publisher<std_msgs::msg::UInt8MultiArray>::SharedPtr vision_send_pub_;
 
   //message_filters::Subscriber<auto_aim_interfaces::msg::GimbalCmd> aim_sub_;
   //message_filters::Subscriber<auto_aim_interfaces::msg::TimeInfo> aim_time_info_sub_;

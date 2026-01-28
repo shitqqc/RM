@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+    <participant profile_name="default" is_default_profile="true">
+        <rtps>
+            <!-- 允许发现其他网络中的参与者 -->
+            <builtin>
+                <discovery_config>
+                    <discoveryProtocol>SIMPLE</discoveryProtocol>
+                    <use_SIMPLE_EndpointDiscoveryProtocol>true</use_SIMPLE_EndpointDiscoveryProtocol>
+                    <use_STATIC_EndpointDiscoveryProtocol>false</use_STATIC_EndpointDiscoveryProtocol>
+                    <!-- 发现范围：SUBNET表示同一子网 -->
+                    <discoveryServersList>
+                        <!-- 如果需要指定发现服务器，可以在这里配置 -->
+                    </discoveryServersList>
+                </discovery_config>
+                <!-- 允许接收多播 -->
+                <useBuiltinTransports>true</useBuiltinTransports>
+            </builtin>
+            <!-- 网络接口配置 -->
+            <useBuiltinTransports>true</useBuiltinTransports>
+        </rtps>
+    </participant>
+</profiles>
+
+
