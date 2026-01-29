@@ -1,8 +1,5 @@
-/rm_serial_driver:
+rm_serial_driver:
   ros__parameters:
-    device_name: /dev/ttyACM0
-    baud_rate: 115200
-    flow_control: none
-    parity: none
-    stop_bits: "1"
-
+    # 视觉框架通过话题与 self_nav 串口节点通信，不直接打开串口
+    # 将 use_topic_subscription 设为 true，启用订阅模式
+    use_topic_subscription: true
