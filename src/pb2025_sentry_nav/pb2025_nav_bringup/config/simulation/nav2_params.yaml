@@ -660,8 +660,12 @@ pb_teleop_twist_joy_node:
 
 chassis_angle:
   ros__parameters:
-    chassis_frame: "chassis"
-    odom_frame: "map"
+    # 使用 base_footprint 而不是 chassis，因为 sensor_scan_generation 发布的是 odom -> base_footprint
+    # base_footprint 和 chassis 之间是固定偏移（z方向0.076m），不影响yaw角度计算
+    chassis_frame: "base_footprint"
+    # 使用 odom 而不是 map，因为 map 需要定位系统初始化
+    # 如果定位系统已初始化，可以改回 "map"
+    odom_frame: "odom"
 
 sentry_control:
   ros__parameters:

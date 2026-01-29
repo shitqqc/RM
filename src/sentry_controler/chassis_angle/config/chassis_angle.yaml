@@ -1,4 +1,6 @@
 chassis_angle:
   ros__parameters:
     chassis_frame: "chassis"
-    odom_frame: "map"
+    # 使用 odom 而不是 map，因为 map 需要定位系统初始化
+    # 如果定位系统已初始化，可以改回 "map"
+    odom_frame: "odom"

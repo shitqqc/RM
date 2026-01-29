@@ -86,6 +86,18 @@ def generate_launch_description():
     )
 
     colorized_output_envvar = SetEnvironmentVariable("RCUTILS_COLORIZED_OUTPUT", "1")
+    
+    # Fix libusb library conflict: prioritize system libusb over MVS libusb
+    # This prevents "undefined symbol: libusb_set_option" error in PCL
+    current_ld_path = os.environ.get("LD_LIBRARY_PATH", "")
+    system_lib_path = "/usr/lib/x86_64-linux-gnu"
+    if current_ld_path:
+        # Prepend system library path to existing LD_LIBRARY_PATH
+        new_ld_path = f"{system_lib_path}:{current_ld_path}"
+    else:
+        # If no existing LD_LIBRARY_PATH, just set system path
+        new_ld_path = system_lib_path
+    ld_library_path_envvar = SetEnvironmentVariable("LD_LIBRARY_PATH", new_ld_path)
 
     declare_namespace_cmd = DeclareLaunchArgument(
         "namespace", default_value="", description="Top-level namespace"
@@ -229,6 +241,7 @@ def generate_launch_description():
     # Set environment variables
     ld.add_action(stdout_linebuf_envvar)
     ld.add_action(colorized_output_envvar)
+    ld.add_action(ld_library_path_envvar)
 
     # Declare the launch options
     ld.add_action(declare_namespace_cmd)

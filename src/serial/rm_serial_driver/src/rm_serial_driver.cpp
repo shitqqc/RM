@@ -16,6 +16,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <cmath>
 
 #include "rm_serial_driver/crc.hpp"
 #include "rm_serial_driver/packet.hpp"
@@ -39,8 +40,12 @@ RMSerialDriver::RMSerialDriver(const rclcpp::NodeOptions & options)
   // // Create Publisher
   // latency_pub_ = this->create_publisher<std_msgs::msg::Float64>("/latency", 10);
   // marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("/aiming_point", 10);
-    gimbal_pub =
-        this->create_publisher<sensor_msgs::msg::JointState>("serial/gimbal_joint_state", 10);
+  gimbal_pub =
+    this->create_publisher<sensor_msgs::msg::JointState>("serial/gimbal_joint_state", 10);
+
+  // 发布视觉接收数据原始字节流，供 rm_vision 订阅
+  vision_pub = this->create_publisher<std_msgs::msg::UInt8MultiArray>(
+    "serial/vision_packet", rclcpp::SensorDataQoS());
 
     try {
       serial_driver_->init_port(device_name_, *device_config_);
@@ -62,14 +67,21 @@ RMSerialDriver::RMSerialDriver(const rclcpp::NodeOptions & options)
   navi_sentry_sub_ = this->create_subscription<std_msgs::msg::Int32>(
     "navi/sentry_cmd", rclcpp::SensorDataQoS(),
     std::bind(&RMSerialDriver::sentryCallback, this, std::placeholders::_1));
-  // Create Subscription
+
+  // 自主导航控制指令，通过串口下发给下位机
   cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
     "cmd_vel", rclcpp::SensorDataQoS(),
     std::bind(&RMSerialDriver::sendNavData, this, std::placeholders::_1));
 
-  gimbal_cmd_sub_ = this->create_subscription<std_msgs::msg::Float32>(
-    "gimbal_topic", rclcpp::SensorDataQoS(),
-    std::bind(&RMSerialDriver::sendVisionData, this, std::placeholders::_1));
+  // 订阅来自 rm_vision 的视觉控制数据
+  vision_send_sub_ = this->create_subscription<std_msgs::msg::UInt8MultiArray>(
+    "serial/vision_send_packet", rclcpp::SensorDataQoS(),
+    std::bind(&RMSerialDriver::sendVisionPacketData, this, std::placeholders::_1));
+
+  // 订阅来自决策的 yaw 偏移，用于修正视觉发送回下位机的目标角度
+  yaw_offset_sub_ = this->create_subscription<std_msgs::msg::Float32>(
+    "omni_aim/yaw_offset", rclcpp::QoS(10),
+    std::bind(&RMSerialDriver::yawOffsetCallback, this, std::placeholders::_1));
 
     //tf
     tf_buffer_ = std::make_unique<tf2_ros::Buffer>(this->get_clock());
@@ -95,51 +107,36 @@ void RMSerialDriver::receiveData()
 {
   std::vector<uint8_t> header(1);
   std::vector<uint8_t> data;
-  // if(rclcpp::ok())
-  // {
-  //   try {
-  //     serial_driver_->port()->receive(header);
+  if(rclcpp::ok())
+  {
+    try {
+      serial_driver_->port()->receive(header);
 
-  //     if (header[0] == 0x6A) {
-  //       data.reserve(sizeof(NaviReceivePacket));
-  //     }
-  //     else if(header[0] == 0X5A)
-  //     {
-  //       data.reserve(sizeof(VisionReceivePacket));
-  //     } else {
-  //       RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 20, "Invalid header: %02X", header[0]);
-  //     }
-  // } catch (const std::exception & ex) {
-  //     RCLCPP_ERROR(get_logger(), "Error receiving data: %s", ex.what());
-  //     throw ex;
-  //   }
-  // }
+      if (header[0] == 0x6A) {
+        data.reserve(sizeof(NaviReceivePacket));
+      }
+      else if(header[0] == 0X5A)
+      {
+        data.reserve(sizeof(VisionReceivePacket));
+      } else {
+        RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 20, "Invalid header: %02X", header[0]);
+      }
+  } catch (const std::exception & ex) {
+      RCLCPP_ERROR(get_logger(), "Error receiving data: %s", ex.what());
+      throw ex;
+    }
+  }
   // data.reserve(sizeof(ReceivePacket));
   // RCLCPP_INFO(this->get_logger(), "In receive data.");
 
   while (rclcpp::ok()) {
     try {
       serial_driver_->port()->receive(header);
-      try{
-        if(header[0] == 0x6A)
-        {
-          data.reserve(sizeof(NaviReceivePacket));
-        }
-        else if(header[0] == 0X5A)
-        {
-          data.reserve(sizeof(VisionReceivePacket));
-        }else{
-          RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 20, "Invalid header: %02X", header[0]);
-          continue;
-        }
-      }catch(const std::exception & ex) {
-        RCLCPP_ERROR(get_logger(), "Error receiving data: %s", ex.what());
-      }
       // RCLCPP_INFO(this->get_logger(), "Receive header.");
       if (header[0] == 0x6A) {
         data.resize(sizeof(NaviReceivePacket) - 1);
         // data.resize(sizeof(ReceivePacket) - 1);
-        // serial_driver_->port()->receive(data);
+        serial_driver_->port()->receive(data);
 
         data.insert(data.begin(), header[0]);
         NaviReceivePacket packet = fromVector < NaviReceivePacket>(data);
@@ -171,6 +168,8 @@ void RMSerialDriver::receiveData()
             msg.name[1] = "gimbal_yaw_joint";
             msg.position[1] = packet.yaw;
 
+            // RCLCPP_INFO_STREAM(this->get_logger(), "gimbal_pitch"<<packet.pitch<<"gimbal_yaw"<<packet.yaw);
+
             // RCLCPP_INFO(
             //   this->get_logger(), "Navi gimbal_pitch: %f, gimbal_yaw: %f", packet.pitch,
             //   packet.yaw);
@@ -186,7 +185,7 @@ void RMSerialDriver::receiveData()
       else if(header[0] == 0X5A)
       {
         data.resize(sizeof(VisionReceivePacket) - 1);
-        // serial_driver_->port()->receive(data);
+        serial_driver_->port()->receive(data);
 
         data.insert(data.begin(), header[0]);
         VisionReceivePacket packet = fromVector<VisionReceivePacket>(data);
@@ -194,16 +193,11 @@ void RMSerialDriver::receiveData()
         bool crc_ok =
           crc16::Verify_CRC16_Check_Sum(reinterpret_cast<const uint8_t *>(&packet), sizeof(packet));
         if (crc_ok) {
-          // geometry_msgs::msg::TransformStamped t;
-          // timestamp_offset_ = this->get_parameter("timestamp_offset").as_double();
-          // t.header.stamp = this->now() + rclcpp::Duration::from_seconds(timestamp_offset_);
-          // t.header.frame_id = "odom";
-          // t.child_frame_id = "gimbal_link";
-          // tf2::Quaternion q;
-          // q.setRPY(packet.roll, packet.pitch, packet.yaw);
-          // t.transform.rotation = tf2::toMsg(q);
-          // tf_broadcaster_->sendTransform(t);
-          // RCLCPP_INFO(this->get_logger(), "Vision localColor : %d", packet.localColor);
+          // 将下位机发来的视觉控制数据原样转发为话题
+          std::vector<uint8_t> packet_bytes = toVector(packet);
+          std_msgs::msg::UInt8MultiArray vision_msg;
+          vision_msg.data = packet_bytes;
+          vision_pub->publish(vision_msg);
         } else {
           RCLCPP_ERROR(get_logger(), "CRC error!");
         }
@@ -229,6 +223,12 @@ void RMSerialDriver::sentryCallback(const std_msgs::msg::Int32::SharedPtr msg)
   sentry_cmd=msg->data;
 }
 
+void RMSerialDriver::yawOffsetCallback(const std_msgs::msg::Float32::SharedPtr msg)
+{
+  yaw_offset_rad_ = static_cast<double>(msg->data);
+  RCLCPP_DEBUG(get_logger(), "Update yaw_offset_rad_: %f", yaw_offset_rad_);
+}
+
 void RMSerialDriver::sendNavData(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
   try {
@@ -251,9 +251,10 @@ void RMSerialDriver::sendNavData(const geometry_msgs::msg::Twist::SharedPtr msg)
     packet.Vx = msg->linear.x;
     packet.Vy = msg->linear.y;
     packet.Wz = msg->angular.z;
+    // RCLCPP_INFO_STREAM(this->get_logger(),"Send nav data\n"<<"header:"<<packet.header<<"Vx:"<<packet.Vx<<"\n"<<"Vy:"<<packet.Vy<<"\n"<<"Wz:"<<packet.Wz);
     crc16::Append_CRC16_Check_Sum(reinterpret_cast<uint8_t *>(&packet), sizeof(packet));
 
-    RCLCPP_INFO(get_logger(), "send nav data: Vx:%f, Vy:%f, Wz:%f", packet.Vx, packet.Vy, packet.Wz);
+    RCLCPP_INFO(get_logger(), "Send nav data:header:%#X Vx:%f, Vy:%f, Wz:%f",packet.header, packet.Vx, packet.Vy, packet.Wz);
 
     std::vector<uint8_t> data = toVector(packet);
 
@@ -278,6 +279,37 @@ void RMSerialDriver::sendVisionData(const std_msgs::msg::Float32::SharedPtr msg)
     serial_driver_->port()->send(data);
   }catch (const std::exception & ex) {
     RCLCPP_ERROR(get_logger(), "Error while sending data: %s", ex.what());
+    reopenPort();
+  }
+}
+
+void RMSerialDriver::sendVisionPacketData(const std_msgs::msg::UInt8MultiArray::SharedPtr msg)
+{
+  try {
+    // 可选：检查长度是否合理（至少要能装下一个 VisionSendPacketSimple）
+    if (msg->data.size() < sizeof(VisionSendPacketSimple)) {
+      RCLCPP_ERROR(
+        get_logger(), "Received vision send packet size too small: %zu, expected: %zu",
+        msg->data.size(), sizeof(VisionSendPacketSimple));
+      return;
+    }
+
+    // 解析为 VisionSendPacketSimple，根据 yaw_offset_rad_ 决定是否修改 target_yaw
+    VisionSendPacketSimple packet = fromVector<VisionSendPacketSimple>(msg->data);
+
+    // 如果不需要转向（yaw_offset_rad_ == 0），保持视觉原始计算的 target_yaw 不变
+    // 如果需要转向，则直接将 target_yaw 改为决策给出的绝对角度
+    if (std::fabs(yaw_offset_rad_) > 1e-3) {
+      packet.target_yaw = static_cast<float>(yaw_offset_rad_);
+    }
+
+    // 重新计算 CRC，保证下位机校验通过
+    crc16::Append_CRC16_Check_Sum(reinterpret_cast<uint8_t *>(&packet), sizeof(packet));
+
+    std::vector<uint8_t> data = toVector(packet);
+    serial_driver_->port()->send(data);
+  } catch (const std::exception & ex) {
+    RCLCPP_ERROR(get_logger(), "Error while sending vision packet data: %s", ex.what());
     reopenPort();
   }
 }

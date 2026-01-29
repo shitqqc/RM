@@ -14,6 +14,7 @@
 #include <geometry_msgs/msg/twist.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/float32.hpp>
+#include <std_msgs/msg/u_int8_multi_array.hpp>
 #include "sensor_msgs/msg/joint_state.hpp"
 
 //tf
@@ -44,11 +45,13 @@ private:
 
   void sendNavData(geometry_msgs::msg::Twist::SharedPtr msg);
   void sendVisionData(std_msgs::msg::Float32::SharedPtr msg);
+  void sendVisionPacketData(const std_msgs::msg::UInt8MultiArray::SharedPtr msg);
 
   void reopenPort();
 
   void statusCallback(const std_msgs::msg::Int32::SharedPtr msg);
   void sentryCallback(const std_msgs::msg::Int32::SharedPtr msg);
+  void yawOffsetCallback(const std_msgs::msg::Float32::SharedPtr msg);
 
   // Serial port
   std::unique_ptr<IoContext> owned_ctx_;
@@ -64,13 +67,15 @@ private:
   rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr navi_sentry_sub_;
   rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
   rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr gimbal_cmd_sub_;
+  rclcpp::Subscription<std_msgs::msg::UInt8MultiArray>::SharedPtr vision_send_sub_;
+  rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr yaw_offset_sub_;
 
   int navi_status_,sentry_cmd;
   // // For debug usage
   // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr latency_pub_;
 
   rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr gimbal_pub;
-  
+  rclcpp::Publisher<std_msgs::msg::UInt8MultiArray>::SharedPtr vision_pub;
 
   std::thread receive_thread_;
 
@@ -78,6 +83,9 @@ private:
   std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};
   geometry_msgs::msg::TransformStamped t_;
+
+  // 来自决策模块的 yaw 偏移（弧度），用于修正视觉发送回下位机的目标角度
+  double yaw_offset_rad_ = 0.0;
 };
 }  // namespace rm_serial_driver
 

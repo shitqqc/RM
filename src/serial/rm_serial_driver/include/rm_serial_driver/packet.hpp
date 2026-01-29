@@ -43,13 +43,13 @@ struct NaviReceivePacket
   uint16_t crcSum;
 } __attribute__((packed));
 
-struct ReceivePacket
-{
-  uint8_t header = 0x5A;
-  NaviReceivePacket navi;
-  VisionReceivePacket vision;
-  uint16_t checksum = 0;
-} __attribute__((packed));
+// struct ReceivePacket
+// {
+//   uint8_t header = 0x5A;
+//   NaviReceivePacket navi;
+//   VisionReceivePacket vision;
+//   uint16_t checksum = 0;
+// } __attribute__((packed));
 
 struct Navi_send_packet
 {
@@ -85,11 +85,20 @@ struct Vision_send_packet
   uint16_t checkSum;
 } __attribute__((packed));
 
-struct SendPacket
+// Vision send packet from rm_vision (simplified version)
+struct VisionSendPacketSimple
 {
   uint8_t header = 0xA5;
-  Navi_send_packet navi;
-  Vision_send_packet vision;
+  uint8_t control;
+  uint8_t fire;
+  float target_yaw;
+  float target_pitch;
+  float yaw;
+  float yaw_vel;
+  float yaw_acc;
+  float pitch;
+  float pitch_vel;
+  float pitch_acc;
   uint16_t checksum = 0;
 } __attribute__((packed));
 

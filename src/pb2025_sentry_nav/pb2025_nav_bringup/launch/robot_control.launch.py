@@ -66,6 +66,15 @@ def generate_launch_description():
         description="log level"
     )
     
+    # Get rm_decision_cpp package directory
+    try:
+        rm_decision_cpp_dir = get_package_share_directory("rm_decision_cpp")
+    except:
+        # 如果包还没有安装，使用源码路径
+        import pathlib
+        self_nav_src = pathlib.Path(__file__).parent.parent.parent.parent.parent
+        rm_decision_cpp_dir = str(self_nav_src / "rm_decision_cpp")
+    
     Node_group = GroupAction([
         Node(
             package="chassis_angle",
@@ -82,12 +91,27 @@ def generate_launch_description():
             arguments=["--ros-args", "--log-level", log_level],
             output="screen"
         ),
+        # 使用 SCURM_SentryNavigation 的决策框架替代 sentry_control
         Node(
-            package="sentry_control",
-            executable="sentry_control_node",
-            name="sentry_control",
+            package="rm_decision_cpp",
+            executable="tree_exec_node",
+            name="tree_exec",
             parameters=[
-                configured_params
+                os.path.join(rm_decision_cpp_dir, "config", "node_params.yaml"),
+                {
+                    "use_sim_time": use_sim_time,
+                    # 使用全向装甲测试行为树
+                    "tree_xml_file": os.path.join(rm_decision_cpp_dir, "behavior_tree", "test_omni_armor.xml"),
+                    "tree_node_model_export_path": os.path.join(rm_decision_cpp_dir, "behavior_tree", "tree_nodes.xml"),
+                }
+            ],
+            remappings=[
+                # 导航相关话题映射（根据命名空间调整）
+                ("navigate_to_pose", (namespace, "/", "navigate_to_pose")),
+                # 游戏状态话题
+                ("/game_state", (namespace, "/", "game_state")),
+                # 目标跟踪话题
+                ("/tracker/target", (namespace, "/", "tracker", "/", "target")),
             ],
             arguments=["--ros-args", "--log-level", log_level],
             output="screen"

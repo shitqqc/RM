@@ -30,7 +30,12 @@ namespace chassis_angle
     {
         try
         {
-            auto trans = this->tf2_buffer_->lookupTransform(this->chassis_frame, this->odom_frame, this->get_clock()->now(), rclcpp::Duration::from_seconds(0.5f));
+            // 使用 tf2::TimePointZero 获取最新的可用变换，而不是使用当前时间
+            // 这样可以避免时间外推错误，特别是在使用 sim_time 时
+            auto trans = this->tf2_buffer_->lookupTransform(
+                this->chassis_frame, 
+                this->odom_frame, 
+                tf2::TimePointZero);
             yaw_ = tf2::getYaw(trans.transform.rotation);
 
             //RCLCPP_INFO_STREAM(this->get_logger(), "yaw from" << odom_frame << " to " << chassis_frame << " : " << yaw_);
@@ -41,7 +46,15 @@ namespace chassis_angle
         }
         catch(const std::exception& e)
         {
-            RCLCPP_WARN(this->get_logger(), "Faild to get transform: %s", e.what());
+            // 使用节流警告，每5秒最多打印一次，避免在TF树建立前产生大量警告
+            RCLCPP_WARN_THROTTLE(
+                this->get_logger(), 
+                *this->get_clock(), 
+                5000, 
+                "Failed to get transform from '%s' to '%s': %s", 
+                this->odom_frame.c_str(), 
+                this->chassis_frame.c_str(), 
+                e.what());
         }
     }
 

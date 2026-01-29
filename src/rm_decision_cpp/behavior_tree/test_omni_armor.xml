@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="TestOmniArmor">
+    <ReactiveSequence name="ROOT">
+      <!-- 1. 从话题更新黑板（包括 best_camera / best_armor_*） -->
+      <Topics2Blackboard
+          current_hp="{current_hp}"
+          game_progress="{game_progress}"
+          stage_remain_time="{stage_remain_time}"
+          armor_id="{armor_id}"
+          hurt_type="{hurt_type}"
+          my_outpost_hp="{my_outpost_hp}"
+          enemy_outpost_hp="{enemy_outpost_hp}"
+          my_base_hp="{my_base_hp}"
+          enemy_base_hp="{enemy_base_hp}"
+          projectile_allowance_17mm="{projectile_allowance_17mm}"
+          tracking="{tracking}"
+          target_armor_id="{target_armor_id}"
+          target_position="{target_position}"
+          best_camera="{best_camera}"
+          best_armor_number="{best_armor_number}"
+          best_armor_priority="{best_armor_priority}" />
+
+      <!-- 2. 如果没有任何装甲（best_camera == -1），直接返回 SUCCESS，不做自瞄 -->
+      <ReactiveFallback name="HAS_TARGET?">
+        <Sequence name="NoTarget">
+          <ConditionScript _onStart="best_camera == -1"/>
+          <!-- 只是个占位动作 -->
+          <Script code="log('no armor detected, skipping aim')"/>
+        </Sequence>
+
+        <!-- 3. 有装甲时，根据 best_camera 决定行为 -->
+        <Sequence name="HandleTarget">
+          <!-- 日志：打印当前最佳装甲 -->
+          <Script code="log('best_camera=' + str(best_camera) + ', best_number=' + str(best_armor_number) + ', priority=' + str(best_armor_priority))"/>
+
+          <!-- 根据 best_camera 决定是否发送云台转向 110° 的指令，然后交给自瞄 -->
+          <YawTurnForBestCamera best_camera="{best_camera}"/>
+        </Sequence>
+      </ReactiveFallback>
+    </ReactiveSequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (用于 Groot 可视化，可选) -->
+  <TreeNodesModel>
+    <Action ID="Topics2Blackboard"/>
+    <Decorator ID="ConditionScript"/>
+    <Action ID="Script"/>
+  </TreeNodesModel>
+</root>
+
+
